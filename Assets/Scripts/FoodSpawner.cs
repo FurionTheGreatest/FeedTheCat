@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class FoodSpawner : MonoBehaviour
 {
-    public GameObject mealPrefab;
-    public GameObject _mealParent;
+    public FoodSupplyManager foodSupplyManager;
+    private GameObject _mealParent;
     private float _baseForceMultiplier = 4f;
 
     [SerializeField] private Vector2 forceVector = new Vector2(.2f,3f);
@@ -17,13 +17,14 @@ public class FoodSpawner : MonoBehaviour
     private const float YLowerLimit = 2f;
     private const float YUpperLimit = 4f;
 
-    public bool isOppositeSpawn = false;
+    public bool isOppositeSpawn;
 
-    private const float DelayForSpawn = 0f;
+    private const float DelayForSpawn = 1f;
     private const float RepeatRate = 1f;
 
     private void Start()
     {
+        foodSupplyManager = FindObjectOfType<FoodSupplyManager>();
         _mealParent = transform.GetChild(0).gameObject;
         InvokeRepeating(nameof(SpawnFood),DelayForSpawn, RepeatRate);
     }
@@ -38,7 +39,7 @@ public class FoodSpawner : MonoBehaviour
 
     private void SpawnFood()
     {
-        var meal = Instantiate(mealPrefab, _mealParent.transform, false);
+        var meal = Instantiate(foodSupplyManager.mealPrefab, _mealParent.transform, false);
 
         var rb = meal.GetComponent<Rigidbody2D>();
         
@@ -48,5 +49,10 @@ public class FoodSpawner : MonoBehaviour
         forceVector.y = randomYValue;
         
         rb.AddForce(forceVector * _baseForceMultiplier,ForceMode2D.Impulse);
+    }
+
+    public void StopSpawn()
+    {
+        CancelInvoke(nameof(SpawnFood));
     }
 }
