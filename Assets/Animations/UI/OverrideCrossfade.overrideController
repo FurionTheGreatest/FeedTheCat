@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: OverrideCrossfade
+  m_Controller: {fileID: 9100000, guid: 7a2c7cec6ef00254b9c9173d5488a74e, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: c8ff0dfb0f84eea488ad0d0a3718cdec, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: fbc4fc528e68dcc45a2333d54c377182, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7999e87f1f5a3ad488dc521b33dd2e10, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7d05646080ce2454a9ed44912db4d298, type: 2}
