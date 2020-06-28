@@ -134,7 +134,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d749de6fb90eb439396fe91c6015e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneCamera: {fileID: 0}
   satiety: 0
+  destroyFood: 0
+  nextTimeToUpdate: 0.5
 --- !u!114 &1799680781521429401
 MonoBehaviour:
   m_ObjectHideFlags: 0

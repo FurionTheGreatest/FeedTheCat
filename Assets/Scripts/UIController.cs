@@ -7,45 +7,66 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public TMP_Text uICounter;
+    public TMP_Text loseText;
+    public TMP_Text winText;
     public Slider satietySlider;
     public Slider foodLeftSlider;
 
-    public int maxSatietyValue;
-    private const string CounterText = "Food counter: ";
-    private int _score = 0;
+    public int maxSatietyUiValue;
+    private int _score;
     private int _currentSatiety;
     private FoodSupplyManager _foodSupplyManager;
     private void Awake()
     {
         _foodSupplyManager = FindObjectOfType<FoodSupplyManager>();
-        maxSatietyValue = _foodSupplyManager.desiredSatiety;
+        maxSatietyUiValue = _foodSupplyManager.maxSatiety;
         
-        satietySlider.maxValue = maxSatietyValue;
+        satietySlider.maxValue = maxSatietyUiValue;
         satietySlider.value = 0;
-        foodLeftSlider.maxValue = maxSatietyValue + (maxSatietyValue/2);
+        
+        foodLeftSlider.maxValue = _foodSupplyManager.maxFoodMachineSatiety;
         foodLeftSlider.value = foodLeftSlider.maxValue;
     }
 
-    private void UpdateCounter()
+    /*private void UpdateCounter()
     {
         _score ++;
         uICounter.text = CounterText + _score;
-    }
+    }*/
 
     private void UpdateSatietySliderValue(int satiety)
     {
         satietySlider.value += satiety;
+    }
+    
+    private void UpdateFoodMachineSatietySliderValue(int satiety)
+    {
         foodLeftSlider.value -= satiety;
+    }
+
+    private void EnableLoseScreen()
+    {
+        loseText.gameObject.SetActive(true);
+    }
+    
+    private void EnableWinScreen()
+    {
+        winText.gameObject.SetActive(true);
     }
     
     private void OnEnable()
     {
-        OnTouch.UpdateUi += UpdateSatietySliderValue;
+        OnTouch.UpdateStats += UpdateSatietySliderValue;
+        FoodSpawner.OnMealSpawned += UpdateFoodMachineSatietySliderValue;
+        FoodSupplyManager.OnLose += EnableLoseScreen;
+        FoodSupplyManager.OnWin += EnableWinScreen;
     }
     
     private void OnDisable()
     {
-        OnTouch.UpdateUi -= UpdateSatietySliderValue;
+        OnTouch.UpdateStats -= UpdateSatietySliderValue;
+        FoodSpawner.OnMealSpawned -= UpdateFoodMachineSatietySliderValue;
+        FoodSupplyManager.OnLose -= EnableLoseScreen;
+        FoodSupplyManager.OnWin -= EnableWinScreen;
     }
 }
