@@ -28,19 +28,25 @@ public class UIController : MonoBehaviour
         foodLeftSlider.value = foodLeftSlider.maxValue;
     }
 
-    /*private void UpdateCounter()
-    {
-        _score ++;
-        uICounter.text = CounterText + _score;
-    }*/
-
     private void UpdateSatietySliderValue(int satiety)
     {
+        if(satietySlider.value == 0 && satiety < 0) return;
+        if (satietySlider.value - satiety > 0 && satiety < 0)
+        {
+            satietySlider.value = 0;
+            return;
+        }
         satietySlider.value += satiety;
     }
     
     private void UpdateFoodMachineSatietySliderValue(int satiety)
     {
+        if(foodLeftSlider.value == 0 && satiety < 0) return;
+        if (foodLeftSlider.value - satiety > 0 && satiety < 0)
+        {
+            foodLeftSlider.value = 0;
+            return;
+        }
         foodLeftSlider.value -= satiety;
     }
 
