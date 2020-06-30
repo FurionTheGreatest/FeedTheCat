@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5850486435313160199}
   - component: {fileID: 1799680781521429401}
   m_Layer: 0
-  m_Name: meal
+  m_Name: CommonFood
   m_TagString: Meal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8b8956ad20c03734aa2296a4bce66adb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -134,8 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d749de6fb90eb439396fe91c6015e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneCamera: {fileID: 0}
-  satiety: 0
   destroyFood: 0
   nextTimeToUpdate: 0.5
 --- !u!114 &1799680781521429401
@@ -151,4 +149,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mealStats:
-    satiety: 5
+    satiety: 1
