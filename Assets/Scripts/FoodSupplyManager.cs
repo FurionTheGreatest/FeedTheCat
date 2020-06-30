@@ -9,7 +9,12 @@ public class FoodSupplyManager : MonoBehaviour
     public static event CheckCondition OnLose;
     public static event CheckCondition OnWin;
     
-    public GameObject mealPrefab;
+    public GameObject[] mealPrefabs;
+    
+    public int commonFoodSatiety;
+    public int rareFoodSatiety;
+    public int mythFoodSatiety;
+    public int legendFoodSatiety;
     
     public GameObject badMealPrefab;
     public bool isBadMealNotEmpty = true;
@@ -18,7 +23,7 @@ public class FoodSupplyManager : MonoBehaviour
     public int maxFoodMachineSatiety;
     
     [SerializeField]private int _currentSatiety;
-    [SerializeField]private int _currentFoodMachineSatiety;
+    public int currentFoodMachineSatiety;
     
     private int _currentBadMealSatiety;
     private int _maxBadMealSatiety;
@@ -31,7 +36,7 @@ public class FoodSupplyManager : MonoBehaviour
     private void Awake()
     {
         maxFoodMachineSatiety = maxSatiety + maxSatiety/2;
-        _currentFoodMachineSatiety = maxFoodMachineSatiety;
+        currentFoodMachineSatiety = maxFoodMachineSatiety;
         _maxBadMealSatiety = maxSatiety / 2;
         _currentBadMealSatiety = _maxBadMealSatiety;
     }
@@ -39,11 +44,21 @@ public class FoodSupplyManager : MonoBehaviour
     private void Start()
     {
         _spawns = FindObjectsOfType<FoodSpawner>();
+
+        commonFoodSatiety = mealPrefabs[0].GetComponent<MealData>().mealStats.satiety;
+        rareFoodSatiety = mealPrefabs[1].GetComponent<MealData>().mealStats.satiety;
+        mythFoodSatiety = mealPrefabs[2].GetComponent<MealData>().mealStats.satiety;
+        legendFoodSatiety = mealPrefabs[3].GetComponent<MealData>().mealStats.satiety;
     }
 
     private void AddCatSatiety(int satiety)
     {
         if(_currentSatiety == 0 && satiety < 0) return;
+        if (_currentSatiety - satiety > 0 && satiety < 0)
+        {
+            _currentSatiety = 0;
+            return;
+        }
         _currentSatiety += satiety;
         CheckForWinCondition();
         if(!_isFoodOnSceneEnd  || _isWon) return;
@@ -52,10 +67,41 @@ public class FoodSupplyManager : MonoBehaviour
     
     private void DecreaseFoodMachineSatiety(int satiety)
     {
-        _currentFoodMachineSatiety -= satiety;
-        CheckForLoseCondition();        
+        if(currentFoodMachineSatiety == 0 && satiety < 0) return;
+        if (currentFoodMachineSatiety - satiety > 0 && satiety < 0)
+        {
+            currentFoodMachineSatiety = 0;
+            return;
+        }
+        currentFoodMachineSatiety -= satiety;
+        CheckForSatietyLimit();
+        CheckForLoseCondition();
+    }
+
+    private void CheckForSatietyLimit()
+    {
+        if (currentFoodMachineSatiety - rareFoodSatiety < 0)
+        {
+            LimitSatiety(FoodSpawner.CommonMealChanceToSpawn);
+        }
+        else if (currentFoodMachineSatiety - mythFoodSatiety < 0)
+        {
+            LimitSatiety(FoodSpawner.RareMealChanceToSpawn);
+        } 
+        else if (currentFoodMachineSatiety - legendFoodSatiety < 0)
+        {
+            LimitSatiety(FoodSpawner.MythMealChanceToSpawn);
+        }
     }
     
+    private void LimitSatiety(int limit)
+    {
+        foreach (var spawn in _spawns)
+        {
+            spawn.maxRandomValue = limit;
+        }
+    }
+
     private void DecreaseBadMealSatiety(int satiety)
     {
         _currentBadMealSatiety += satiety;
@@ -83,7 +129,7 @@ public class FoodSupplyManager : MonoBehaviour
 
     private void CheckForLoseCondition()
     {
-        if (_currentFoodMachineSatiety > 0)
+        if (currentFoodMachineSatiety > 0)
             return;
         StopSpawnFood();
         

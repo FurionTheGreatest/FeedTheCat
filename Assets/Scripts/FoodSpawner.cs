@@ -9,14 +9,12 @@ public class FoodSpawner : MonoBehaviour
 {
     public delegate void OnMealTouched(int satiety);
     public delegate void BadMealCalculation(int satiety);
-
     public static event OnMealTouched OnMealSpawned;
     public static event BadMealCalculation OnBadMealSpawned;
 
-    
-    public FoodSupplyManager foodSupplyManager;
+    private FoodSupplyManager _foodSupplyManager;
     private GameObject _mealParent;
-    private readonly float _baseForceMultiplier = 4f;
+    private const float BaseForceMultiplier = 4f;
 
     [SerializeField] private Vector2 forceVector = new Vector2(.2f,3f);
     private const float XLowerLimit = 0f;
@@ -28,27 +26,61 @@ public class FoodSpawner : MonoBehaviour
     public bool isOppositeSpawn;
 
     private const float DelayForSpawn = 1f;
-    private const float RepeatRate = 1f;
-    private const float BadMealChanceToSpawn = 0.5f;
+    private const float RepeatRate = 1.5f;
 
+    public const int CommonMealChanceToSpawn = 40;
+    public const int RareMealChanceToSpawn = 60;
+    public const int MythMealChanceToSpawn = 75;
+    private const int LegendMealChanceToSpawn = 80;
+
+    public int minRandomValue = -20;
+    public int maxRandomValue;
+    
     private void Start()
     {
-        foodSupplyManager = FindObjectOfType<FoodSupplyManager>();
+        _foodSupplyManager = FindObjectOfType<FoodSupplyManager>();
+        maxRandomValue = LegendMealChanceToSpawn;
         _mealParent = transform.GetChild(0).gameObject;
         InvokeRepeating(nameof(SpawnFood),DelayForSpawn, RepeatRate);
     }
 
     private void SpawnFood()
     {
-        if (foodSupplyManager.isBadMealNotEmpty)
+        var randomMealValue = Random.Range(minRandomValue, maxRandomValue);
+        Debug.Log(randomMealValue);
+        if (randomMealValue >= 0 && randomMealValue <= CommonMealChanceToSpawn )
         {
-            var randomMealValue = Random.Range(0f, 1f);
-            FoodInstantiate(randomMealValue < BadMealChanceToSpawn ? foodSupplyManager.mealPrefab : foodSupplyManager.badMealPrefab);
+            FoodInstantiate(_foodSupplyManager.mealPrefabs[0]);
+        }
+        else if ( randomMealValue > 0 && randomMealValue <= RareMealChanceToSpawn)
+        {
+            FoodInstantiate(_foodSupplyManager.mealPrefabs[1]);
+        }
+        else if (randomMealValue > 0 && randomMealValue <= MythMealChanceToSpawn)
+        {
+            FoodInstantiate(_foodSupplyManager.mealPrefabs[2]);
+        }
+        else if (randomMealValue > 0 && randomMealValue <= LegendMealChanceToSpawn)
+        {
+            FoodInstantiate(_foodSupplyManager.mealPrefabs[3]);
         }
         else
         {
-            FoodInstantiate(foodSupplyManager.mealPrefab);
+            if (!_foodSupplyManager.isBadMealNotEmpty)
+            {
+                minRandomValue = 0;
+                return;
+            }
+            FoodInstantiate(_foodSupplyManager.badMealPrefab);
         }
+    }
+
+    private int CheckFoodMachineSatiety(int indexOfObjectToSpawn, int foodSatiety)
+    {
+        Debug.Log(_foodSupplyManager.currentFoodMachineSatiety +">=" + foodSatiety);
+        if (_foodSupplyManager.currentFoodMachineSatiety >= foodSatiety) return indexOfObjectToSpawn;
+        
+        return indexOfObjectToSpawn;
     }
 
     private void FoodInstantiate(GameObject prefab)
@@ -62,7 +94,7 @@ public class FoodSpawner : MonoBehaviour
         forceVector.x = isOppositeSpawn? -randomXValue : randomXValue;
         forceVector.y = randomYValue;
         
-        rb.AddForce(forceVector * _baseForceMultiplier,ForceMode2D.Impulse);
+        rb.AddForce(forceVector * BaseForceMultiplier,ForceMode2D.Impulse);
         
         var satiety = meal.GetComponent<MealData>().mealStats.satiety;
         if (satiety > 0)
@@ -73,7 +105,6 @@ public class FoodSpawner : MonoBehaviour
         {
             OnBadMealSpawned?.Invoke(satiety);
         }
-
     }
 
     public void StopSpawn()
