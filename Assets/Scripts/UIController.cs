@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     public TMP_Text loseText;
+    public TMP_Text loseFoodOverText;
     public TMP_Text winText;
     public Slider satietySlider;
     public Slider foodLeftSlider;
@@ -50,9 +51,12 @@ public class UIController : MonoBehaviour
         foodLeftSlider.value -= satiety;
     }
 
-    private void EnableLoseScreen()
+    private void EnableLoseScreen(bool isFoodOver)
     {
-        loseText.gameObject.SetActive(true);
+        if(!isFoodOver)
+            loseText.gameObject.SetActive(true);
+        else
+            loseFoodOverText.gameObject.SetActive(true);
     }
     
     private void EnableWinScreen()

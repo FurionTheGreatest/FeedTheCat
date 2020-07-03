@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -32,27 +30,65 @@ public class FoodSpawner : MonoBehaviour
     public const int RareMealChanceToSpawn = 60;
     public const int MythMealChanceToSpawn = 75;
     private const int LegendMealChanceToSpawn = 80;
+    
+    public const int CommonBadMealChanceToSpawn = -12;
+    public const int RareBadMealChanceToSpawn = -18;
+    private const int BombBadMealChanceToSpawn = -20;
 
-    public int minRandomValue = -20;
+    public int minRandomValue;
     public int maxRandomValue;
+
+    [SerializeField] private bool _isBroken;
+    public Material litDefaultMaterial;
+    public Material brokenRedMaterial;
+    private SpriteRenderer _machineSpriteRenderer;
+
+    public int minMachineEventRandomValue = 10;
+    public int maxMachineEventRandomValue = 20;
     
     private void Start()
     {
         _foodSupplyManager = FindObjectOfType<FoodSupplyManager>();
+        _machineSpriteRenderer = GetComponent<SpriteRenderer>();
+        
+        minRandomValue = BombBadMealChanceToSpawn;
         maxRandomValue = LegendMealChanceToSpawn;
+
         _mealParent = transform.GetChild(0).gameObject;
         InvokeRepeating(nameof(SpawnFood),DelayForSpawn, RepeatRate);
+        InvokeRepeating(nameof(BrokenMachineEvent), RandomTimeForMachineEvent(), RandomTimeForMachineEvent());
     }
 
-    private void SpawnFood()
+    #region BrokenMachineEvent
+    private float RandomTimeForMachineEvent()
+    {
+        var randomTimeValue = Random.Range(minMachineEventRandomValue, maxMachineEventRandomValue);
+        return randomTimeValue;
+    }
+
+    private void BrokenMachineEvent()
+    {
+        _isBroken = true;
+        _machineSpriteRenderer.sharedMaterial = brokenRedMaterial;
+    }
+
+    private void OnMouseDown()
+    {
+        _isBroken = false;
+        _machineSpriteRenderer.sharedMaterial = litDefaultMaterial;
+    }
+    #endregion
+
+    #region SpawnFood
+
+private void SpawnFood()
     {
         var randomMealValue = Random.Range(minRandomValue, maxRandomValue);
-        Debug.Log(randomMealValue);
-        if (randomMealValue >= 0 && randomMealValue <= CommonMealChanceToSpawn )
+        if (randomMealValue >= 0 && randomMealValue <= CommonMealChanceToSpawn)
         {
             FoodInstantiate(_foodSupplyManager.mealPrefabs[0]);
         }
-        else if ( randomMealValue > 0 && randomMealValue <= RareMealChanceToSpawn)
+        else if (randomMealValue > 0 && randomMealValue <= RareMealChanceToSpawn)
         {
             FoodInstantiate(_foodSupplyManager.mealPrefabs[1]);
         }
@@ -71,35 +107,36 @@ public class FoodSpawner : MonoBehaviour
                 minRandomValue = 0;
                 return;
             }
-            FoodInstantiate(_foodSupplyManager.badMealPrefab);
-        }
-    }
 
-    private int CheckFoodMachineSatiety(int indexOfObjectToSpawn, int foodSatiety)
-    {
-        Debug.Log(_foodSupplyManager.currentFoodMachineSatiety +">=" + foodSatiety);
-        if (_foodSupplyManager.currentFoodMachineSatiety >= foodSatiety) return indexOfObjectToSpawn;
-        
-        return indexOfObjectToSpawn;
+            if (randomMealValue < 0 && randomMealValue >= CommonBadMealChanceToSpawn)
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[0]);
+            else if (randomMealValue < 0 && randomMealValue >= RareBadMealChanceToSpawn)
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[1]);
+            else if (randomMealValue < 0 && randomMealValue >= BombBadMealChanceToSpawn)
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[2]);
+        }
     }
 
     private void FoodInstantiate(GameObject prefab)
     {
-        var meal = Instantiate(prefab, _mealParent.transform, false);
+        if (!_isBroken)
+        {
+            var meal = Instantiate(prefab, _mealParent.transform, false);
 
-        var rb = meal.GetComponent<Rigidbody2D>();
-        
-        var randomXValue = UnityEngine.Random.Range(XLowerLimit, XUpperLimit);
-        var randomYValue = UnityEngine.Random.Range(YLowerLimit, YUpperLimit);
-        forceVector.x = isOppositeSpawn? -randomXValue : randomXValue;
-        forceVector.y = randomYValue;
-        
-        rb.AddForce(forceVector * BaseForceMultiplier,ForceMode2D.Impulse);
-        
-        var satiety = meal.GetComponent<MealData>().mealStats.satiety;
+            var rb = meal.GetComponent<Rigidbody2D>();
+
+            var randomXValue = Random.Range(XLowerLimit, XUpperLimit);
+            var randomYValue = Random.Range(YLowerLimit, YUpperLimit);
+            forceVector.x = isOppositeSpawn ? -randomXValue : randomXValue;
+            forceVector.y = randomYValue;
+
+            rb.AddForce(forceVector * BaseForceMultiplier, ForceMode2D.Impulse);
+        }
+
+        var satiety = prefab.GetComponent<MealData>().mealStats.satiety;
         if (satiety > 0)
         {
-            OnMealSpawned?.Invoke(satiety); 
+            OnMealSpawned?.Invoke(satiety);
         }
         else
         {
@@ -111,4 +148,6 @@ public class FoodSpawner : MonoBehaviour
     {
         CancelInvoke(nameof(SpawnFood));
     }
+    #endregion
+    
 }

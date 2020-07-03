@@ -27,6 +27,7 @@ public class TouchHandler : MonoBehaviour
 
             if (hitInformation.collider == null) return;
             GameObject touchedObject = hitInformation.transform.gameObject;
+            //Debug.Log("Touched " + touchedObject.transform.name);
         }
 #endif
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
