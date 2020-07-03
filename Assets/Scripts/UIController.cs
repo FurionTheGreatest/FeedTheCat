@@ -32,7 +32,7 @@ public class UIController : MonoBehaviour
     private void UpdateSatietySliderValue(int satiety)
     {
         if(satietySlider.value == 0 && satiety < 0) return;
-        if (satietySlider.value - satiety > 0 && satiety < 0)
+        if (satietySlider.value + satiety < 0 && satiety < 0)
         {
             satietySlider.value = 0;
             return;
