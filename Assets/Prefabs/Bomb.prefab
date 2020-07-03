@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!58 &6486262166163453750
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144654051409229455}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3
+--- !u!250 &-5072113022286537026
+PointEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144654051409229455}
+  m_Enabled: 0
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_ForceMagnitude: 1000
+  m_ForceVariation: 10
+  m_DistanceScale: 5
+  m_ForceSource: 1
+  m_ForceTarget: 1
+  m_ForceMode: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+--- !u!114 &1183196068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144654051409229455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8267bef248515f6459b586e9dec79334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaToForce: {fileID: 6486262166163453750}
+  forceField: {fileID: -5072113022286537026}
 --- !u!1001 &7297458117153486486
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79,3 +129,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4d0fbe188348e045bb487b9f5bfdaca, type: 3}
+--- !u!1 &1144654051409229455 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7685225320391901209, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+    type: 3}
+  m_PrefabInstance: {fileID: 7297458117153486486}
+  m_PrefabAsset: {fileID: 0}

@@ -688,8 +688,8 @@ MonoBehaviour:
   _isBroken: 0
   litDefaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   brokenRedMaterial: {fileID: 2100000, guid: f0337b61d2104e54aa08e5bfb900d402, type: 2}
-  minMachineEventRandomValue: 3
-  maxMachineEventRandomValue: 8
+  minMachineEventRandomValue: 20
+  maxMachineEventRandomValue: 30
 --- !u!61 &433873796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1741,8 +1741,8 @@ MonoBehaviour:
   _isBroken: 0
   litDefaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   brokenRedMaterial: {fileID: 2100000, guid: f0337b61d2104e54aa08e5bfb900d402, type: 2}
-  minMachineEventRandomValue: 3
-  maxMachineEventRandomValue: 8
+  minMachineEventRandomValue: 10
+  maxMachineEventRandomValue: 20
 --- !u!61 &922687518
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2093,7 +2093,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1ec63ba9387273f49b31b9357321379d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

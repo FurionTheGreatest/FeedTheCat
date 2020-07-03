@@ -23,7 +23,8 @@ public class FoodSpawner : MonoBehaviour
 
     public bool isOppositeSpawn;
 
-    private const float DelayForSpawn = 1f;
+    private const float minDelayForSpawn = 1f;
+    private const float maxDelayForSpawn = 2.5f;
     private const float RepeatRate = 1.5f;
 
     public const int CommonMealChanceToSpawn = 40;
@@ -55,10 +56,14 @@ public class FoodSpawner : MonoBehaviour
         maxRandomValue = LegendMealChanceToSpawn;
 
         _mealParent = transform.GetChild(0).gameObject;
-        InvokeRepeating(nameof(SpawnFood),DelayForSpawn, RepeatRate);
+        InvokeRepeating(nameof(SpawnFood), RandomTimeForStartFoodSpawn(), RepeatRate);
         InvokeRepeating(nameof(BrokenMachineEvent), RandomTimeForMachineEvent(), RandomTimeForMachineEvent());
     }
-
+    private float RandomTimeForStartFoodSpawn()
+    {
+        var randomTimeValue = Random.Range(minDelayForSpawn, maxDelayForSpawn);
+        return randomTimeValue;
+    }
     #region BrokenMachineEvent
     private float RandomTimeForMachineEvent()
     {
@@ -147,6 +152,7 @@ private void SpawnFood()
     public void StopSpawn()
     {
         CancelInvoke(nameof(SpawnFood));
+        CancelInvoke(nameof(BrokenMachineEvent));
     }
     #endregion
     

@@ -77,5 +77,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RareFood
       objectReference: {fileID: 0}
+    - target: {fileID: 5470344557628369608, guid: ee3d1165b98081940a312c360065f20a,
+        type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee3d1165b98081940a312c360065f20a, type: 3}
