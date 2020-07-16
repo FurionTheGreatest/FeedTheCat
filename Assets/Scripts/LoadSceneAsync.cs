@@ -15,10 +15,10 @@ public class LoadSceneAsync : MonoBehaviour
         StartCoroutine(LoadLevel(sceneBuildIndex));
     }
     
-    /*public void LoadScene(string nameOfScene)
+    public void ReloadScene()
     {
-        StartCoroutine(LoadLevel(nameOfScene));
-    }*/
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
+    }
     
     public void LoadNextScene()
     {
