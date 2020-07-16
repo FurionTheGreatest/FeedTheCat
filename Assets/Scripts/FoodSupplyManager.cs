@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FoodSupplyManager : MonoBehaviour
 {
@@ -26,10 +23,10 @@ public class FoodSupplyManager : MonoBehaviour
     public int maxSatiety = 100;
     public int maxFoodMachineSatiety;
     
-    [SerializeField]private int _currentSatiety;
+    private int _currentSatiety;
     public int currentFoodMachineSatiety;
     
-    [SerializeField]private int _currentBadMealSatiety;
+    private int _currentBadMealSatiety;
     private int _maxBadMealSatiety;
     
     private FoodSpawner[] _spawns;

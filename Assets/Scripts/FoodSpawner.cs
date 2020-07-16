@@ -23,8 +23,8 @@ public class FoodSpawner : MonoBehaviour
 
     public bool isOppositeSpawn;
 
-    private const float minDelayForSpawn = 1f;
-    private const float maxDelayForSpawn = 2.5f;
+    private const float MinDelayForSpawn = 1f;
+    private const float MaxDelayForSpawn = 2.5f;
     private const float RepeatRate = 1.5f;
 
     public const int CommonMealChanceToSpawn = 40;
@@ -38,8 +38,9 @@ public class FoodSpawner : MonoBehaviour
 
     public int minRandomValue;
     public int maxRandomValue;
-
-    [SerializeField] private bool _isBroken;
+    [Header("Broken MachineEvent")]
+    public bool isBrokenMachineEventEnabled = true;
+    private bool _isBroken;
     public Material litDefaultMaterial;
     public Material brokenRedMaterial;
     private SpriteRenderer _machineSpriteRenderer;
@@ -56,12 +57,14 @@ public class FoodSpawner : MonoBehaviour
         maxRandomValue = LegendMealChanceToSpawn;
 
         _mealParent = transform.GetChild(0).gameObject;
+        
         InvokeRepeating(nameof(SpawnFood), RandomTimeForStartFoodSpawn(), RepeatRate);
-        InvokeRepeating(nameof(BrokenMachineEvent), RandomTimeForMachineEvent(), RandomTimeForMachineEvent());
+        if(isBrokenMachineEventEnabled)
+            InvokeRepeating(nameof(BrokenMachineEvent), RandomTimeForMachineEvent(), RandomTimeForMachineEvent());
     }
     private float RandomTimeForStartFoodSpawn()
     {
-        var randomTimeValue = Random.Range(minDelayForSpawn, maxDelayForSpawn);
+        var randomTimeValue = Random.Range(MinDelayForSpawn, MaxDelayForSpawn);
         return randomTimeValue;
     }
     #region BrokenMachineEvent
