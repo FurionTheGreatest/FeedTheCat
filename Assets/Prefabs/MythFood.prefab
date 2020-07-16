@@ -77,6 +77,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MythFood
       objectReference: {fileID: 0}
+    - target: {fileID: 4437977528355310718, guid: ee3d1165b98081940a312c360065f20a,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437977528355310718, guid: ee3d1165b98081940a312c360065f20a,
+        type: 3}
+      propertyPath: m_Mass
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 5470344557628369608, guid: ee3d1165b98081940a312c360065f20a,
         type: 3}
       propertyPath: m_UsedByEffector
