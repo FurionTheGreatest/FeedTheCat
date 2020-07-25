@@ -31,7 +31,7 @@ public class LoadSceneAsync : MonoBehaviour
         
         yield return new WaitForSeconds(TransitionTime);
 
-        SceneManager.LoadSceneAsync(levelIndex);
+        SceneManager.LoadScene(levelIndex);
     }
     
     public void QuitApplication()

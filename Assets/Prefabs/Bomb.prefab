@@ -50,6 +50,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   areaToForce: {fileID: 6486262166163453750}
   forceField: {fileID: -5072113022286537026}
+--- !u!114 &2668761320597438787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144654051409229455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf714da760017b34ba71e65b2950e112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7297458117153486486
 PrefabInstance:
   m_ObjectHideFlags: 0

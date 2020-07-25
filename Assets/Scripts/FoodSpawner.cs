@@ -24,8 +24,8 @@ public class FoodSpawner : MonoBehaviour
     public bool isOppositeSpawn;
 
     private const float MinDelayForSpawn = 1f;
-    private const float MaxDelayForSpawn = 2.5f;
-    private const float RepeatRate = 1.5f;
+    private const float MaxDelayForSpawn = 3f;
+    private const float RepeatRate = 2f;
 
     public const int CommonMealChanceToSpawn = 40;
     public const int RareMealChanceToSpawn = 60;
