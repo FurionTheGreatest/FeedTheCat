@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections;
-using UnityEditor.U2D;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.U2D;
 using Random = UnityEngine.Random;
 
 public class FoodSpawner : MonoBehaviour
@@ -51,8 +47,6 @@ public class FoodSpawner : MonoBehaviour
 
     public int minMachineEventRandomValue = 10;
     public int maxMachineEventRandomValue = 20;
-
-    public AssetReference spriteAtlas;
     
     private void Start()
     {
@@ -63,12 +57,6 @@ public class FoodSpawner : MonoBehaviour
         maxRandomValue = LegendMealChanceToSpawn;
 
         _mealParent = transform.GetChild(0).gameObject;
-        
-        /*Addressables.LoadAssetAsync<SpriteAtlas>(spriteAtlas).Completed += handle =>
-        {
-            if(handle.Status == AsyncOperationStatus.Succeeded)
-                _foodAtlas = handle.Result;
-        };*/
         
         InvokeRepeating(nameof(SpawnFood), RandomTimeForStartFoodSpawn(), RepeatRate);
         if(isBrokenMachineEventEnabled)
@@ -137,41 +125,31 @@ private void SpawnFood()
         }
     }
 
-    private void FoodInstantiate(AssetReference prefab)
+    private void FoodInstantiate(GameObject prefab)
     {
-        Addressables.LoadAssetAsync<GameObject>(prefab).Completed += handle =>
+        if (!_isBroken)
         {
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                if (!_isBroken)
-                {
-                    Addressables.InstantiateAsync(prefab, _mealParent.transform).Completed += instance =>
-                    {
-                        instance.Result.GetComponent<OnTouch>().handler = instance;
-                        var rb = instance.Result.GetComponent<Rigidbody2D>();
+            var meal = Instantiate(prefab, _mealParent.transform, false);
 
-                        var randomXValue = Random.Range(XLowerLimit, XUpperLimit);
-                        var randomYValue = Random.Range(YLowerLimit, YUpperLimit);
+            var rb = meal.GetComponent<Rigidbody2D>();
 
-                        forceVector.x = isOppositeSpawn ? -randomXValue : randomXValue;
-                        forceVector.y = randomYValue;
+            var randomXValue = Random.Range(XLowerLimit, XUpperLimit);
+            var randomYValue = Random.Range(YLowerLimit, YUpperLimit);
+            forceVector.x = isOppositeSpawn ? -randomXValue : randomXValue;
+            forceVector.y = randomYValue;
 
-                        rb.AddForce(forceVector * BaseForceMultiplier, ForceMode2D.Impulse);
-                    };
-                }
+            rb.AddForce(forceVector * BaseForceMultiplier, ForceMode2D.Impulse);
+        }
 
-                var satiety = handle.Result.GetComponent<MealData>().mealStats.satiety;
-                if (satiety > 0)
-                {
-                    OnMealSpawned?.Invoke(satiety);
-                }
-                else
-                {
-                    OnBadMealSpawned?.Invoke(satiety);
-                }
-            }
-            Addressables.Release(handle);
-        };
+        var satiety = prefab.GetComponent<MealData>().mealStats.satiety;
+        if (satiety > 0)
+        {
+            OnMealSpawned?.Invoke(satiety);
+        }
+        else
+        {
+            OnBadMealSpawned?.Invoke(satiety);
+        }
     }
 
     public void StopSpawn()
@@ -180,4 +158,5 @@ private void SpawnFood()
         CancelInvoke(nameof(BrokenMachineEvent));
     }
     #endregion
+    
 }

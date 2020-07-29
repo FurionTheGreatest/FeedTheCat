@@ -269,24 +269,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mealPrefabs:
-  - m_AssetGUID: ee3d1165b98081940a312c360065f20a
-    m_SubObjectName: 
-  - m_AssetGUID: d8968987dbce6d149bccd2d3e29dcb0c
-    m_SubObjectName: 
-  - m_AssetGUID: ad01383139a8c924f9652e145148c758
-    m_SubObjectName: 
-  - m_AssetGUID: e2684a3163f59e048af906f25ea5f223
-    m_SubObjectName: 
+  - {fileID: 2627132978385364283, guid: ee3d1165b98081940a312c360065f20a, type: 3}
+  - {fileID: 2820521742532462219, guid: d8968987dbce6d149bccd2d3e29dcb0c, type: 3}
+  - {fileID: 1719514607411982141, guid: ad01383139a8c924f9652e145148c758, type: 3}
+  - {fileID: 7686812640599909701, guid: e2684a3163f59e048af906f25ea5f223, type: 3}
   rareFoodSatiety: 0
   mythFoodSatiety: 0
   legendFoodSatiety: 0
   badMealPrefabs:
-  - m_AssetGUID: e4d0fbe188348e045bb487b9f5bfdaca
-    m_SubObjectName: 
-  - m_AssetGUID: 68f41121a838965458cc943d824b9484
-    m_SubObjectName: 
-  - m_AssetGUID: 200b82695a877b04ab3860d9ab0783b8
-    m_SubObjectName: 
+  - {fileID: 7685225320391901209, guid: e4d0fbe188348e045bb487b9f5bfdaca, type: 3}
+  - {fileID: 1144654051409229455, guid: 68f41121a838965458cc943d824b9484, type: 3}
+  - {fileID: 1144654051409229455, guid: 200b82695a877b04ab3860d9ab0783b8, type: 3}
   rareBadFoodSatiety: 0
   mythBadFoodSatiety: 0
   isBadMealNotEmpty: 1
@@ -709,9 +702,6 @@ MonoBehaviour:
   brokenRedMaterial: {fileID: 2100000, guid: f0337b61d2104e54aa08e5bfb900d402, type: 2}
   minMachineEventRandomValue: 20
   maxMachineEventRandomValue: 30
-  spriteAtlas:
-    m_AssetGUID: 41ad67024733aed4f84fdefe00821389
-    m_SubObjectName: 
 --- !u!61 &433873796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2051,9 +2041,6 @@ MonoBehaviour:
   brokenRedMaterial: {fileID: 2100000, guid: f0337b61d2104e54aa08e5bfb900d402, type: 2}
   minMachineEventRandomValue: 10
   maxMachineEventRandomValue: 20
-  spriteAtlas:
-    m_AssetGUID: 41ad67024733aed4f84fdefe00821389
-    m_SubObjectName: 
 --- !u!61 &922687518
 BoxCollider2D:
   m_ObjectHideFlags: 0

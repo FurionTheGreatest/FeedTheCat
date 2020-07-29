@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
+﻿using UnityEngine;
 
 public class FoodSupplyManager : MonoBehaviour
 {
@@ -10,13 +7,14 @@ public class FoodSupplyManager : MonoBehaviour
     public static event CheckLoseCondition OnLose;
     public static event CheckWinCondition OnWin;
     
-    public List<AssetReference> mealPrefabs;
+    public GameObject[] mealPrefabs;
+    
     [HideInInspector] public int rareFoodSatiety;
     [HideInInspector] public int mythFoodSatiety;
     [HideInInspector] public int legendFoodSatiety;
     
-    public List<AssetReference> badMealPrefabs;
-
+    public GameObject[] badMealPrefabs;
+    
     [HideInInspector] public int rareBadFoodSatiety;
     [HideInInspector] public int mythBadFoodSatiety;
     
@@ -47,38 +45,13 @@ public class FoodSupplyManager : MonoBehaviour
     private void Start()
     {
         _spawns = FindObjectsOfType<FoodSpawner>();
-        
-        /*mealPrefabs[1].LoadAssetAsync<GameObject>().Completed += 
-            (res) =>
-            {
-                rareFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
-                Addressables.Release(res);
-            };
-        mealPrefabs[2].LoadAssetAsync<GameObject>().Completed += 
-            (res) =>
-            {
-                mythFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
-                Addressables.Release(res);
-            };
-        mealPrefabs[3].LoadAssetAsync<GameObject>().Completed += 
-            (res) =>
-            {
-                legendFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
-                Addressables.Release(res);
-            };
 
-        badMealPrefabs[1].LoadAssetAsync<GameObject>().Completed += 
-            (res) =>
-            {
-                rareBadFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
-                Addressables.Release(res);
-            };
-        badMealPrefabs[2].LoadAssetAsync<GameObject>().Completed += 
-            (res) =>
-            {
-                mythBadFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
-                Addressables.Release(res);
-            };*/
+        rareFoodSatiety = mealPrefabs[1].GetComponent<MealData>().mealStats.satiety;
+        mythFoodSatiety = mealPrefabs[2].GetComponent<MealData>().mealStats.satiety;
+        legendFoodSatiety = mealPrefabs[3].GetComponent<MealData>().mealStats.satiety;
+        
+        rareBadFoodSatiety = badMealPrefabs[1].GetComponent<MealData>().mealStats.satiety;
+        mythBadFoodSatiety = badMealPrefabs[2].GetComponent<MealData>().mealStats.satiety;
     }
 
     private void AddCatSatiety(int satiety)
