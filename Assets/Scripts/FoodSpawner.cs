@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityEditor.U2D;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.U2D;
@@ -53,7 +50,8 @@ public class FoodSpawner : MonoBehaviour
     public int maxMachineEventRandomValue = 20;
 
     public AssetReference spriteAtlas;
-    
+    private SpriteAtlas _foodAtlas;
+    public Sprite[] sprites;    
     private void Start()
     {
         _foodSupplyManager = FindObjectOfType<FoodSupplyManager>();
@@ -64,21 +62,21 @@ public class FoodSpawner : MonoBehaviour
 
         _mealParent = transform.GetChild(0).gameObject;
         
-        /*Addressables.LoadAssetAsync<SpriteAtlas>(spriteAtlas).Completed += handle =>
+        Addressables.LoadAssetAsync<SpriteAtlas>(spriteAtlas).Completed += handle =>
         {
             if(handle.Status == AsyncOperationStatus.Succeeded)
                 _foodAtlas = handle.Result;
-        };*/
-        
+            
+            sprites = new Sprite[_foodAtlas.spriteCount];
+            _foodAtlas.GetSprites(sprites);
+            Addressables.Release(handle);
+        };
+
         InvokeRepeating(nameof(SpawnFood), RandomTimeForStartFoodSpawn(), RepeatRate);
         if(isBrokenMachineEventEnabled)
             InvokeRepeating(nameof(BrokenMachineEvent), RandomTimeForMachineEvent(), RandomTimeForMachineEvent());
     }
-    private float RandomTimeForStartFoodSpawn()
-    {
-        var randomTimeValue = Random.Range(MinDelayForSpawn, MaxDelayForSpawn);
-        return randomTimeValue;
-    }
+
     #region BrokenMachineEvent
     private float RandomTimeForMachineEvent()
     {
@@ -129,15 +127,15 @@ private void SpawnFood()
             }
 
             if (randomMealValue < 0 && randomMealValue >= CommonBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[0]);
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[0],false);
             else if (randomMealValue < 0 && randomMealValue >= RareBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[1]);
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[1],false);
             else if (randomMealValue < 0 && randomMealValue >= BombBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[2]);
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[2],false);
         }
     }
 
-    private void FoodInstantiate(AssetReference prefab)
+    private void FoodInstantiate(AssetReference prefab, bool isFood = true)
     {
         Addressables.LoadAssetAsync<GameObject>(prefab).Completed += handle =>
         {
@@ -147,7 +145,10 @@ private void SpawnFood()
                 {
                     Addressables.InstantiateAsync(prefab, _mealParent.transform).Completed += instance =>
                     {
-                        instance.Result.GetComponent<OnTouch>().handler = instance;
+                        var foodGo = instance.Result; 
+                        foodGo.GetComponent<OnTouch>().handler = instance;
+                        if(isFood)
+                            SetRandomSprite(foodGo);
                         var rb = instance.Result.GetComponent<Rigidbody2D>();
 
                         var randomXValue = Random.Range(XLowerLimit, XUpperLimit);
@@ -172,6 +173,17 @@ private void SpawnFood()
             }
             Addressables.Release(handle);
         };
+    }
+
+    private void SetRandomSprite(GameObject food)
+    {
+        var randomSpriteIndex = Random.Range(0, _foodAtlas.spriteCount - 1);
+        food.GetComponent<SpriteRenderer>().sprite = sprites[randomSpriteIndex];
+    }
+    private float RandomTimeForStartFoodSpawn()
+    {
+        var randomTimeValue = Random.Range(MinDelayForSpawn, MaxDelayForSpawn);
+        return randomTimeValue;
     }
 
     public void StopSpawn()

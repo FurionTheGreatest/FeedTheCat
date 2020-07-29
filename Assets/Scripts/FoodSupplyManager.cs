@@ -11,7 +11,7 @@ public class FoodSupplyManager : MonoBehaviour
     public static event CheckWinCondition OnWin;
     
     public List<AssetReference> mealPrefabs;
-    [HideInInspector] public int rareFoodSatiety;
+    public int rareFoodSatiety;
     [HideInInspector] public int mythFoodSatiety;
     [HideInInspector] public int legendFoodSatiety;
     
@@ -47,38 +47,43 @@ public class FoodSupplyManager : MonoBehaviour
     private void Start()
     {
         _spawns = FindObjectsOfType<FoodSpawner>();
-        
-        /*mealPrefabs[1].LoadAssetAsync<GameObject>().Completed += 
+
+        LoadFoodSatiety();
+    }
+
+    private void LoadFoodSatiety()
+    {
+        mealPrefabs[1].LoadAssetAsync<GameObject>().Completed +=
             (res) =>
             {
                 rareFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
                 Addressables.Release(res);
             };
-        mealPrefabs[2].LoadAssetAsync<GameObject>().Completed += 
+        mealPrefabs[2].LoadAssetAsync<GameObject>().Completed +=
             (res) =>
             {
                 mythFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
                 Addressables.Release(res);
             };
-        mealPrefabs[3].LoadAssetAsync<GameObject>().Completed += 
+        mealPrefabs[3].LoadAssetAsync<GameObject>().Completed +=
             (res) =>
             {
                 legendFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
                 Addressables.Release(res);
             };
 
-        badMealPrefabs[1].LoadAssetAsync<GameObject>().Completed += 
+        badMealPrefabs[1].LoadAssetAsync<GameObject>().Completed +=
             (res) =>
             {
                 rareBadFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
                 Addressables.Release(res);
             };
-        badMealPrefabs[2].LoadAssetAsync<GameObject>().Completed += 
+        badMealPrefabs[2].LoadAssetAsync<GameObject>().Completed +=
             (res) =>
             {
                 mythBadFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
                 Addressables.Release(res);
-            };*/
+            };
     }
 
     private void AddCatSatiety(int satiety)

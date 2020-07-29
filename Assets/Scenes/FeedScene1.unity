@@ -710,8 +710,9 @@ MonoBehaviour:
   minMachineEventRandomValue: 20
   maxMachineEventRandomValue: 30
   spriteAtlas:
-    m_AssetGUID: 41ad67024733aed4f84fdefe00821389
+    m_AssetGUID: 157597ecf7b382e468a982be41629804
     m_SubObjectName: 
+  sprites: []
 --- !u!61 &433873796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2052,8 +2053,9 @@ MonoBehaviour:
   minMachineEventRandomValue: 10
   maxMachineEventRandomValue: 20
   spriteAtlas:
-    m_AssetGUID: 41ad67024733aed4f84fdefe00821389
+    m_AssetGUID: 157597ecf7b382e468a982be41629804
     m_SubObjectName: 
+  sprites: []
 --- !u!61 &922687518
 BoxCollider2D:
   m_ObjectHideFlags: 0
