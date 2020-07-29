@@ -14,7 +14,7 @@ public class OnTouch : MonoBehaviour
     public static event OnDelete CheckForLose;
 
     public bool destroyFood = false;
-    [SerializeField] private float nextTimeToUpdate = 1f;
+    [SerializeField] private float nextTimeToUpdate = 0.3f;
     
     private int _satiety;
     private Transform _catMouth;
@@ -35,22 +35,34 @@ public class OnTouch : MonoBehaviour
     private float _currentTime = 0f;
 
     public AsyncOperationHandle<GameObject> handler;
+    private GameObject _particleSystem;
+    public bool isUsingParticle = true;
+    private bool _isParticleSystemNotNull;
 
-    private void Start()
+    private void Awake()
     {
-        _catMouth = GameObject.Find("Mouth").transform;
-        _step = Speed * Time.deltaTime;
         _rb = gameObject.GetComponent<Rigidbody2D>();
         _sprite = GetComponent<SpriteRenderer>();
         _collider2D = GetComponent<CircleCollider2D>();
-        _satiety = GetComponent<MealData>().mealStats.satiety;
         _touchHandler = FindObjectOfType<TouchHandler>();
+    }
+
+    private void Start()
+    {
+        if (isUsingParticle)
+        {
+            _particleSystem = gameObject.GetComponentInChildren<ParticleSystem>(true).gameObject;
+            _isParticleSystemNotNull = _particleSystem != null; 
+        }
+        _catMouth = GameObject.Find("Mouth").transform;
+        _step = Speed * Time.deltaTime;
+        _satiety = GetComponent<MealData>().mealStats.satiety;
     }
 
     public void OnMouseDown()
     {
         _isClicked = true;
-        StartCoroutine(ChangeMealAlpha(0.3f));
+        StartCoroutine(BeforeDestroy(0.3f));
         UpdateStats?.Invoke(_satiety);
     }
     
@@ -75,7 +87,7 @@ public class OnTouch : MonoBehaviour
             CheckForLose?.Invoke();
         }
         if (destroyFood && !_isClicked)
-            StartCoroutine(ChangeMealAlpha(0f));
+            StartCoroutine(BeforeDestroy(0f));
         
         if(!_isClicked) return;
         TranslateMealToMouth();
@@ -94,8 +106,11 @@ public class OnTouch : MonoBehaviour
         }
     }
 
-    private IEnumerator ChangeMealAlpha(float alphaOfMeal)
+    private IEnumerator BeforeDestroy(float alphaOfMeal)
     {
+        if(_isParticleSystemNotNull)
+            _particleSystem.SetActive(false);
+        
         var alpha = _sprite.color;
         while (alpha.a >= alphaOfMeal)
         {
@@ -109,6 +124,7 @@ public class OnTouch : MonoBehaviour
 
     private void OnDestroy()
     {
-        Addressables.ReleaseInstance(handler);
+        if(handler.IsValid())
+            Addressables.ReleaseInstance(handler);
     }
 }

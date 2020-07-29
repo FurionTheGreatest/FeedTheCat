@@ -19,6 +19,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1713233579, guid: ee3d1165b98081940a312c360065f20a, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713233579, guid: ee3d1165b98081940a312c360065f20a, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713233579, guid: ee3d1165b98081940a312c360065f20a, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.8900118
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713233579, guid: ee3d1165b98081940a312c360065f20a, type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713233579, guid: ee3d1165b98081940a312c360065f20a, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.078431375
+      objectReference: {fileID: 0}
     - target: {fileID: 1799680781521429401, guid: ee3d1165b98081940a312c360065f20a,
         type: 3}
       propertyPath: mealStats.satiety

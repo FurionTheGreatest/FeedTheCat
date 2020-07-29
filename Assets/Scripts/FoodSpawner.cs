@@ -178,7 +178,14 @@ private void SpawnFood()
     private void SetRandomSprite(GameObject food)
     {
         var randomSpriteIndex = Random.Range(0, _foodAtlas.spriteCount - 1);
-        food.GetComponent<SpriteRenderer>().sprite = sprites[randomSpriteIndex];
+        var sprite = sprites[randomSpriteIndex];
+        food.GetComponent<SpriteRenderer>().sprite = sprite;
+        var particle = food.GetComponentInChildren<ParticleSystem>();
+        var shapeOfParticle = particle.shape;
+        shapeOfParticle.sprite = sprite;
+        
+        var emitter = particle.emission;
+        emitter.enabled = true;
     }
     private float RandomTimeForStartFoodSpawn()
     {
