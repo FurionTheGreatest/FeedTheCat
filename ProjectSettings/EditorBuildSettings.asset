@@ -14,4 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FeedScene2.unity
     guid: 187f43df6fe1a3949a39f99717ff8760
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: dfcd90bccf3405c4581a84845f309e90,
+      type: 2}

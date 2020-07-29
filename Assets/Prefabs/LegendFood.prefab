@@ -29,6 +29,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5b57f79f3a6f1a44cbe0bb0ab4ed56ee, type: 2}
+    - target: {fileID: 2627132978385364260, guid: ee3d1165b98081940a312c360065f20a,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -6903917762713662121, guid: 56768218c4e632e409b4603e3167b9e1,
+        type: 3}
     - target: {fileID: 2627132978385364261, guid: ee3d1165b98081940a312c360065f20a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -103,6 +109,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LinearDrag
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437977528355310718, guid: ee3d1165b98081940a312c360065f20a,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5470344557628369608, guid: ee3d1165b98081940a312c360065f20a,
         type: 3}

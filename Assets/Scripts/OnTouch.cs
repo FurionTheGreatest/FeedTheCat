@@ -1,14 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Vector3 = UnityEngine.Vector3;
 
 public class OnTouch : MonoBehaviour
 {
     private TouchHandler _touchHandler;
     public delegate void OnMealTouched(int satiety);
-    public delegate void OnDestroy();
+    public delegate void OnDelete();
     public static event OnMealTouched UpdateStats;
-    public static event OnDestroy CheckForLose;
+    public static event OnDelete CheckForLose;
 
     public bool destroyFood = false;
     [SerializeField] private float nextTimeToUpdate = 1f;
@@ -30,6 +33,8 @@ public class OnTouch : MonoBehaviour
     private const float LowerBound = -60f;
 
     private float _currentTime = 0f;
+
+    public AsyncOperationHandle<GameObject> handler;
 
     private void Start()
     {
@@ -100,5 +105,10 @@ public class OnTouch : MonoBehaviour
         }
         if(alpha.a <= 0)
             Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        Addressables.ReleaseInstance(handler);
     }
 }
