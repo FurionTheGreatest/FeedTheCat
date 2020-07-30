@@ -17,7 +17,7 @@ SpriteAtlas:
       textureCompression: 0
       filterMode: 1
       generateMipMaps: 0
-      readable: 0
+      readable: 1
       crunchedCompression: 0
       sRGB: 1
     platformSettings: []
@@ -31,8 +31,8 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 2800000, guid: 56768218c4e632e409b4603e3167b9e1, type: 3}
-    totalSpriteSurfaceArea: 2478840
-    bindAsDefault: 1
+    totalSpriteSurfaceArea: 618348
+    bindAsDefault: 0
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 8743436283651640075, guid: 56768218c4e632e409b4603e3167b9e1, type: 3}
