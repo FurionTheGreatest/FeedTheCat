@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.U2D;
@@ -50,9 +52,15 @@ public class FoodSpawner : MonoBehaviour
     public int maxMachineEventRandomValue = 20;
 
     public AssetReference spriteAtlas;
+    //public AssetReference bombAtlas;
     private SpriteAtlas _foodAtlas;
-    public Sprite[] sprites;    
-    private void Start()
+    //private SpriteAtlas _bombAtlas;
+    public Sprite[] foodSprites;
+    //public Sprite[] bombSprites;
+    private AsyncOperationHandle<SpriteAtlas> _foodHandler;
+    //private AsyncOperationHandle<SpriteAtlas> _bombHandler;
+
+    private IEnumerator Start()
     {
         _foodSupplyManager = FindObjectOfType<FoodSupplyManager>();
         _machineSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -61,20 +69,40 @@ public class FoodSpawner : MonoBehaviour
         maxRandomValue = LegendMealChanceToSpawn;
 
         _mealParent = transform.GetChild(0).gameObject;
+
+        yield return LoadAtlas(out _foodHandler, spriteAtlas);
+        LoadSpritesFromAtlas(_foodHandler, out _foodAtlas, out foodSprites);
         
-        Addressables.LoadAssetAsync<SpriteAtlas>(spriteAtlas).Completed += handle =>
-        {
-            if(handle.Status == AsyncOperationStatus.Succeeded)
-                _foodAtlas = handle.Result;
-            
-            sprites = new Sprite[_foodAtlas.spriteCount];
-            _foodAtlas.GetSprites(sprites);
-            Addressables.Release(handle);
-        };
+        /*yield return LoadAtlas(out _bombHandler, bombAtlas);
+        LoadSpritesFromAtlas(_bombHandler,out _bombAtlas, out bombSprites);*/
 
         InvokeRepeating(nameof(SpawnFood), RandomTimeForStartFoodSpawn(), RepeatRate);
         if(isBrokenMachineEventEnabled)
             InvokeRepeating(nameof(BrokenMachineEvent), RandomTimeForMachineEvent(), RandomTimeForMachineEvent());
+    }
+
+    private object LoadAtlas(out AsyncOperationHandle<SpriteAtlas> handler, AssetReference reference)
+    {
+        handler = Addressables.LoadAssetAsync<SpriteAtlas>(reference);
+        
+        return handler;
+    }
+
+    private void LoadSpritesFromAtlas(AsyncOperationHandle<SpriteAtlas> handler, out SpriteAtlas atlas, out Sprite[] sprites)
+    {
+        if (handler.Status == AsyncOperationStatus.Succeeded)
+        {
+            atlas = handler.Result;
+        }
+        else
+        {
+            Addressables.Release(handler);
+            atlas = null;
+            sprites = null;
+            return;
+        }
+        sprites = new Sprite[atlas.spriteCount];
+        atlas.GetSprites(sprites);
     }
 
     #region BrokenMachineEvent
@@ -98,8 +126,7 @@ public class FoodSpawner : MonoBehaviour
     #endregion
 
     #region SpawnFood
-
-private void SpawnFood()
+    private void SpawnFood()
     {
         var randomMealValue = Random.Range(minRandomValue, maxRandomValue);
         if (randomMealValue >= 0 && randomMealValue <= CommonMealChanceToSpawn)
@@ -147,8 +174,10 @@ private void SpawnFood()
                     {
                         var foodGo = instance.Result; 
                         foodGo.GetComponent<OnTouch>().handler = instance;
+                        
                         if(isFood)
-                            SetRandomSprite(foodGo);
+                            SetRandomSprite(foodGo,_foodAtlas, foodSprites);
+
                         var rb = instance.Result.GetComponent<Rigidbody2D>();
 
                         var randomXValue = Random.Range(XLowerLimit, XUpperLimit);
@@ -171,23 +200,30 @@ private void SpawnFood()
                     OnBadMealSpawned?.Invoke(satiety);
                 }
             }
+            else
+            {
+                Addressables.Release(handle);
+            }
             Addressables.Release(handle);
         };
     }
 
-    private void SetRandomSprite(GameObject food)
+    private static void SetRandomSprite(GameObject food, SpriteAtlas atlas, Sprite[] sprites)
     {
-        var randomSpriteIndex = Random.Range(0, _foodAtlas.spriteCount - 1);
+        if(atlas == null) return;
+         
+        var randomSpriteIndex = Random.Range(0, atlas.spriteCount - 1);
         var sprite = sprites[randomSpriteIndex];
+        
         food.GetComponent<SpriteRenderer>().sprite = sprite;
         var particle = food.GetComponentInChildren<ParticleSystem>();
         var shapeOfParticle = particle.shape;
         shapeOfParticle.sprite = sprite;
-        
+    
         var emitter = particle.emission;
         emitter.enabled = true;
     }
-    private float RandomTimeForStartFoodSpawn()
+    private static float RandomTimeForStartFoodSpawn()
     {
         var randomTimeValue = Random.Range(MinDelayForSpawn, MaxDelayForSpawn);
         return randomTimeValue;
@@ -197,6 +233,9 @@ private void SpawnFood()
     {
         CancelInvoke(nameof(SpawnFood));
         CancelInvoke(nameof(BrokenMachineEvent));
+        
+        if(_foodHandler.IsValid())
+            Addressables.Release(_foodHandler);
     }
     #endregion
 }

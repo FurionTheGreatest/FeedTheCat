@@ -28,7 +28,7 @@ public class UIController : MonoBehaviour
         satietySlider.value = 0;
         foodLeftSlider.maxValue = _foodSupplyManager.maxFoodMachineSatiety;
         foodLeftSlider.value = foodLeftSlider.maxValue;
-    }
+    }    
 
     private void UpdateSatietySliderValue(int satiety)
     {
