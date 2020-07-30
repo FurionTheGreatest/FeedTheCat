@@ -19,6 +19,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4021233142188243253, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+        type: 3}
+      propertyPath: m_ForceVariation
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 863044637016209227, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.227
+      objectReference: {fileID: 0}
+    - target: {fileID: 1872832786825090175, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+        type: 3}
+      propertyPath: ShapeModule.m_Sprite
+      value: 
+      objectReference: {fileID: -5067868225149591191, guid: f4d12fa89bfdb5e418719e8fa4c20a6c,
+        type: 3}
+    - target: {fileID: 4290101335176367583, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.234
+      objectReference: {fileID: 0}
     - target: {fileID: 6209289681029105339, guid: e4d0fbe188348e045bb487b9f5bfdaca,
         type: 3}
       propertyPath: mealStats.satiety
@@ -29,6 +50,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f0337b61d2104e54aa08e5bfb900d402, type: 2}
+    - target: {fileID: 7685225320391901190, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5067868225149591191, guid: f4d12fa89bfdb5e418719e8fa4c20a6c,
+        type: 3}
     - target: {fileID: 7685225320391901191, guid: e4d0fbe188348e045bb487b9f5bfdaca,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -88,6 +115,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RareBadMeal
+      objectReference: {fileID: 0}
+    - target: {fileID: 8444617946328403182, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.219
+      objectReference: {fileID: 0}
+    - target: {fileID: 8444617946328403182, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.403
+      objectReference: {fileID: 0}
+    - target: {fileID: 8561730995865294528, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+        type: 3}
+      propertyPath: m_Radius
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4d0fbe188348e045bb487b9f5bfdaca, type: 3}
