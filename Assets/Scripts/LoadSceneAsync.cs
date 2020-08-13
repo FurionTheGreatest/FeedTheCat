@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
@@ -9,6 +11,18 @@ public class LoadSceneAsync : MonoBehaviour
     private readonly int _startTrigger = Animator.StringToHash("Start");
 
     private const float TransitionTime = 1f;
+
+    public TMP_Text exit;
+
+    private WaitForSeconds _waitForLabelShow = new WaitForSeconds(2f);
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StartCoroutine(ShowLabel());
+        }
+    }
 
     public void LoadScene(int sceneBuildIndex)
     {
@@ -33,7 +47,13 @@ public class LoadSceneAsync : MonoBehaviour
 
         SceneManager.LoadScene(levelIndex);
     }
-    
+
+    private IEnumerator ShowLabel()
+    {
+        exit.enabled = true;
+        yield return _waitForLabelShow;
+        exit.enabled = false;
+    }
     public void QuitApplication()
     {
         Application.Quit();

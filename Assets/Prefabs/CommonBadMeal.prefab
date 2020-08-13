@@ -14407,7 +14407,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyFood: 0
   nextTimeToUpdate: 0.1
+  floatingNumberPrefab: {fileID: 8867624307045739565, guid: 365e49dc61a34a84a8a39ff9e164d10d,
+    type: 3}
   isUsingParticle: 0
+  isFood: 0
 --- !u!114 &6209289681029105339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14448,6 +14451,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   areaToForce: {fileID: 8561730995865294528}
   forceField: {fileID: -4021233142188243253}
+  explosionPrefab: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56,
+    type: 3}
 --- !u!58 &8561730995865294528
 CircleCollider2D:
   m_ObjectHideFlags: 0

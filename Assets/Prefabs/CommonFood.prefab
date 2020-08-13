@@ -4895,6 +4895,8 @@ MonoBehaviour:
   destroyFood: 0
   nextTimeToUpdate: 0.1
   isUsingParticle: 1
+  floatingNumberPrefab: {fileID: 8867624307045739565, guid: 365e49dc61a34a84a8a39ff9e164d10d,
+    type: 3}
 --- !u!114 &1799680781521429401
 MonoBehaviour:
   m_ObjectHideFlags: 0

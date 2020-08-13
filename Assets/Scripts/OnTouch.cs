@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.XR.WSA;
+using Random = System.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class OnTouch : MonoBehaviour
@@ -16,6 +19,11 @@ public class OnTouch : MonoBehaviour
     public bool destroyFood = false;
     [SerializeField] private float nextTimeToUpdate = 0.3f;
     
+    public GameObject floatingNumberPrefab;
+    public AsyncOperationHandle<GameObject> handler;
+    
+    public bool isUsingParticle = true;
+    public bool isFood = true;
     private int _satiety;
     private Transform _catMouth;
     private bool _isClicked;
@@ -34,11 +42,8 @@ public class OnTouch : MonoBehaviour
 
     private float _currentTime = 0f;
 
-    public AsyncOperationHandle<GameObject> handler;
     private GameObject _particleSystem;
-    public bool isUsingParticle = true;
     private bool _isParticleSystemNotNull;
-
     private void Awake()
     {
         _rb = gameObject.GetComponent<Rigidbody2D>();
@@ -64,10 +69,13 @@ public class OnTouch : MonoBehaviour
         _isClicked = true;
         StartCoroutine(BeforeDestroy(0.3f));
         UpdateStats?.Invoke(_satiety);
+        if(floatingNumberPrefab != null)
+            ActivatePointText();
     }
     
     private void TranslateMealToMouth()
     {
+        if(!isFood) return;
         _collider2D.enabled = false;
         _rb.bodyType = RigidbodyType2D.Static;
         transform.position = Vector3.MoveTowards(transform.position, _catMouth.position, _step);
@@ -120,6 +128,18 @@ public class OnTouch : MonoBehaviour
         }
         if(alpha.a <= 0)
             Destroy(gameObject);
+    }
+
+    private void ActivatePointText()
+    {
+        var prefab = Instantiate(floatingNumberPrefab, transform.position, Quaternion.identity, transform);
+        var text = prefab.GetComponentInChildren<TMP_Text>(true);
+        text.color = new Color(UnityEngine.Random.Range(0,1f),UnityEngine.Random.Range(0,1f),UnityEngine.Random.Range(0,1f));
+        
+        if(_satiety > 0)
+            text.text = "+" + _satiety;
+        else
+            text.text = _satiety.ToString();
     }
 
     private void OnDestroy()
