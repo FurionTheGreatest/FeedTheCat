@@ -19,8 +19,8 @@ public class BombExplosion : MonoBehaviour
     {
         areaToForce.enabled = true;
         forceField.enabled = true;
+        
         _explosionRotation = Quaternion.Euler(0,0,Random.Range(-_maxRotationValue,_maxRotationValue));
-        Debug.Log(_explosionRotation);
         Instantiate(explosionPrefab, transform.position, _explosionRotation);
         
         Destroy(gameObject, 0.3f);
