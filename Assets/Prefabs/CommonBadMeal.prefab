@@ -14424,7 +14424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mealStats:
-    satiety: -1
+    satiety: -3
 --- !u!114 &785177672967011663
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -69,7 +69,7 @@ PrefabInstance:
     - target: {fileID: 6209289681029105339, guid: e4d0fbe188348e045bb487b9f5bfdaca,
         type: 3}
       propertyPath: mealStats.satiety
-      value: -5
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 7685225320391901190, guid: e4d0fbe188348e045bb487b9f5bfdaca,
         type: 3}
