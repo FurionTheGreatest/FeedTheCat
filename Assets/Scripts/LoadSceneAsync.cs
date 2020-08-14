@@ -7,23 +7,26 @@ using UnityEngine;
 public class LoadSceneAsync : MonoBehaviour
 {
     public Animator transition;
+    
+    public TMP_Text exit;
 
     private readonly int _startTrigger = Animator.StringToHash("Start");
 
     private const float TransitionTime = 1f;
-
-    public TMP_Text exit;
-
-    private WaitForSeconds _waitForLabelShow = new WaitForSeconds(2f);
+    private const float TimeToExit = 2f;
+    private WaitForSeconds _waitForLabelShow = new WaitForSeconds(TimeToExit);
+    private bool _isExitEnabled;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape) && !_isExitEnabled)
         {
+            _isExitEnabled = true;
             StartCoroutine(ShowLabel());
+
+            StartCoroutine(nameof(ExitApplicationFromMenu));
         }
     }
-
     public void LoadScene(int sceneBuildIndex)
     {
         StartCoroutine(LoadLevel(sceneBuildIndex));
@@ -53,6 +56,25 @@ public class LoadSceneAsync : MonoBehaviour
         exit.enabled = true;
         yield return _waitForLabelShow;
         exit.enabled = false;
+        _isExitEnabled = false;
+    }
+
+    private IEnumerator ExitApplicationFromMenu()
+    {
+        yield return null;
+        float counter = 0;
+        
+        while (counter < TimeToExit)
+        {
+            counter += Time.deltaTime;
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                QuitApplication();
+            }
+
+            yield return null;
+        }
     }
     public void QuitApplication()
     {
