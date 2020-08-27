@@ -97,7 +97,7 @@ public class OnTouch : MonoBehaviour
         if (destroyFood && !_isClicked)
             StartCoroutine(BeforeDestroy(0f));
         
-        if(!_isClicked) return;
+        if(!_isClicked || PauseController.instance.isPaused) return;
         TranslateMealToMouth();
     }
 

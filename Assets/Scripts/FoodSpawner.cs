@@ -43,7 +43,7 @@ public class FoodSpawner : MonoBehaviour
     public int maxRandomValue;
     [Header("Broken MachineEvent")]
     public bool isBrokenMachineEventEnabled = true;
-    private bool _isBroken;
+    public bool _isBroken;
     public Material litDefaultMaterial;
     public Material brokenRedMaterial;
     private SpriteRenderer _machineSpriteRenderer;

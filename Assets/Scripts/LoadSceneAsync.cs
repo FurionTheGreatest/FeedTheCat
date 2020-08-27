@@ -44,6 +44,7 @@ public class LoadSceneAsync : MonoBehaviour
 
     private IEnumerator LoadLevel(int levelIndex)
     {
+        Time.timeScale = 1f;
         transition.SetTrigger(_startTrigger);
         
         yield return new WaitForSeconds(TransitionTime);
@@ -78,6 +79,7 @@ public class LoadSceneAsync : MonoBehaviour
     }
     public void QuitApplication()
     {
+        EnergyManager.instance.SaveTimeStamp();
         Application.Quit();
     }
 }

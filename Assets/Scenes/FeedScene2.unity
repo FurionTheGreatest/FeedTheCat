@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -325,7 +325,7 @@ Transform:
   - {fileID: 293214829}
   - {fileID: 161066401}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &161066400
 GameObject:
@@ -435,7 +435,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &190121990
 GameObject:
@@ -503,7 +503,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &201223056
 GameObject:
@@ -946,7 +946,7 @@ PrefabInstance:
     - target: {fileID: 2709974837954983146, guid: f8e50e82f22770f4bb75dbfa8e325936,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2709974837954983146, guid: f8e50e82f22770f4bb75dbfa8e325936,
         type: 3}
@@ -1330,7 +1330,7 @@ Transform:
   m_Children:
   - {fileID: 347273545}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.5}
 --- !u!114 &433873795
 MonoBehaviour:
@@ -1349,14 +1349,15 @@ MonoBehaviour:
   minRandomValue: -20
   maxRandomValue: 80
   isBrokenMachineEventEnabled: 1
+  _isBroken: 0
   litDefaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  brokenRedMaterial: {fileID: 2100000, guid: f0337b61d2104e54aa08e5bfb900d402, type: 2}
+  brokenRedMaterial: {fileID: 2100000, guid: 21c4761559de57248b90512e95b9c815, type: 2}
   minMachineEventRandomValue: 20
   maxMachineEventRandomValue: 30
   spriteAtlas:
     m_AssetGUID: 157597ecf7b382e468a982be41629804
     m_SubObjectName: 
-  sprites: []
+  foodSprites: []
 --- !u!61 &433873796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1383,49 +1384,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 4.5}
   m_EdgeRadius: 0
---- !u!1 &440300630
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 440300632}
-  - component: {fileID: 440300631}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &440300631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440300630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8eb619e9c14403e41bd158046c57029e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &440300632
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440300630}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2007,7 +1965,7 @@ Transform:
   m_LocalScale: {x: 1.7, y: 1.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &882444030
 GameObject:
@@ -2251,7 +2209,7 @@ Transform:
   m_Children:
   - {fileID: 861367257}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 7.5}
 --- !u!114 &922687517
 MonoBehaviour:
@@ -2270,14 +2228,15 @@ MonoBehaviour:
   minRandomValue: -20
   maxRandomValue: 80
   isBrokenMachineEventEnabled: 1
+  _isBroken: 0
   litDefaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  brokenRedMaterial: {fileID: 2100000, guid: f0337b61d2104e54aa08e5bfb900d402, type: 2}
-  minMachineEventRandomValue: 10
-  maxMachineEventRandomValue: 20
+  brokenRedMaterial: {fileID: 2100000, guid: 21c4761559de57248b90512e95b9c815, type: 2}
+  minMachineEventRandomValue: 20
+  maxMachineEventRandomValue: 30
   spriteAtlas:
     m_AssetGUID: 157597ecf7b382e468a982be41629804
     m_SubObjectName: 
-  sprites: []
+  foodSprites: []
 --- !u!61 &922687518
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3089,7 +3048,7 @@ Transform:
   m_Children:
   - {fileID: 1995932863}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1703595854
 GameObject:
