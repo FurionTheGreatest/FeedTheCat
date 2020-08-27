@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AddressableAssets;
 
 // Cartoon FX  - (c) 2015 Jean Moreno
 
@@ -36,7 +37,10 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 					#endif
 				}
 				else
+				{
 					GameObject.Destroy(this.gameObject);
+					Addressables.Release(gameObject);
+				}
 				break;
 			}
 		}

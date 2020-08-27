@@ -13,6 +13,24 @@ public class FoodSpawner : MonoBehaviour
     public static event OnMealTouched OnMealSpawned;
     public static event BadMealCalculation OnBadMealSpawned;
 
+    public int minRandomValue;
+    public int maxRandomValue;
+    [Header("Broken MachineEvent")]
+    public bool isBrokenMachineEventEnabled = true;
+    public bool _isBroken;
+    public Material litDefaultMaterial;
+    public Material brokenRedMaterial;
+
+    public int minMachineEventRandomValue = 10;
+    public int maxMachineEventRandomValue = 20;
+
+    public AssetReference spriteAtlas;
+    public Sprite[] foodSprites;
+    
+    public bool isOppositeSpawn;
+
+    public AssetReference spawnParticle;
+
     private FoodSupplyManager _foodSupplyManager;
     private GameObject _mealParent;
     private const float BaseForceMultiplier = 4f;
@@ -24,7 +42,6 @@ public class FoodSpawner : MonoBehaviour
     private const float YLowerLimit = 2f;
     private const float YUpperLimit = 4f;
 
-    public bool isOppositeSpawn;
 
     private const float MinDelayForSpawn = 1f;
     private const float MaxDelayForSpawn = 3f;
@@ -39,26 +56,12 @@ public class FoodSpawner : MonoBehaviour
     public const int RareBadMealChanceToSpawn = -18;
     private const int BombBadMealChanceToSpawn = -20;
 
-    public int minRandomValue;
-    public int maxRandomValue;
-    [Header("Broken MachineEvent")]
-    public bool isBrokenMachineEventEnabled = true;
-    public bool _isBroken;
-    public Material litDefaultMaterial;
-    public Material brokenRedMaterial;
     private SpriteRenderer _machineSpriteRenderer;
-
-    public int minMachineEventRandomValue = 10;
-    public int maxMachineEventRandomValue = 20;
-
-    public AssetReference spriteAtlas;
     //public AssetReference bombAtlas;
     private SpriteAtlas _foodAtlas;
     //private SpriteAtlas _bombAtlas;
-    public Sprite[] foodSprites;
     //public Sprite[] bombSprites;
     private AsyncOperationHandle<SpriteAtlas> _foodHandler;
-    //private AsyncOperationHandle<SpriteAtlas> _bombHandler;
 
     private IEnumerator Start()
     {
@@ -187,6 +190,8 @@ public class FoodSpawner : MonoBehaviour
                         forceVector.y = randomYValue;
 
                         rb.AddForce(forceVector * BaseForceMultiplier, ForceMode2D.Impulse);
+
+                        PlaySpawnEffect();
                     };
                 }
 
@@ -206,6 +211,24 @@ public class FoodSpawner : MonoBehaviour
             }
             Addressables.Release(handle);
         };
+    }
+
+    private void PlaySpawnEffect()
+    {
+        if (!spawnParticle.IsValid())
+        {
+            spawnParticle.LoadAssetAsync<GameObject>().Completed += spawnEffectHandler =>
+            {
+                if(spawnEffectHandler.Status == AsyncOperationStatus.Succeeded)
+                {
+                    spawnParticle.InstantiateAsync(_mealParent.transform.position, Quaternion.identity);
+                }
+            };
+        }
+        else
+        {
+            spawnParticle.InstantiateAsync(_mealParent.transform.position, Quaternion.identity);
+        }
     }
 
     private static void SetRandomSprite(GameObject food, SpriteAtlas atlas, Sprite[] sprites)
