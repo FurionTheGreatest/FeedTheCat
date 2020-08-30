@@ -1,0 +1,204 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8723741327910276548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9190a04da29ae24ab35e05133ebf087, type: 3}
+  m_Name: _Catalog_Tags
+  m_EditorClassIdentifier: 
+  m_Tags:
+  - {fileID: -2992308978493942295}
+  m_Database: {fileID: 11400000}
+--- !u!114 &-8257881856262127781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef78d1e65e02740dca774d4b2d1ecad2, type: 3}
+  m_Name: Detail_gems_Assets
+  m_EditorClassIdentifier: 
+  m_ItemDefinition: {fileID: 4577702310901341921}
+  m_Names: []
+  m_Values: []
+--- !u!114 &-6146341074102581731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6736b79f77dc474c8bc820c305c2c2e, type: 3}
+  m_Name: Currency_coins
+  m_EditorClassIdentifier: 
+  m_DisplayName: Coin
+  m_Key: coin
+  m_Tags:
+  - {fileID: -2992308978493942295}
+  m_Catalog: {fileID: 2040908536974470242}
+  m_StaticPropertyKeys: []
+  m_StaticPropertyValues: []
+  m_DetailValues: []
+  m_InitialBalance: 1000
+  m_MaximumBalance: 0
+  m_Type: 0
+--- !u!114 &-2992308978493942295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4178f7fa125e7644ba2a2d0c6300db1, type: 3}
+  m_Name: Tag_currency
+  m_EditorClassIdentifier: 
+  m_Key: currency
+  m_Catalog: {fileID: -8723741327910276548}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6d6d794703b5406883240f543e5b084, type: 3}
+  m_Name: GameFoundationDatabase
+  m_EditorClassIdentifier: 
+  m_TagCatalog: {fileID: -8723741327910276548}
+  m_InventoryCatalog: {fileID: 4273129703795460508}
+  m_StoreCatalog: {fileID: 2606977551249687698}
+  m_CurrencyCatalog: {fileID: 2040908536974470242}
+  m_TransactionCatalog: {fileID: 4391461369852026627}
+  m_GameParameterCatalog: {fileID: 4765543069196019811}
+--- !u!114 &2040908536974470242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2da6fd8dcbc743878084f83ab49ad7c, type: 3}
+  m_Name: CatDatabase
+  m_EditorClassIdentifier: 
+  m_Database: {fileID: 11400000}
+  m_Items:
+  - {fileID: 4577702310901341921}
+  - {fileID: -6146341074102581731}
+--- !u!114 &2606977551249687698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c3c0f44711962a40b99131878afcc83, type: 3}
+  m_Name: _Catalog_Stores
+  m_EditorClassIdentifier: 
+  m_Database: {fileID: 11400000}
+  m_Items:
+  - {fileID: 5655058416406800730}
+--- !u!114 &4273129703795460508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b084f2c338a4185ab8badeed2a3947, type: 3}
+  m_Name: _Catalog_Inventories
+  m_EditorClassIdentifier: 
+  m_Database: {fileID: 11400000}
+  m_Items: []
+--- !u!114 &4391461369852026627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069acf70dc5a3428cb53df4df156ad59, type: 3}
+  m_Name: _Catalog_Transaction
+  m_EditorClassIdentifier: 
+  m_Database: {fileID: 11400000}
+  m_Items: []
+--- !u!114 &4577702310901341921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6736b79f77dc474c8bc820c305c2c2e, type: 3}
+  m_Name: Currency_gems
+  m_EditorClassIdentifier: 
+  m_DisplayName: Gem
+  m_Key: gem
+  m_Tags:
+  - {fileID: -2992308978493942295}
+  m_Catalog: {fileID: 2040908536974470242}
+  m_StaticPropertyKeys: []
+  m_StaticPropertyValues: []
+  m_DetailValues:
+  - {fileID: -8257881856262127781}
+  m_InitialBalance: 100
+  m_MaximumBalance: 0
+  m_Type: 1
+--- !u!114 &4765543069196019811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90084df6fbe874e7c8e34037839c2070, type: 3}
+  m_Name: _Catalog_GameParameter
+  m_EditorClassIdentifier: 
+  m_Database: {fileID: 11400000}
+  m_Items: []
+--- !u!114 &5655058416406800730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b81b157322addcd439104bd3c59b830b, type: 3}
+  m_Name: Store_main
+  m_EditorClassIdentifier: 
+  m_DisplayName: Main
+  m_Key: main
+  m_Tags: []
+  m_Catalog: {fileID: 0}
+  m_StaticPropertyKeys: []
+  m_StaticPropertyValues: []
+  m_DetailValues: []
+  m_StoreItems: []
