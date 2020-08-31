@@ -22,6 +22,7 @@ public class LoadSceneAsync : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Escape) && !_isExitEnabled)
         {
             _isExitEnabled = true;
+            if (exit == null) return;
             StartCoroutine(ShowLabel());
 
             StartCoroutine(nameof(ExitApplicationFromMenu));

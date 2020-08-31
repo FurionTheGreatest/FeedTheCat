@@ -19,7 +19,7 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 		StartCoroutine("CheckIfAlive");
 	}
 	
-	IEnumerator CheckIfAlive ()
+	IEnumerator CheckIfAlive()
 	{
 		ParticleSystem ps = this.GetComponent<ParticleSystem>();
 		
@@ -38,8 +38,8 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 				}
 				else
 				{
-					GameObject.Destroy(this.gameObject);
 					Addressables.Release(gameObject);
+					GameObject.Destroy(this.gameObject);
 				}
 				break;
 			}
