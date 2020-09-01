@@ -145,6 +145,8 @@ public class OnTouch : MonoBehaviour
     private void OnDestroy()
     {
         if(handler.IsValid())
-            Addressables.ReleaseInstance(handler);
+            Addressables.Release(handler);
+        
+        Addressables.ReleaseInstance(gameObject);
     }
 }

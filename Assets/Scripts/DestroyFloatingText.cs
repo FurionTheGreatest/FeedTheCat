@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DestroyFloatingText : MonoBehaviour
 {
-    [SerializeField] private float destroyTime;
+    public float destroyTime;
     private Quaternion _rotation;
     
     private void Start()

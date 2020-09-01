@@ -16,7 +16,7 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 	
 	void OnEnable()
 	{
-		StartCoroutine("CheckIfAlive");
+		StartCoroutine(nameof(CheckIfAlive));
 	}
 	
 	IEnumerator CheckIfAlive()
@@ -38,7 +38,7 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 				}
 				else
 				{
-					Addressables.Release(gameObject);
+					Addressables.ReleaseInstance(gameObject);
 					GameObject.Destroy(this.gameObject);
 				}
 				break;

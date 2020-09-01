@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 85e32b6df7f80cb4c81832e35d9705eb
   m_SerializeEntries:
   - m_GUID: 157597ecf7b382e468a982be41629804
-    m_Address: Assets/Prefabs/Food.spriteatlas
+    m_Address: Assets/Textures/Food.spriteatlas
     m_ReadOnly: 0
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}

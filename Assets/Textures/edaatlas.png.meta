@@ -4,40 +4,40 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: 6670209751311670679
-    second: edaatlas (3)_0
+    second: sausage_big
   - first:
       213: 1173793425312628787
-    second: edaatlas (3)_1
+    second: half_sausage
   - first:
       213: -5026220845076865528
-    second: edaatlas (3)_2
+    second: tomato
   - first:
       213: 6716287415085399812
-    second: edaatlas (3)_3
+    second: half_sausage2
   - first:
       213: 7670231350011296147
-    second: edaatlas (3)_4
+    second: meat
   - first:
       213: 1299495334726446899
-    second: edaatlas (3)_5
+    second: thin sausage
   - first:
       213: -6903917762713662121
-    second: edaatlas (3)_6
+    second: tripple_sausage
   - first:
       213: -5111337356496617408
-    second: edaatlas (3)_7
+    second: cheese
   - first:
       213: 7122484094809261207
-    second: edaatlas (3)_8
+    second: grilled_sausage
   - first:
       213: 4418821534760466314
-    second: edaatlas (3)_9
+    second: fabric_sausage
   - first:
       213: 8743436283651640075
-    second: edaatlas (3)_10
+    second: big_cheese
   - first:
       213: 4637013707843001802
-    second: edaatlas (3)_11
+    second: light_grilled_sausage
   - first:
       213: -7123046333261639728
     second: edaatlas (3)_12
@@ -147,7 +147,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: edaatlas (3)_0
+      name: sausage_big
       rect:
         serializedVersion: 2
         x: 0
@@ -583,7 +583,7 @@ TextureImporter:
         boneIndex[2]: 0
         boneIndex[3]: 0
     - serializedVersion: 2
-      name: edaatlas (3)_1
+      name: half_sausage
       rect:
         serializedVersion: 2
         x: 480
@@ -964,7 +964,7 @@ TextureImporter:
         boneIndex[2]: 0
         boneIndex[3]: 0
     - serializedVersion: 2
-      name: edaatlas (3)_2
+      name: tomato
       rect:
         serializedVersion: 2
         x: 960
@@ -1234,7 +1234,7 @@ TextureImporter:
         boneIndex[2]: 0
         boneIndex[3]: 0
     - serializedVersion: 2
-      name: edaatlas (3)_3
+      name: half_sausage2
       rect:
         serializedVersion: 2
         x: 0
@@ -1576,7 +1576,7 @@ TextureImporter:
         boneIndex[2]: 0
         boneIndex[3]: 0
     - serializedVersion: 2
-      name: edaatlas (3)_4
+      name: meat
       rect:
         serializedVersion: 2
         x: 477
@@ -1892,7 +1892,7 @@ TextureImporter:
         boneIndex[2]: 0
         boneIndex[3]: 0
     - serializedVersion: 2
-      name: edaatlas (3)_5
+      name: thin sausage
       rect:
         serializedVersion: 2
         x: 960
@@ -2446,7 +2446,7 @@ TextureImporter:
         boneIndex[2]: 0
         boneIndex[3]: 0
     - serializedVersion: 2
-      name: edaatlas (3)_6
+      name: tripple_sausage
       rect:
         serializedVersion: 2
         x: 0
@@ -2941,7 +2941,7 @@ TextureImporter:
         boneIndex[2]: 0
         boneIndex[3]: 0
     - serializedVersion: 2
-      name: edaatlas (3)_7
+      name: cheese
       rect:
         serializedVersion: 2
         x: 480
@@ -3246,7 +3246,7 @@ TextureImporter:
         boneIndex[2]: 0
         boneIndex[3]: 0
     - serializedVersion: 2
-      name: edaatlas (3)_8
+      name: grilled_sausage
       rect:
         serializedVersion: 2
         x: 960
@@ -3807,7 +3807,7 @@ TextureImporter:
         boneIndex[2]: 0
         boneIndex[3]: 0
     - serializedVersion: 2
-      name: edaatlas (3)_9
+      name: fabric_sausage
       rect:
         serializedVersion: 2
         x: 0
@@ -4253,7 +4253,7 @@ TextureImporter:
         boneIndex[2]: 0
         boneIndex[3]: 0
     - serializedVersion: 2
-      name: edaatlas (3)_10
+      name: big_cheese
       rect:
         serializedVersion: 2
         x: 480
@@ -4531,7 +4531,7 @@ TextureImporter:
         boneIndex[2]: 0
         boneIndex[3]: 0
     - serializedVersion: 2
-      name: edaatlas (3)_11
+      name: light_grilled_sausage
       rect:
         serializedVersion: 2
         x: 960

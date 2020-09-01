@@ -223,12 +223,15 @@ public class FoodSpawner : MonoBehaviour
                 {
                     spawnParticle.InstantiateAsync(_mealParent.transform.position, Quaternion.identity);
                 }
+                //spawnParticle.ReleaseInstance(spawnEffectHandler.Result);
             };
+            
         }
         else
         {
             spawnParticle.InstantiateAsync(_mealParent.transform.position, Quaternion.identity);
         }
+        
     }
 
     private static void SetRandomSprite(GameObject food, SpriteAtlas atlas, Sprite[] sprites)
@@ -259,6 +262,8 @@ public class FoodSpawner : MonoBehaviour
         
         if(_foodHandler.IsValid())
             Addressables.Release(_foodHandler);
+        if(spriteAtlas.IsValid())
+            Addressables.Release(spriteAtlas);
     }
     #endregion
 }
