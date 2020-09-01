@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -175,6 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 190121992}
   - component: {fileID: 190121991}
+  - component: {fileID: 190121993}
   m_Layer: 0
   m_Name: FoodSupply
   m_TagString: Untagged
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190121990}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e46097c8f4f823479e57983a5d569f9, type: 3}
   m_Name: 
@@ -216,7 +217,7 @@ MonoBehaviour:
   rareBadFoodSatiety: 0
   mythBadFoodSatiety: 0
   isBadMealNotEmpty: 1
-  maxSatiety: 100
+  maxSatiety: 20
   maxFoodMachineSatiety: 30
   currentFoodMachineSatiety: 0
 --- !u!4 &190121992
@@ -233,6 +234,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &190121993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190121990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21b794e02063add4f92d257ee5ec3a2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _index: 0
+  _spawnCount: 20
 --- !u!1 &347273544
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +399,7 @@ GameObject:
   - component: {fileID: 433873793}
   - component: {fileID: 433873795}
   - component: {fileID: 433873796}
+  - component: {fileID: 433873797}
   m_Layer: 0
   m_Name: FoodMachineLeft
   m_TagString: Untagged
@@ -463,7 +479,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 433873792}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08a5d547916fed443a7ef03166d020bb, type: 3}
   m_Name: 
@@ -473,13 +489,9 @@ MonoBehaviour:
   isBrokenMachineEventEnabled: 0
   _isBroken: 0
   litDefaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  brokenRedMaterial: {fileID: 2100000, guid: f0337b61d2104e54aa08e5bfb900d402, type: 2}
+  brokenRedMaterial: {fileID: 2100000, guid: 21c4761559de57248b90512e95b9c815, type: 2}
   minMachineEventRandomValue: 20
   maxMachineEventRandomValue: 30
-  spriteAtlas:
-    m_AssetGUID: 157597ecf7b382e468a982be41629804
-    m_SubObjectName: 
-  foodSprites: []
   isOppositeSpawn: 0
   spawnParticle:
     m_AssetGUID: a40b64bf23366dc42a892af2c6ff6140
@@ -511,6 +523,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 4.5}
   m_EdgeRadius: 0
+--- !u!114 &433873797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433873792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b443cf19988192d439344150872320e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particleReferences:
+  - m_AssetGUID: a40b64bf23366dc42a892af2c6ff6140
+    m_SubObjectName: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,6 +848,7 @@ GameObject:
   - component: {fileID: 922687515}
   - component: {fileID: 922687517}
   - component: {fileID: 922687518}
+  - component: {fileID: 922687519}
   m_Layer: 0
   m_Name: FoodMachineRight
   m_TagString: Untagged
@@ -900,7 +928,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922687514}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08a5d547916fed443a7ef03166d020bb, type: 3}
   m_Name: 
@@ -910,13 +938,9 @@ MonoBehaviour:
   isBrokenMachineEventEnabled: 0
   _isBroken: 0
   litDefaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  brokenRedMaterial: {fileID: 2100000, guid: f0337b61d2104e54aa08e5bfb900d402, type: 2}
+  brokenRedMaterial: {fileID: 2100000, guid: 21c4761559de57248b90512e95b9c815, type: 2}
   minMachineEventRandomValue: 10
   maxMachineEventRandomValue: 20
-  spriteAtlas:
-    m_AssetGUID: 157597ecf7b382e468a982be41629804
-    m_SubObjectName: 
-  foodSprites: []
   isOppositeSpawn: 1
   spawnParticle:
     m_AssetGUID: a40b64bf23366dc42a892af2c6ff6140
@@ -948,6 +972,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 4.5}
   m_EdgeRadius: 0
+--- !u!114 &922687519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922687514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b443cf19988192d439344150872320e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particleReferences:
+  - m_AssetGUID: a40b64bf23366dc42a892af2c6ff6140
+    m_SubObjectName: 
 --- !u!1 &1416411922
 GameObject:
   m_ObjectHideFlags: 0
