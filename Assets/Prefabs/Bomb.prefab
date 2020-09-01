@@ -75,7 +75,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 491942ac3678d3f45864610866cf484a, type: 2}
+      objectReference: {fileID: 2100000, guid: 8b8956ad20c03734aa2296a4bce66adb, type: 2}
     - target: {fileID: 7685225320391901190, guid: e4d0fbe188348e045bb487b9f5bfdaca,
         type: 3}
       propertyPath: m_Sprite
