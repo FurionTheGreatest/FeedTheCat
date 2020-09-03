@@ -25,7 +25,7 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         _foodSupplyManager = FindObjectOfType<FoodSupplyManager>();
-        maxSatietyUiValue = _foodSupplyManager.maxSatiety;
+        maxSatietyUiValue = _foodSupplyManager.maxCatSatiety;
         
         satietySlider.maxValue = maxSatietyUiValue;
         satietySlider.value = 0;
