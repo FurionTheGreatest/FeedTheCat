@@ -14283,7 +14283,7 @@ GameObject:
   - component: {fileID: -4021233142188243253}
   m_Layer: 8
   m_Name: CommonBadMeal
-  m_TagString: Meal
+  m_TagString: BadMeal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
