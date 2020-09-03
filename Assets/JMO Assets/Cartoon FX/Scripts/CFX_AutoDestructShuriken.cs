@@ -13,7 +13,6 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 {
 	// If true, deactivate the object instead of destroying it
 	public bool OnlyDeactivate;
-	
 	void OnEnable()
 	{
 		StartCoroutine(nameof(CheckIfAlive));
@@ -39,7 +38,6 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 				else
 				{
 					Addressables.ReleaseInstance(gameObject);
-					GameObject.Destroy(this.gameObject);
 				}
 				break;
 			}
