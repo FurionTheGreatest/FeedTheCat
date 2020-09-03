@@ -21,10 +21,10 @@ public class FoodSupplyManager : MonoBehaviour
     
     public bool isBadMealNotEmpty = true;
     
-    public int maxSatiety = 100;
+    public int maxCatSatiety = 100;
     public int maxFoodMachineSatiety;
     
-    private int _currentSatiety;
+    private int _currentCatSatiety;
     public int currentFoodMachineSatiety;
     
     private int _currentBadMealSatiety;
@@ -37,9 +37,9 @@ public class FoodSupplyManager : MonoBehaviour
 
     private void Awake()
     {
-        maxFoodMachineSatiety = maxSatiety + maxSatiety/2;
+        maxFoodMachineSatiety = maxCatSatiety + maxCatSatiety/2;
         currentFoodMachineSatiety = maxFoodMachineSatiety;
-        _maxBadMealSatiety = maxSatiety / 2;
+        _maxBadMealSatiety = maxCatSatiety / 2;
         _currentBadMealSatiety = _maxBadMealSatiety;
     }
     
@@ -87,13 +87,13 @@ public class FoodSupplyManager : MonoBehaviour
 
     private void AddCatSatiety(int satiety)
     {
-        if(_currentSatiety == 0 && satiety < 0) return;
-        if (_currentSatiety + satiety < 0 && satiety < 0)
+        if(_currentCatSatiety == 0 && satiety < 0) return;
+        if (_currentCatSatiety + satiety < 0 && satiety < 0)
         {
-            _currentSatiety = 0;
+            _currentCatSatiety = 0;
             return;
         }
-        _currentSatiety += satiety;
+        _currentCatSatiety += satiety;
         CheckForWinCondition();
         if(!_isFoodOnSceneEnd  || _isWon) return;
         CheckForLoseCondition();
@@ -162,13 +162,14 @@ public class FoodSupplyManager : MonoBehaviour
 
     private void CheckForWinCondition()
     {
-        if (_currentSatiety < maxSatiety) return;
+        if (_currentCatSatiety < maxCatSatiety) return;
         StopSpawnFood();
         _isWon = true;
         OnWin?.Invoke();
         
-        var otherFood = GameObject.FindGameObjectsWithTag("Meal");
-
+        var otherFood = new List<GameObject>(GameObject.FindGameObjectsWithTag("Meal"));
+        var bombs = GameObject.FindGameObjectsWithTag("BadMeal");
+        otherFood.AddRange(bombs);
         foreach (var food in otherFood)
         {
             food.GetComponent<CircleCollider2D>().enabled = false;
@@ -179,10 +180,23 @@ public class FoodSupplyManager : MonoBehaviour
 
     private void CheckForLoseCondition()
     {
-        if (currentFoodMachineSatiety - (maxSatiety - _currentSatiety) < 0)
+        var otherFood = new List<GameObject>(GameObject.FindGameObjectsWithTag("Meal"));
+        int sceneSatiety = 0;
+        foreach (var food in otherFood)
         {
+            sceneSatiety += food.GetComponent<MealData>().mealStats.satiety;
+        }
+        if (_currentCatSatiety + currentFoodMachineSatiety + sceneSatiety < maxCatSatiety)
+        {
+            var bombs = GameObject.FindGameObjectsWithTag("BadMeal");
+            otherFood.AddRange(bombs);
+            foreach (var food in otherFood)
+            {
+                food.GetComponent<CircleCollider2D>().enabled = false;
+                food.GetComponent<OnTouch>().destroyFood = true;
+            }
             StopSpawnFood();
-            OnLose?.Invoke(true);  
+            OnLose?.Invoke(true);
         }
         
         if (currentFoodMachineSatiety > 0)
