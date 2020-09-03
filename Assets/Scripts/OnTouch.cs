@@ -67,6 +67,7 @@ public class OnTouch : MonoBehaviour
     public void OnMouseDown()
     {
         _isClicked = true;
+        gameObject.tag = "Untagged";
         StartCoroutine(BeforeDestroy(0.3f));
         UpdateStats?.Invoke(_satiety);
         if(floatingNumberPrefab != null)
@@ -82,7 +83,7 @@ public class OnTouch : MonoBehaviour
         
         if(Vector3.Distance(transform.position, _catMouth.position) > 0.3f) return;
 
-        Destroy(gameObject);
+        Addressables.ReleaseInstance(gameObject);
     }
 
     private void Update()
@@ -91,7 +92,7 @@ public class OnTouch : MonoBehaviour
 
         if (_screenPos.y <= LowerBound)
         {
-            Destroy(gameObject);
+            Addressables.ReleaseInstance(gameObject);
             CheckForLose?.Invoke();
         }
         if (destroyFood && !_isClicked)
@@ -127,7 +128,7 @@ public class OnTouch : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
         }
         if(alpha.a <= 0)
-            Destroy(gameObject);
+            Addressables.ReleaseInstance(gameObject);
     }
 
     private void ActivatePointText()
@@ -144,9 +145,9 @@ public class OnTouch : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(handler.IsValid())
+        if (handler.IsValid())
+        {           
             Addressables.Release(handler);
-        
-        Addressables.ReleaseInstance(gameObject);
+        }
     }
 }
