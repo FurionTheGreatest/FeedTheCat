@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Assertions;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.U2D;
 using Random = UnityEngine.Random;
@@ -175,6 +176,8 @@ public class FoodSpawner : MonoBehaviour
                 {
                     Addressables.InstantiateAsync(prefab, _mealParent.transform).Completed += instance =>
                     {
+                        PlaySpawnEffect();
+
                         var foodGo = instance.Result; 
                         foodGo.GetComponent<OnTouch>().handler = instance;
                         
@@ -190,8 +193,6 @@ public class FoodSpawner : MonoBehaviour
                         forceVector.y = randomYValue;
 
                         rb.AddForce(forceVector * BaseForceMultiplier, ForceMode2D.Impulse);
-
-                        PlaySpawnEffect();
                     };
                 }
 
@@ -222,17 +223,16 @@ public class FoodSpawner : MonoBehaviour
                 if(spawnEffectHandler.Status == AsyncOperationStatus.Succeeded)
                 {
                     spawnParticle.InstantiateAsync(_mealParent.transform.position, Quaternion.identity);
+                    Addressables.ReleaseInstance(spawnEffectHandler);
                 }
-                //spawnParticle.ReleaseInstance(spawnEffectHandler.Result);
             };
-            
         }
         else
         {
             spawnParticle.InstantiateAsync(_mealParent.transform.position, Quaternion.identity);
         }
-        
     }
+
 
     private static void SetRandomSprite(GameObject food, SpriteAtlas atlas, Sprite[] sprites)
     {
