@@ -24,6 +24,8 @@ public class OnTouch : MonoBehaviour
     
     public bool isUsingParticle = true;
     public bool isFood = true;
+
+    public bool isAddressablesInstance = false;
     private int _satiety;
     private Transform _catMouth;
     private bool _isClicked;
@@ -83,8 +85,10 @@ public class OnTouch : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, _catMouth.position, _step);
         
         if(Vector3.Distance(transform.position, _catMouth.position) > 0.3f) return;
-
-        Addressables.ReleaseInstance(gameObject);
+        if(isAddressablesInstance)
+            Addressables.ReleaseInstance(gameObject);
+        else
+            Destroy(gameObject);
     }
 
     private void Update()

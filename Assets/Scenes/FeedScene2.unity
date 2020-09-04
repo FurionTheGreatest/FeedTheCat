@@ -337,9 +337,6 @@ MonoBehaviour:
     m_SubObjectName: 
   - m_AssetGUID: e2684a3163f59e048af906f25ea5f223
     m_SubObjectName: 
-  rareFoodSatiety: 0
-  mythFoodSatiety: 0
-  legendFoodSatiety: 0
   badMealPrefabs:
   - m_AssetGUID: e4d0fbe188348e045bb487b9f5bfdaca
     m_SubObjectName: 
@@ -347,10 +344,8 @@ MonoBehaviour:
     m_SubObjectName: 
   - m_AssetGUID: 200b82695a877b04ab3860d9ab0783b8
     m_SubObjectName: 
-  rareBadFoodSatiety: 0
-  mythBadFoodSatiety: 0
   isBadMealNotEmpty: 1
-  maxSatiety: 130
+  maxCatSatiety: 100
   maxFoodMachineSatiety: 30
   currentFoodMachineSatiety: 0
 --- !u!4 &190121992
@@ -675,6 +670,10 @@ MonoBehaviour:
   spawnParticle:
     m_AssetGUID: a40b64bf23366dc42a892af2c6ff6140
     m_SubObjectName: 
+  sausages:
+  - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
+  - {fileID: 2627132978385364283, guid: e3598ae6d904d904597f61a3cf933f79, type: 3}
+  - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
   forceVector: {x: 0.2, y: 3}
 --- !u!61 &433873796
 BoxCollider2D:
@@ -1112,6 +1111,10 @@ MonoBehaviour:
   spawnParticle:
     m_AssetGUID: a40b64bf23366dc42a892af2c6ff6140
     m_SubObjectName: 
+  sausages:
+  - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
+  - {fileID: 2627132978385364283, guid: e3598ae6d904d904597f61a3cf933f79, type: 3}
+  - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
   forceVector: {x: -0.2, y: 3}
 --- !u!61 &922687518
 BoxCollider2D:
