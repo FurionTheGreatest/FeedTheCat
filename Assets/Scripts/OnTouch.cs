@@ -44,6 +44,7 @@ public class OnTouch : MonoBehaviour
 
     private GameObject _particleSystem;
     private bool _isParticleSystemNotNull;
+
     private void Awake()
     {
         _rb = gameObject.GetComponent<Rigidbody2D>();

@@ -10,14 +10,16 @@ public class FoodSupplyManager : MonoBehaviour
     public static event CheckWinCondition OnWin;
     
     public List<AssetReference> mealPrefabs;
-    public int rareFoodSatiety;
-    [HideInInspector] public int mythFoodSatiety;
-    [HideInInspector] public int legendFoodSatiety;
+    public readonly int CommonFoodSatiety = 1;
+    public readonly int RareFoodSatiety = 2;
+    public readonly int MythFoodSatiety = 5;
+    public readonly int LegendFoodSatiety = 10;
     
     public List<AssetReference> badMealPrefabs;
 
-    [HideInInspector] public int rareBadFoodSatiety;
-    [HideInInspector] public int mythBadFoodSatiety;
+    public readonly int CommonBadFoodSatiety = -1;
+    public readonly int RareBadFoodSatiety = -2;
+    public readonly int MythBadFoodSatiety = -5;
     
     public bool isBadMealNotEmpty = true;
     
@@ -46,43 +48,6 @@ public class FoodSupplyManager : MonoBehaviour
     private void Start()
     {
         _spawns = FindObjectsOfType<FoodSpawner>();
-
-        LoadFoodSatiety();
-    }
-
-    private void LoadFoodSatiety()
-    {
-        mealPrefabs[1].LoadAssetAsync<GameObject>().Completed +=
-            (res) =>
-            {
-                rareFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
-                Addressables.Release(res);
-            };
-        mealPrefabs[2].LoadAssetAsync<GameObject>().Completed +=
-            (res) =>
-            {
-                mythFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
-                Addressables.Release(res);
-            };
-        mealPrefabs[3].LoadAssetAsync<GameObject>().Completed +=
-            (res) =>
-            {
-                legendFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
-                Addressables.Release(res);
-            };
-
-        badMealPrefabs[1].LoadAssetAsync<GameObject>().Completed +=
-            (res) =>
-            {
-                rareBadFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
-                Addressables.Release(res);
-            };
-        badMealPrefabs[2].LoadAssetAsync<GameObject>().Completed +=
-            (res) =>
-            {
-                mythBadFoodSatiety = res.Result.GetComponent<MealData>().mealStats.satiety;
-                Addressables.Release(res);
-            };
     }
 
     private void AddCatSatiety(int satiety)
@@ -110,15 +75,15 @@ public class FoodSupplyManager : MonoBehaviour
 
     private void CheckForSatietyLimit()
     {
-        if (currentFoodMachineSatiety - rareFoodSatiety < 0)
+        if (currentFoodMachineSatiety - RareFoodSatiety < 0)
         {
             LimitSatiety(FoodSpawner.CommonMealChanceToSpawn, false);
         }
-        else if (currentFoodMachineSatiety - mythFoodSatiety < 0)
+        else if (currentFoodMachineSatiety - MythFoodSatiety < 0)
         {
             LimitSatiety(FoodSpawner.RareMealChanceToSpawn, false);
         } 
-        else if (currentFoodMachineSatiety - legendFoodSatiety < 0)
+        else if (currentFoodMachineSatiety - LegendFoodSatiety < 0)
         {
             LimitSatiety(FoodSpawner.MythMealChanceToSpawn, false);
         }
@@ -126,11 +91,11 @@ public class FoodSupplyManager : MonoBehaviour
     
     private void CheckForBadSatietyLimit()
     {
-        if (_currentBadMealSatiety - rareBadFoodSatiety < 0)
+        if (_currentBadMealSatiety - RareBadFoodSatiety < 0)
         {
             LimitSatiety(FoodSpawner.CommonBadMealChanceToSpawn, true);
         }
-        else if (currentFoodMachineSatiety - mythBadFoodSatiety < 0)
+        else if (currentFoodMachineSatiety - MythBadFoodSatiety < 0)
         {
             LimitSatiety(FoodSpawner.RareBadMealChanceToSpawn, true);
         }
@@ -193,7 +158,10 @@ public class FoodSupplyManager : MonoBehaviour
             foreach (var food in otherFood)
             {
                 food.GetComponent<CircleCollider2D>().enabled = false;
-                food.GetComponent<OnTouch>().destroyFood = true;
+                if(food.GetComponent<OnTouch>() != null)
+                    food.GetComponent<OnTouch>().destroyFood = true;
+                if(food.GetComponent<OnTouchSpecial>() != null)
+                    food.GetComponent<OnTouchSpecial>().destroyFood = true;
             }
             StopSpawnFood();
             OnLose?.Invoke(true);

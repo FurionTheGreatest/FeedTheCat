@@ -31,6 +31,8 @@ public class FoodSpawner : MonoBehaviour
     public bool isOppositeSpawn;
 
     public AssetReference spawnParticle;
+    
+    public GameObject[] sausages;
 
     private FoodSupplyManager _foodSupplyManager;
     private GameObject _mealParent;
@@ -42,7 +44,6 @@ public class FoodSpawner : MonoBehaviour
     
     private const float YLowerLimit = 2f;
     private const float YUpperLimit = 4f;
-
 
     private const float MinDelayForSpawn = 1f;
     private const float MaxDelayForSpawn = 3f;
@@ -63,6 +64,8 @@ public class FoodSpawner : MonoBehaviour
     //private SpriteAtlas _bombAtlas;
     //public Sprite[] bombSprites;
     private AsyncOperationHandle<SpriteAtlas> _foodHandler;
+    private const string TrippleSausageName = "tripple_sausage(Clone)";
+    private GameObject _lastSpawnedGameObject;
 
     private IEnumerator Start()
     {
@@ -135,19 +138,19 @@ public class FoodSpawner : MonoBehaviour
         var randomMealValue = Random.Range(minRandomValue, maxRandomValue);
         if (randomMealValue >= 0 && randomMealValue <= CommonMealChanceToSpawn)
         {
-            FoodInstantiate(_foodSupplyManager.mealPrefabs[0]);
+            FoodInstantiate(_foodSupplyManager.mealPrefabs[0], _foodSupplyManager.CommonFoodSatiety);
         }
         else if (randomMealValue > 0 && randomMealValue <= RareMealChanceToSpawn)
         {
-            FoodInstantiate(_foodSupplyManager.mealPrefabs[1]);
+            FoodInstantiate(_foodSupplyManager.mealPrefabs[1],_foodSupplyManager.RareFoodSatiety);
         }
         else if (randomMealValue > 0 && randomMealValue <= MythMealChanceToSpawn)
         {
-            FoodInstantiate(_foodSupplyManager.mealPrefabs[2]);
+            FoodInstantiate(_foodSupplyManager.mealPrefabs[2], _foodSupplyManager.MythFoodSatiety);
         }
         else if (randomMealValue > 0 && randomMealValue <= LegendMealChanceToSpawn)
         {
-            FoodInstantiate(_foodSupplyManager.mealPrefabs[3]);
+            FoodInstantiate(_foodSupplyManager.mealPrefabs[3],_foodSupplyManager.LegendFoodSatiety);
         }
         else
         {
@@ -158,15 +161,15 @@ public class FoodSpawner : MonoBehaviour
             }
 
             if (randomMealValue < 0 && randomMealValue >= CommonBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[0],false);
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[0],_foodSupplyManager.CommonBadFoodSatiety,false);
             else if (randomMealValue < 0 && randomMealValue >= RareBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[1],false);
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[1],_foodSupplyManager.RareBadFoodSatiety,false);
             else if (randomMealValue < 0 && randomMealValue >= BombBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[2],false);
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[2],_foodSupplyManager.MythBadFoodSatiety,false);
         }
     }
 
-    private void FoodInstantiate(AssetReference prefab, bool isFood = true)
+    private void FoodInstantiate(AssetReference prefab, int satietyOfFood, bool isFood = true)
     {
         Addressables.LoadAssetAsync<GameObject>(prefab).Completed += handle =>
         {
@@ -177,13 +180,15 @@ public class FoodSpawner : MonoBehaviour
                     Addressables.InstantiateAsync(prefab, _mealParent.transform).Completed += instance =>
                     {
                         PlaySpawnEffect();
+                        _lastSpawnedGameObject = instance.Result;
 
-                        var foodGo = instance.Result; 
-                        foodGo.GetComponent<OnTouch>().handler = instance;
+                        _lastSpawnedGameObject.GetComponent<OnTouch>().handler = instance;
+                        _lastSpawnedGameObject.GetComponent<MealData>().mealStats.satiety = satietyOfFood;
                         
                         if(isFood)
-                            SetRandomSprite(foodGo,_foodAtlas, foodSprites);
+                            SetRandomSprite(_lastSpawnedGameObject,_foodAtlas, foodSprites);
 
+                        CheckForTrippleSausage(_lastSpawnedGameObject);
                         var rb = instance.Result.GetComponent<Rigidbody2D>();
 
                         var randomXValue = Random.Range(XLowerLimit, XUpperLimit);
@@ -196,14 +201,17 @@ public class FoodSpawner : MonoBehaviour
                     };
                 }
 
-                var satiety = handle.Result.GetComponent<MealData>().mealStats.satiety;
-                if (satiety > 0)
+                if (_lastSpawnedGameObject != null)
                 {
-                    OnMealSpawned?.Invoke(satiety);
-                }
-                else
-                {
-                    OnBadMealSpawned?.Invoke(satiety);
+                    var satiety = _lastSpawnedGameObject.GetComponent<MealData>().mealStats.satiety;
+                    if (satiety > 0)
+                    {
+                        OnMealSpawned?.Invoke(satiety);
+                    }
+                    else
+                    {
+                        OnBadMealSpawned?.Invoke(satiety);
+                    }
                 }
             }
             else
@@ -233,6 +241,21 @@ public class FoodSpawner : MonoBehaviour
         }
     }
 
+    private void CheckForTrippleSausage(GameObject prefab)
+    {
+        if (prefab.GetComponent<SpriteRenderer>().sprite.name.Equals(TrippleSausageName))
+        {
+            prefab.GetComponent<OnTouch>().enabled = false;
+            MealDataStats stats = prefab.GetComponent<MealData>().mealStats;
+            prefab.GetComponent<MealData>().mealStats.satiety = 0;
+            prefab.AddComponent<OnTouchSpecial>();
+            OnTouchSpecial specialStats = prefab.GetComponent<OnTouchSpecial>();
+            specialStats.stats = stats;
+            specialStats.mealParent = _mealParent.transform;
+            specialStats.sausagePrefs = sausages;
+        }
+    }
+
 
     private static void SetRandomSprite(GameObject food, SpriteAtlas atlas, Sprite[] sprites)
     {
@@ -249,6 +272,7 @@ public class FoodSpawner : MonoBehaviour
         var emitter = particle.emission;
         emitter.enabled = true;
     }
+
     private static float RandomTimeForStartFoodSpawn()
     {
         var randomTimeValue = Random.Range(MinDelayForSpawn, MaxDelayForSpawn);

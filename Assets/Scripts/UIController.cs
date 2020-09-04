@@ -43,6 +43,7 @@ public class UIController : MonoBehaviour
         }
         satietySlider.value += satiety;
         
+        if(satiety == 0) return;
         if (satiety > 0)
         {
             if (showFrameCoroutine != null)
