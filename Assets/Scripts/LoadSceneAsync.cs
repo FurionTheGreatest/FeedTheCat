@@ -80,7 +80,7 @@ public class LoadSceneAsync : MonoBehaviour
     }
     public void QuitApplication()
     {
-        EnergyManager.instance.SaveTimeStamp();
+        EnergyManager.Instance.SaveTimeStamp();
         Application.Quit();
     }
 }

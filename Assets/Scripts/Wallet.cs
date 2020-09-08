@@ -54,8 +54,8 @@ namespace UnityEngine.GameFoundation.Sample
             //   that will store GameFoundation's data only for the play session.
             m_DataLayer = new PersistenceDataLayer(
                 new LocalPersistence("DataPersistence", new JsonDataSerializer()));
-            
-            GameFoundation.Initialize(m_DataLayer, OnGameFoundationInitialized, OnInitFailed);
+            if(!GameFoundation.IsInitialized)
+                GameFoundation.Initialize(m_DataLayer, OnGameFoundationInitialized, OnInitFailed);
 
             m_softCurrencyDefinition = GameFoundation.catalogs.currencyCatalog.FindItem("coin");
             m_hardCurrencyDefinition = GameFoundation.catalogs.currencyCatalog.FindItem("gem");

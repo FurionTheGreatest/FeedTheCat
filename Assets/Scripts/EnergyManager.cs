@@ -10,7 +10,7 @@
      public TMP_Text energyText;
      private const int MaxEnergy = 20;
  
-     private static TimeSpan _newLifeInterval = new TimeSpan(0,10,0);
+     private static TimeSpan _newLifeInterval = new TimeSpan(0,0,5);
 
      private DateTime _lostLifeTimeStamp;
      private int _livesLeft = MaxEnergy;
@@ -18,11 +18,11 @@
      private const string LivesLeftPrefsString = "LivesLeft";
      private const string LostLifeTimeStampPrefsString = "LifeLostTimeStamp";
 
-     public static EnergyManager instance;
+     public static EnergyManager Instance;
      private void Start()
      {
-         if (instance == null)
-             instance = this;
+         if (Instance == null)
+             Instance = this;
          
          DontDestroyOnLoad(gameObject);
 
@@ -82,15 +82,23 @@
          {
              // something has probably gone wrong. give full lives. normalize the situation
              _livesLeft = MaxEnergy;
-             ChangeEnergyUi();
          }   
  
          if (_amountOfIntervalsPassed + _livesLeft >= MaxEnergy)
          {
              _livesLeft = MaxEnergy;
-             ChangeEnergyUi();
          }
- 
+         
+         if(_amountOfIntervalsPassed != 0)
+         {
+             Debug.Log("!=0");
+             _livesLeft = GetAmountOfLives();
+             _amountOfIntervalsPassed = 0;
+             _lostLifeTimeStamp = DateTime.Now;
+         }
+         
+         ChangeEnergyUi();
+
          Debug.Log("it's been " + timeDifference + " since lives dropped from full (now "+_livesLeft+"). " + _amountOfIntervalsPassed + " reloads passed. Lives Left: " + GetAmountOfLives() );
      }
      private int GetAmountOfLives()
