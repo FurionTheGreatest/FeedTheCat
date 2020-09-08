@@ -4,17 +4,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.XR.WSA;
-using Random = System.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class OnTouch : MonoBehaviour
 {
     private TouchHandler _touchHandler;
-    public delegate void OnMealTouched(int satiety);
-    public delegate void OnDelete();
-    public static event OnMealTouched UpdateStats;
-    public static event OnDelete CheckForLose;
+    public static event Action<GameObject> OnTrippleSpawn;
+    public static event Action CheckForLose;
+    public static event Action<GameObject> OnDestroyObject;
 
     public bool destroyFood = false;
     [SerializeField] private float nextTimeToUpdate = 0.3f;
@@ -26,9 +23,13 @@ public class OnTouch : MonoBehaviour
     public bool isFood = true;
 
     public bool isAddressablesInstance = false;
-    private int _satiety;
+    [Header("SpecialOptions")]
+    public GameObject[] sausagePrefs;
+    public Collectible.MealDataStats stats;
+    public Transform mealParent;
+    public ParticleSystem _parentParticleSystem;
+    public bool isTrippleSausage;
     private Transform _catMouth;
-    private bool _isClicked;
     private float _step;
     private const float Speed = 4f;
 
@@ -42,7 +43,7 @@ public class OnTouch : MonoBehaviour
 
     private const float LowerBound = -60f;
 
-    private float _currentTime = 0f;
+    private float _currentTime;
 
     private GameObject _particleSystem;
     private bool _isParticleSystemNotNull;
@@ -60,35 +61,46 @@ public class OnTouch : MonoBehaviour
         if (isUsingParticle)
         {
             _particleSystem = gameObject.GetComponentInChildren<ParticleSystem>(true).gameObject;
-            _isParticleSystemNotNull = _particleSystem != null; 
+            _isParticleSystemNotNull = _particleSystem != null;
         }
         _catMouth = GameObject.Find("Mouth").transform;
         _step = Speed * Time.deltaTime;
-        _satiety = GetComponent<MealData>().mealStats.satiety;
+        
+        _parentParticleSystem = GetComponentInChildren<ParticleSystem>();
     }
-
-    public void OnMouseDown()
+    
+    public void Collect()
     {
-        _isClicked = true;
+        if (isTrippleSausage)
+        {
+            for (var i = 0; i < sausagePrefs.Length; i++)
+            {
+                var obj = sausagePrefs[i];
+                obj.GetComponent<Collectible>().mealStats = stats;
+                FallApart(obj, 5f, 1.5f, i);
+            }
+            DestroyObject();
+            return;
+        }
         gameObject.tag = "Untagged";
         StartCoroutine(BeforeDestroy(0.3f));
-        UpdateStats?.Invoke(_satiety);
+        StartCoroutine(TranslateMealToMouth());
         if(floatingNumberPrefab != null)
             ActivatePointText();
     }
     
-    private void TranslateMealToMouth()
+    private IEnumerator TranslateMealToMouth()
     {
-        if(!isFood) return;
+        if(!GetComponent<Collectible>().mealStats.isFood) yield break;
         _collider2D.enabled = false;
         _rb.bodyType = RigidbodyType2D.Static;
-        transform.position = Vector3.MoveTowards(transform.position, _catMouth.position, _step);
-        
-        if(Vector3.Distance(transform.position, _catMouth.position) > 0.3f) return;
-        if(isAddressablesInstance)
-            Addressables.ReleaseInstance(gameObject);
-        else
-            Destroy(gameObject);
+
+        while(Vector3.Distance(transform.position, _catMouth.position) > 0.3f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _catMouth.position, _step);
+            yield return Yielders.FixedUpdate;
+        }
+        DestroyObject();
     }
 
     private void Update()
@@ -97,14 +109,14 @@ public class OnTouch : MonoBehaviour
 
         if (_screenPos.y <= LowerBound)
         {
-            Addressables.ReleaseInstance(gameObject);
+            DestroyObject();
             CheckForLose?.Invoke();
         }
-        if (destroyFood && !_isClicked)
+
+        if (destroyFood)
+        {
             StartCoroutine(BeforeDestroy(0f));
-        
-        if(!_isClicked || PauseController.instance.isPaused) return;
-        TranslateMealToMouth();
+        }
     }
 
     private void UpdateScreenPosition()
@@ -132,8 +144,9 @@ public class OnTouch : MonoBehaviour
             _sprite.color = alpha;
             yield return new WaitForSeconds(Time.deltaTime);
         }
-        if(alpha.a <= 0)
-            Addressables.ReleaseInstance(gameObject);
+
+        if (alpha.a <= 0)
+            DestroyObject();
     }
 
     private void ActivatePointText()
@@ -141,18 +154,62 @@ public class OnTouch : MonoBehaviour
         var prefab = Instantiate(floatingNumberPrefab, transform.position, Quaternion.identity, transform);
         var text = prefab.GetComponentInChildren<TMP_Text>(true);
         text.color = new Color(UnityEngine.Random.Range(0,1f),UnityEngine.Random.Range(0,1f),UnityEngine.Random.Range(0,1f));
-        
-        if(_satiety > 0)
-            text.text = "+" + _satiety;
+        var satiety = GetComponent<Collectible>().mealStats.satiety;
+        if(satiety > 0)
+            text.text = "+" + satiety;
         else
-            text.text = _satiety.ToString();
+            text.text = satiety.ToString();
+    }
+    
+    private void FallApart(GameObject prefab, float heightForce, float widthForce, int indexOfPrefab)
+    {
+        GameObject instantiatedObj = Instantiate(prefab, gameObject.transform.position, Quaternion.identity, mealParent);//instantiatedObj.GetComponentInChildren<ParticleSystem>();
+        OnTrippleSpawn?.Invoke(instantiatedObj);
+        var particle = instantiatedObj.GetComponentInChildren<ParticleSystem>();
+        
+        var shapeOfParticle = particle.shape;
+        shapeOfParticle.sprite = instantiatedObj.GetComponent<SpriteRenderer>().sprite;
+        
+        var color = particle.main;
+        color.startColor = _parentParticleSystem.main.startColor;
+        
+        var emitter = particle.emission;
+        emitter.enabled = true;
+        
+        var rb = instantiatedObj.GetComponent<Rigidbody2D>();
+
+        Vector2 forceVector;
+        forceVector.x = widthForce;
+        switch (indexOfPrefab)
+        {
+            case 0:
+                forceVector.x = -widthForce;
+                break;
+            case 1:
+                forceVector.x = 0;
+                break;
+            case 2:
+                forceVector.x = widthForce;
+                break;
+        }
+        forceVector.y = heightForce;
+
+        rb.AddForce(forceVector, ForceMode2D.Impulse);// * BaseForceMultiplier
     }
 
-    private void OnDestroy()
+    private void DestroyObject()
     {
-        if (handler.IsValid())
-        {           
-            Addressables.Release(handler);
-        }
+        OnDestroyObject?.Invoke(gameObject);
+        
+        if(isAddressablesInstance)
+            Addressables.ReleaseInstance(gameObject);
+        else
+            Destroy(gameObject);
     }
+
+    /*private void OnDestroy()
+    {
+        OnDestroyObject?.Invoke(gameObject);
+        DestroyObject();
+    }*/
 }

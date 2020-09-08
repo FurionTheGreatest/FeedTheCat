@@ -22,6 +22,8 @@ public class UIController : MonoBehaviour
 
     private string _gameOverText = "The food is over, GG";
     private string _foodOverText = "Not enough food in machine to finish level, GG";
+    private float _spawnDelay = 0.2f;
+
     private void Start()
     {
         _foodSupplyManager = FindObjectOfType<FoodSupplyManager>();
@@ -33,8 +35,9 @@ public class UIController : MonoBehaviour
         foodLeftSlider.value = foodLeftSlider.maxValue;
     }    
 
-    private void UpdateSatietySliderValue(int satiety)
+    private void UpdateSatietySliderValue(GameObject obj)
     {
+        var satiety = obj.GetComponent<Collectible>().mealStats.satiety;
         if(satietySlider.value == 0 && satiety < 0) return;
         if (satietySlider.value + satiety < 0 && satiety < 0)
         {
@@ -89,7 +92,7 @@ public class UIController : MonoBehaviour
     
     private void EnableWinScreen()
     {
-        winText.gameObject.SetActive(true);
+        StartCoroutine(ShowWinScreen(10, 1));
     }
 
     private IEnumerator ShowFrame(Color color)
@@ -110,9 +113,20 @@ public class UIController : MonoBehaviour
         }
     }
     
+    public IEnumerator ShowWinScreen(int spawnCount, int index)
+    {
+        for (int i = 0; i < spawnCount; i++)
+        {
+            FindObjectOfType<ParticleSpawner>().Spawn(index);
+            yield return Yielders.Get(_spawnDelay);
+        }
+        yield return Yielders.EndOfFrame;
+        winText.gameObject.SetActive(true);
+    }
+    
     private void OnEnable()
     {
-        OnTouch.UpdateStats += UpdateSatietySliderValue;
+        Collectible.OnCollect += UpdateSatietySliderValue;
         FoodSpawner.OnMealSpawned += UpdateFoodMachineSatietySliderValue;
         FoodSupplyManager.OnLose += EnableLoseScreen;
         FoodSupplyManager.OnWin += EnableWinScreen;
@@ -120,7 +134,7 @@ public class UIController : MonoBehaviour
     
     private void OnDisable()
     {
-        OnTouch.UpdateStats -= UpdateSatietySliderValue;
+        Collectible.OnCollect -= UpdateSatietySliderValue;
         FoodSpawner.OnMealSpawned -= UpdateFoodMachineSatietySliderValue;
         FoodSupplyManager.OnLose -= EnableLoseScreen;
         FoodSupplyManager.OnWin -= EnableWinScreen;

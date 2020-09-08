@@ -131,8 +131,6 @@ GameObject:
   m_Component:
   - component: {fileID: 173122917}
   - component: {fileID: 173122916}
-  - component: {fileID: 173122918}
-  - component: {fileID: 173122919}
   m_Layer: 0
   m_Name: TouchHandler
   m_TagString: Untagged
@@ -167,37 +165,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &173122918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 173122915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21b794e02063add4f92d257ee5ec3a2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _index: 0
-  _spawnCount: 20
---- !u!114 &173122919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 173122915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b443cf19988192d439344150872320e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _particleReferences:
-  - m_AssetGUID: a40b64bf23366dc42a892af2c6ff6140
-    m_SubObjectName: 
-  - m_AssetGUID: a40b64bf23366dc42a892af2c6ff6140
-    m_SubObjectName: 
 --- !u!1 &190121990
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,10 +203,6 @@ MonoBehaviour:
     m_SubObjectName: 
   - m_AssetGUID: e2684a3163f59e048af906f25ea5f223
     m_SubObjectName: 
-  commonFoodSatiety: 0
-  rareFoodSatiety: 0
-  mythFoodSatiety: 0
-  legendFoodSatiety: 0
   badMealPrefabs:
   - m_AssetGUID: e4d0fbe188348e045bb487b9f5bfdaca
     m_SubObjectName: 
@@ -247,13 +210,13 @@ MonoBehaviour:
     m_SubObjectName: 
   - m_AssetGUID: 200b82695a877b04ab3860d9ab0783b8
     m_SubObjectName: 
-  commonBadFoodSatiety: 0
-  rareBadFoodSatiety: 0
-  mythBadFoodSatiety: 0
   isBadMealNotEmpty: 1
-  maxCatSatiety: 20
+  maxCatSatiety: 10
   maxFoodMachineSatiety: 30
   currentFoodMachineSatiety: 0
+  isWon: 0
+  foodOnScene: []
+  bombsOnScene: []
 --- !u!4 &190121992
 Transform:
   m_ObjectHideFlags: 0
@@ -1266,11 +1229,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 2191644029133167506, guid: 46e0890a03b60ad4f9892a86f420ee7a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2191644029133167507, guid: 46e0890a03b60ad4f9892a86f420ee7a,
         type: 3}

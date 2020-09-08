@@ -95,6 +95,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LegendFood
       objectReference: {fileID: 0}
+    - target: {fileID: 2907605489126623765, guid: ee3d1165b98081940a312c360065f20a,
+        type: 3}
+      propertyPath: mealStats.satiety
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4437977528355310718, guid: ee3d1165b98081940a312c360065f20a,
         type: 3}
       propertyPath: m_AngularDrag

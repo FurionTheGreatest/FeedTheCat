@@ -17,6 +17,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0.227
       objectReference: {fileID: 0}
+    - target: {fileID: 1498168988155018121, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+        type: 3}
+      propertyPath: mealStats.satiety
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 1872832786825090175, guid: e4d0fbe188348e045bb487b9f5bfdaca,
         type: 3}
       propertyPath: ShapeModule.m_Sprite

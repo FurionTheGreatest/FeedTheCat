@@ -178,6 +178,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2191644028452204627, guid: 46e0890a03b60ad4f9892a86f420ee7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 396663473}
+    - target: {fileID: 2191644028452204627, guid: 46e0890a03b60ad4f9892a86f420ee7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReloadScene
+      objectReference: {fileID: 0}
     - target: {fileID: 2191644028642019498, guid: 46e0890a03b60ad4f9892a86f420ee7a,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -187,6 +197,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2191644028707898733, guid: 46e0890a03b60ad4f9892a86f420ee7a,
+        type: 3}
+      propertyPath: m_Name
+      value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 2191644028707898735, guid: 46e0890a03b60ad4f9892a86f420ee7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 396663473}
+    - target: {fileID: 2191644028707898735, guid: 46e0890a03b60ad4f9892a86f420ee7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2191644028860255963, guid: 46e0890a03b60ad4f9892a86f420ee7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 396663473}
+    - target: {fileID: 2191644028860255963, guid: 46e0890a03b60ad4f9892a86f420ee7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScene
       objectReference: {fileID: 0}
     - target: {fileID: 2191644028871920498, guid: 46e0890a03b60ad4f9892a86f420ee7a,
         type: 3}
@@ -348,6 +383,9 @@ MonoBehaviour:
   maxCatSatiety: 100
   maxFoodMachineSatiety: 30
   currentFoodMachineSatiety: 0
+  isWon: 0
+  foodOnScene: []
+  bombsOnScene: []
 --- !u!4 &190121992
 Transform:
   m_ObjectHideFlags: 0
@@ -558,6 +596,18 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 396663471}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &396663473 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 816639129813011440, guid: 6b745f5a075f8044fa93425c86371de1,
+    type: 3}
+  m_PrefabInstance: {fileID: 396663471}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af241e94bee67be4883c25544b848138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &433873792
 GameObject:
   m_ObjectHideFlags: 0

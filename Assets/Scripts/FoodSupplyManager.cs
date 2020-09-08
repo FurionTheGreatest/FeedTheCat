@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class FoodSupplyManager : MonoBehaviour
 {
-    public delegate void CheckLoseCondition(bool isFoodOver);
-    public delegate void CheckWinCondition();
-    public static event CheckLoseCondition OnLose;
-    public static event CheckWinCondition OnWin;
+    public static event Action<bool> OnLose;
+    public static event Action OnWin;
     
     public List<AssetReference> mealPrefabs;
     public readonly int CommonFoodSatiety = 1;
@@ -29,13 +29,18 @@ public class FoodSupplyManager : MonoBehaviour
     private int _currentCatSatiety;
     public int currentFoodMachineSatiety;
     
+    public bool isWon;
+    
+    public List<GameObject> foodOnScene;
+    public List<GameObject> bombsOnScene;
+    
     private int _currentBadMealSatiety;
     private int _maxBadMealSatiety;
     
     private FoodSpawner[] _spawns;
 
     private bool _isFoodOnSceneEnd;
-    private bool _isWon;
+
 
     private void Awake()
     {
@@ -49,9 +54,12 @@ public class FoodSupplyManager : MonoBehaviour
     {
         _spawns = FindObjectsOfType<FoodSpawner>();
     }
+    
 
-    private void AddCatSatiety(int satiety)
+    private void AddCatSatiety(GameObject obj)
     {
+        var satiety = obj.GetComponent<Collectible>().mealStats.satiety;
+
         if(_currentCatSatiety == 0 && satiety < 0) return;
         if (_currentCatSatiety + satiety < 0 && satiety < 0)
         {
@@ -60,7 +68,7 @@ public class FoodSupplyManager : MonoBehaviour
         }
         _currentCatSatiety += satiety;
         CheckForWinCondition();
-        if(!_isFoodOnSceneEnd  || _isWon) return;
+        if(!_isFoodOnSceneEnd  || isWon) return;
         CheckForLoseCondition();
     }
     
@@ -129,40 +137,31 @@ public class FoodSupplyManager : MonoBehaviour
     {
         if (_currentCatSatiety < maxCatSatiety) return;
         StopSpawnFood();
-        _isWon = true;
+        isWon = true;
         OnWin?.Invoke();
         
-        var otherFood = new List<GameObject>(GameObject.FindGameObjectsWithTag("Meal"));
-        var bombs = GameObject.FindGameObjectsWithTag("BadMeal");
-        otherFood.AddRange(bombs);
-        foreach (var food in otherFood)
+        ClearFoodTable();
+    }
+
+    private void ClearFoodTable()
+    {
+        var objectsOnTable = foodOnScene;
+        objectsOnTable.AddRange(bombsOnScene);
+        foreach (var obj in objectsOnTable)
         {
-            food.GetComponent<CircleCollider2D>().enabled = false;
-            food.GetComponent<OnTouch>().destroyFood = true;
-            //Todo foodOnScreenLeft +add points
+            obj.GetComponent<CircleCollider2D>().enabled = false;
+            obj.GetComponent<OnTouch>().destroyFood = true;
         }
+        foodOnScene.Clear();
+        bombsOnScene.Clear();
     }
 
     private void CheckForLoseCondition()
     {
-        var otherFood = new List<GameObject>(GameObject.FindGameObjectsWithTag("Meal"));
-        int sceneSatiety = 0;
-        foreach (var food in otherFood)
-        {
-            sceneSatiety += food.GetComponent<MealData>().mealStats.satiety;
-        }
+        var sceneSatiety = foodOnScene.Sum(food => food.GetComponent<Collectible>().mealStats.satiety);
         if (_currentCatSatiety + currentFoodMachineSatiety + sceneSatiety < maxCatSatiety)
         {
-            var bombs = GameObject.FindGameObjectsWithTag("BadMeal");
-            otherFood.AddRange(bombs);
-            foreach (var food in otherFood)
-            {
-                food.GetComponent<CircleCollider2D>().enabled = false;
-                if(food.GetComponent<OnTouch>() != null)
-                    food.GetComponent<OnTouch>().destroyFood = true;
-                if(food.GetComponent<OnTouchSpecial>() != null)
-                    food.GetComponent<OnTouchSpecial>().destroyFood = true;
-            }
+            ClearFoodTable();
             StopSpawnFood();
             OnLose?.Invoke(true);
         }
@@ -184,9 +183,7 @@ public class FoodSupplyManager : MonoBehaviour
 
     private void CheckForFoodOnScene()
     {
-        var otherFood = GameObject.FindGameObjectsWithTag("Meal");
-        
-        if (otherFood.Length - 1 <= 0)
+        if (foodOnScene.Count == 0)
         {
             OnLose?.Invoke(false);
         }
@@ -196,19 +193,52 @@ public class FoodSupplyManager : MonoBehaviour
         }
     }
 
+    private void AddFoodToList(GameObject food)
+    {
+        if(food.GetComponent<OnTouch>().isFood)
+            foodOnScene.Add(food);
+        else
+            bombsOnScene.Add(food);
+    }
+    private void RemoveFoodFromList(GameObject food)
+    {
+        if (food.GetComponent<OnTouch>().isFood)
+        {
+            if (foodOnScene.Contains(food))
+            {
+                foodOnScene.Remove(food);
+            }
+        }
+        else
+        {
+            if (bombsOnScene.Contains(food))
+            {
+                bombsOnScene.Remove(food);
+            }
+        }
+    }
+
     private void OnEnable()
     {
-        OnTouch.UpdateStats += AddCatSatiety;
+        Collectible.OnCollect += AddCatSatiety;
+        Collectible.OnCollect += RemoveFoodFromList;
         OnTouch.CheckForLose += CheckForLoseCondition;
+        OnTouch.OnDestroyObject += RemoveFoodFromList;
+        OnTouch.OnTrippleSpawn += AddFoodToList;
         FoodSpawner.OnMealSpawned += DecreaseFoodMachineSatiety;
+        FoodSpawner.OnMealAddOnScene += AddFoodToList;
         FoodSpawner.OnBadMealSpawned += DecreaseBadMealSatiety;
     }
     
     private void OnDisable()
     {
-        OnTouch.UpdateStats -= AddCatSatiety;
+        Collectible.OnCollect -= AddCatSatiety;
+        Collectible.OnCollect -= RemoveFoodFromList;
         OnTouch.CheckForLose -= CheckForLoseCondition;
+        OnTouch.OnDestroyObject -= RemoveFoodFromList;
+        OnTouch.OnTrippleSpawn -= AddFoodToList;
         FoodSpawner.OnMealSpawned -= DecreaseFoodMachineSatiety;
+        FoodSpawner.OnMealAddOnScene -= AddFoodToList;
         FoodSpawner.OnBadMealSpawned -= DecreaseBadMealSatiety;
     }
 }

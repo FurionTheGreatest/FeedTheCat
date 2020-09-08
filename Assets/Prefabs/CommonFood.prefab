@@ -4768,8 +4768,8 @@ GameObject:
   - component: {fileID: 4437977528355310718}
   - component: {fileID: 5470344557628369608}
   - component: {fileID: -5850486435313160199}
-  - component: {fileID: 1799680781521429401}
   - component: {fileID: -1636563119045581589}
+  - component: {fileID: 2907605489126623765}
   m_Layer: 8
   m_Name: CommonFood
   m_TagString: Meal
@@ -4898,20 +4898,14 @@ MonoBehaviour:
     type: 3}
   isUsingParticle: 1
   isFood: 1
---- !u!114 &1799680781521429401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2627132978385364283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73cae67aae68a00459b7861055911f9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mealStats:
-    satiety: 1
+  isAddressablesInstance: 1
+  sausagePrefs: []
+  stats:
+    satiety: 0
+    isFood: 0
+  mealParent: {fileID: 0}
+  _parentParticleSystem: {fileID: 0}
+  isTrippleSausage: 0
 --- !u!114 &-1636563119045581589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4924,3 +4918,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf714da760017b34ba71e65b2950e112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2907605489126623765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2627132978385364283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2452670dba9b844bca852090629045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCollected: 0
+  onCollectEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5850486435313160199}
+        m_MethodName: Collect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  touchCounter: 0
+  mealStats:
+    satiety: 1
+    isFood: 1

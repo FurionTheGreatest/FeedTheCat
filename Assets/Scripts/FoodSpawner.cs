@@ -9,10 +9,9 @@ using Random = UnityEngine.Random;
 
 public class FoodSpawner : MonoBehaviour
 {
-    public delegate void OnMealTouched(int satiety);
-    public delegate void BadMealCalculation(int satiety);
-    public static event OnMealTouched OnMealSpawned;
-    public static event BadMealCalculation OnBadMealSpawned;
+    public static event Action<int> OnMealSpawned;
+    public static event Action<GameObject> OnMealAddOnScene;
+    public static event Action<int> OnBadMealSpawned;
 
     public int minRandomValue;
     public int maxRandomValue;
@@ -64,7 +63,7 @@ public class FoodSpawner : MonoBehaviour
     //private SpriteAtlas _bombAtlas;
     //public Sprite[] bombSprites;
     private AsyncOperationHandle<SpriteAtlas> _foodHandler;
-    private const string TrippleSausageName = "tripple_sausage(Clone)";
+    private const string TripleSausageName = "tripple_sausage(Clone)";
     private GameObject _lastSpawnedGameObject;
 
     private IEnumerator Start()
@@ -171,47 +170,46 @@ public class FoodSpawner : MonoBehaviour
 
     private void FoodInstantiate(AssetReference prefab, int satietyOfFood, bool isFood = true)
     {
-        Addressables.LoadAssetAsync<GameObject>(prefab).Completed += handle =>
+        Addressables.LoadAssetAsync<GameObject>(prefab).Completed += async handle =>
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 if (!_isBroken)
                 {
-                    Addressables.InstantiateAsync(prefab, _mealParent.transform).Completed += instance =>
-                    {
-                        PlaySpawnEffect();
-                        _lastSpawnedGameObject = instance.Result;
+                    var instanceHandler = Addressables.InstantiateAsync(prefab, _mealParent.transform);
+                    var go = await instanceHandler.Task;
 
-                        _lastSpawnedGameObject.GetComponent<OnTouch>().handler = instance;
-                        _lastSpawnedGameObject.GetComponent<MealData>().mealStats.satiety = satietyOfFood;
-                        
-                        if(isFood)
-                            SetRandomSprite(_lastSpawnedGameObject,_foodAtlas, foodSprites);
+                    PlaySpawnEffect();
+                    
+                    _lastSpawnedGameObject = go;
+                    OnMealAddOnScene?.Invoke(_lastSpawnedGameObject);
 
-                        CheckForTrippleSausage(_lastSpawnedGameObject);
-                        var rb = instance.Result.GetComponent<Rigidbody2D>();
+                    _lastSpawnedGameObject.GetComponent<OnTouch>().handler = instanceHandler;
+                    _lastSpawnedGameObject.GetComponent<Collectible>().mealStats.satiety = satietyOfFood;
+                    
+                    if(isFood)
+                        SetRandomSprite(_lastSpawnedGameObject,_foodAtlas, foodSprites);
 
-                        var randomXValue = Random.Range(XLowerLimit, XUpperLimit);
-                        var randomYValue = Random.Range(YLowerLimit, YUpperLimit);
+                    CheckForTripleSausage(_lastSpawnedGameObject);
+                    var rb = go.GetComponent<Rigidbody2D>();
 
-                        forceVector.x = isOppositeSpawn ? -randomXValue : randomXValue;
-                        forceVector.y = randomYValue;
+                    var randomXValue = Random.Range(XLowerLimit, XUpperLimit);
+                    var randomYValue = Random.Range(YLowerLimit, YUpperLimit);
 
-                        rb.AddForce(forceVector * BaseForceMultiplier, ForceMode2D.Impulse);
-                    };
+                    forceVector.x = isOppositeSpawn ? -randomXValue : randomXValue;
+                    forceVector.y = randomYValue;
+
+                    rb.AddForce(forceVector * BaseForceMultiplier, ForceMode2D.Impulse);
                 }
 
-                if (_lastSpawnedGameObject != null)
+                var satiety = _lastSpawnedGameObject.GetComponent<Collectible>().mealStats.satiety;
+                if (satiety > 0)
                 {
-                    var satiety = _lastSpawnedGameObject.GetComponent<MealData>().mealStats.satiety;
-                    if (satiety > 0)
-                    {
-                        OnMealSpawned?.Invoke(satiety);
-                    }
-                    else
-                    {
-                        OnBadMealSpawned?.Invoke(satiety);
-                    }
+                    OnMealSpawned?.Invoke(satiety);
+                }
+                else
+                {
+                    OnBadMealSpawned?.Invoke(satiety);
                 }
             }
             else
@@ -241,19 +239,18 @@ public class FoodSpawner : MonoBehaviour
         }
     }
 
-    private void CheckForTrippleSausage(GameObject prefab)
+    private void CheckForTripleSausage(GameObject prefab)
     {
-        if (prefab.GetComponent<SpriteRenderer>().sprite.name.Equals(TrippleSausageName))
-        {
-            prefab.GetComponent<OnTouch>().enabled = false;
-            MealDataStats stats = prefab.GetComponent<MealData>().mealStats;
-            prefab.GetComponent<MealData>().mealStats.satiety = 0;
-            prefab.AddComponent<OnTouchSpecial>();
-            OnTouchSpecial specialStats = prefab.GetComponent<OnTouchSpecial>();
-            specialStats.stats = stats;
-            specialStats.mealParent = _mealParent.transform;
-            specialStats.sausagePrefs = sausages;
-        }
+        if (!prefab.GetComponent<SpriteRenderer>().sprite.name.Equals(TripleSausageName)) return;
+        
+        Collectible.MealDataStats stats = prefab.GetComponent<Collectible>().mealStats;
+        prefab.GetComponent<Collectible>().mealStats.satiety = 0;
+        
+        OnTouch mealStats = prefab.GetComponent<OnTouch>();
+        mealStats.isTrippleSausage = true;
+        mealStats.stats = stats;
+        mealStats.mealParent = _mealParent.transform;
+        mealStats.sausagePrefs = sausages;
     }
 
 

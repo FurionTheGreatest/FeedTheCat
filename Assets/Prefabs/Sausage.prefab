@@ -4898,6 +4898,14 @@ MonoBehaviour:
     type: 3}
   isUsingParticle: 1
   isFood: 1
+  isAddressablesInstance: 0
+  sausagePrefs: []
+  stats:
+    satiety: 0
+    isFood: 0
+  mealParent: {fileID: 0}
+  _parentParticleSystem: {fileID: 0}
+  isTrippleSausage: 0
 --- !u!114 &1799680781521429401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4907,11 +4915,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 2627132978385364283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73cae67aae68a00459b7861055911f9b, type: 3}
+  m_Script: {fileID: 11500000, guid: ba2452670dba9b844bca852090629045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCollected: 0
+  onCollectEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -5850486435313160199}
+        m_MethodName: Collect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  touchCounter: 0
   mealStats:
-    satiety: 1
+    satiety: 0
+    isFood: 0
 --- !u!114 &-1636563119045581589
 MonoBehaviour:
   m_ObjectHideFlags: 0

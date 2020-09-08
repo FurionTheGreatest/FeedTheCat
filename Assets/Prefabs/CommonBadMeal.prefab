@@ -14276,11 +14276,11 @@ GameObject:
   - component: {fileID: 8305984888828029276}
   - component: {fileID: 376197181737897962}
   - component: {fileID: 6925676023220095707}
-  - component: {fileID: 6209289681029105339}
   - component: {fileID: 785177672967011663}
   - component: {fileID: -3564303869526442185}
   - component: {fileID: 8561730995865294528}
   - component: {fileID: -4021233142188243253}
+  - component: {fileID: 1498168988155018121}
   m_Layer: 8
   m_Name: CommonBadMeal
   m_TagString: BadMeal
@@ -14411,20 +14411,14 @@ MonoBehaviour:
     type: 3}
   isUsingParticle: 0
   isFood: 0
---- !u!114 &6209289681029105339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7685225320391901209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73cae67aae68a00459b7861055911f9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mealStats:
-    satiety: -3
+  isAddressablesInstance: 1
+  sausagePrefs: []
+  stats:
+    satiety: 0
+    isFood: 0
+  mealParent: {fileID: 0}
+  _parentParticleSystem: {fileID: 0}
+  isTrippleSausage: 0
 --- !u!114 &785177672967011663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14489,3 +14483,23 @@ PointEffector2D:
   m_ForceMode: 1
   m_Drag: 0
   m_AngularDrag: 0
+--- !u!114 &1498168988155018121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7685225320391901209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2452670dba9b844bca852090629045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCollected: 0
+  onCollectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  touchCounter: 0
+  mealStats:
+    satiety: -1
+    isFood: 0
