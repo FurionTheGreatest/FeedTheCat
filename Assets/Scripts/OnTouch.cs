@@ -12,14 +12,14 @@ public class OnTouch : MonoBehaviour
     public static event Action<GameObject> OnTrippleSpawn;
     public static event Action CheckForLose;
     public static event Action<GameObject> OnDestroyObject;
+    public static event Action<GameObject> OnCollect;
 
-    public bool destroyFood = false;
+    public bool destroyFood;
     [SerializeField] private float nextTimeToUpdate = 0.3f;
     
     public GameObject floatingNumberPrefab;
     public AsyncOperationHandle<GameObject> handler;
     
-    public bool isUsingParticle = true;
     public bool isFood = true;
 
     public bool isAddressablesInstance = false;
@@ -27,8 +27,7 @@ public class OnTouch : MonoBehaviour
     public GameObject[] sausagePrefs;
     public Collectible.MealDataStats stats;
     public Transform mealParent;
-    public ParticleSystem _parentParticleSystem;
-    public bool isTrippleSausage;
+    public bool isTripleSausage;
     private Transform _catMouth;
     private float _step;
     private const float Speed = 4f;
@@ -44,12 +43,11 @@ public class OnTouch : MonoBehaviour
     private const float LowerBound = -60f;
 
     private float _currentTime;
-
-    private GameObject _particleSystem;
-    private bool _isParticleSystemNotNull;
+    private VFX _vfx;
 
     private void Awake()
     {
+        _vfx = GetComponent<VFX>();
         _rb = gameObject.GetComponent<Rigidbody2D>();
         _sprite = GetComponent<SpriteRenderer>();
         _collider2D = GetComponent<CircleCollider2D>();
@@ -58,26 +56,18 @@ public class OnTouch : MonoBehaviour
 
     private void Start()
     {
-        if (isUsingParticle)
-        {
-            _particleSystem = gameObject.GetComponentInChildren<ParticleSystem>(true).gameObject;
-            _isParticleSystemNotNull = _particleSystem != null;
-        }
         _catMouth = GameObject.Find("Mouth").transform;
         _step = Speed * Time.deltaTime;
-        
-        _parentParticleSystem = GetComponentInChildren<ParticleSystem>();
     }
     
     public void Collect()
     {
-        if (isTrippleSausage)
+        if (isTripleSausage)
         {
-            for (var i = 0; i < sausagePrefs.Length; i++)
+            foreach (var obj in sausagePrefs)
             {
-                var obj = sausagePrefs[i];
                 obj.GetComponent<Collectible>().mealStats = stats;
-                FallApart(obj, 5f, 1.5f, i);
+                FallApart(obj);
             }
             DestroyObject();
             return;
@@ -100,6 +90,8 @@ public class OnTouch : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, _catMouth.position, _step);
             yield return Yielders.FixedUpdate;
         }
+        OnCollect?.Invoke(gameObject);
+
         DestroyObject();
     }
 
@@ -134,8 +126,8 @@ public class OnTouch : MonoBehaviour
 
     private IEnumerator BeforeDestroy(float alphaOfMeal)
     {
-        if(_isParticleSystemNotNull)
-            _particleSystem.SetActive(false);
+        if(_vfx.IsVfxEnabled())
+            _vfx.DisableParticleSystem();
         
         var alpha = _sprite.color;
         while (alpha.a >= alphaOfMeal)
@@ -161,9 +153,10 @@ public class OnTouch : MonoBehaviour
             text.text = satiety.ToString();
     }
     
-    private void FallApart(GameObject prefab, float heightForce, float widthForce, int indexOfPrefab)
+    private void FallApart(GameObject prefab)
     {
-        GameObject instantiatedObj = Instantiate(prefab, gameObject.transform.position, Quaternion.identity, mealParent);//instantiatedObj.GetComponentInChildren<ParticleSystem>();
+        GameObject instantiatedObj = Instantiate(prefab, gameObject.transform.position, Quaternion.identity, mealParent);
+        instantiatedObj.GetComponent<SpawnedObjectPhysics>().isSpawnedFromAnotherObject = true;
         OnTrippleSpawn?.Invoke(instantiatedObj);
         var particle = instantiatedObj.GetComponentInChildren<ParticleSystem>();
         
@@ -171,33 +164,13 @@ public class OnTouch : MonoBehaviour
         shapeOfParticle.sprite = instantiatedObj.GetComponent<SpriteRenderer>().sprite;
         
         var color = particle.main;
-        color.startColor = _parentParticleSystem.main.startColor;
+        color.startColor = _vfx.particleFx.GetComponent<ParticleSystem>().main.startColor;
         
         var emitter = particle.emission;
         emitter.enabled = true;
-        
-        var rb = instantiatedObj.GetComponent<Rigidbody2D>();
-
-        Vector2 forceVector;
-        forceVector.x = widthForce;
-        switch (indexOfPrefab)
-        {
-            case 0:
-                forceVector.x = -widthForce;
-                break;
-            case 1:
-                forceVector.x = 0;
-                break;
-            case 2:
-                forceVector.x = widthForce;
-                break;
-        }
-        forceVector.y = heightForce;
-
-        rb.AddForce(forceVector, ForceMode2D.Impulse);// * BaseForceMultiplier
     }
 
-    private void DestroyObject()
+    public void DestroyObject()
     {
         OnDestroyObject?.Invoke(gameObject);
         

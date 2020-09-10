@@ -126,7 +126,7 @@ public class UIController : MonoBehaviour
     
     private void OnEnable()
     {
-        Collectible.OnCollect += UpdateSatietySliderValue;
+        OnTouch.OnCollect += UpdateSatietySliderValue;
         FoodSpawner.OnMealSpawned += UpdateFoodMachineSatietySliderValue;
         FoodSupplyManager.OnLose += EnableLoseScreen;
         FoodSupplyManager.OnWin += EnableWinScreen;
@@ -134,7 +134,7 @@ public class UIController : MonoBehaviour
     
     private void OnDisable()
     {
-        Collectible.OnCollect -= UpdateSatietySliderValue;
+        OnTouch.OnCollect -= UpdateSatietySliderValue;
         FoodSpawner.OnMealSpawned -= UpdateFoodMachineSatietySliderValue;
         FoodSupplyManager.OnLose -= EnableLoseScreen;
         FoodSupplyManager.OnWin -= EnableWinScreen;

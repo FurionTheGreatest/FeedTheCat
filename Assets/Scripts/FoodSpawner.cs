@@ -9,40 +9,38 @@ using Random = UnityEngine.Random;
 
 public class FoodSpawner : MonoBehaviour
 {
+    [Header("Food machine options")]
+    
+    public bool isOppositeSpawn;
+    public AssetReference spawnParticle;
+    
+    [Header("Food sprites")]
+    
+    public AssetReference spriteAtlas;
+    public Sprite[] foodSprites;
     public static event Action<int> OnMealSpawned;
     public static event Action<GameObject> OnMealAddOnScene;
     public static event Action<int> OnBadMealSpawned;
-
+    
+    [Header("Random spawn rarity values")]
+    
     public int minRandomValue;
     public int maxRandomValue;
-    [Header("Broken MachineEvent")]
+    
+    [Header("Broken machine event")]
+    
     public bool isBrokenMachineEventEnabled = true;
     public bool _isBroken;
     public Material litDefaultMaterial;
     public Material brokenRedMaterial;
 
-    public int minMachineEventRandomValue = 10;
-    public int maxMachineEventRandomValue = 20;
-
-    public AssetReference spriteAtlas;
-    public Sprite[] foodSprites;
-    
-    public bool isOppositeSpawn;
-
-    public AssetReference spawnParticle;
-    
+    public int minMachineEventBeginningTime = 10;
+    public int maxMachineEventBeginningTime = 20;
+    [Header("Special options")]
     public GameObject[] sausages;
 
     private FoodSupplyManager _foodSupplyManager;
     private GameObject _mealParent;
-    private const float BaseForceMultiplier = 4f;
-
-    [SerializeField] private Vector2 forceVector = new Vector2(.2f,3f);
-    private const float XLowerLimit = 0f;
-    private const float XUpperLimit = 1.5f;
-    
-    private const float YLowerLimit = 2f;
-    private const float YUpperLimit = 4f;
 
     private const float MinDelayForSpawn = 1f;
     private const float MaxDelayForSpawn = 3f;
@@ -114,7 +112,7 @@ public class FoodSpawner : MonoBehaviour
     #region BrokenMachineEvent
     private float RandomTimeForMachineEvent()
     {
-        var randomTimeValue = Random.Range(minMachineEventRandomValue, maxMachineEventRandomValue);
+        var randomTimeValue = Random.Range(minMachineEventBeginningTime, maxMachineEventBeginningTime);
         return randomTimeValue;
     }
 
@@ -191,15 +189,7 @@ public class FoodSpawner : MonoBehaviour
                         SetRandomSprite(_lastSpawnedGameObject,_foodAtlas, foodSprites);
 
                     CheckForTripleSausage(_lastSpawnedGameObject);
-                    var rb = go.GetComponent<Rigidbody2D>();
 
-                    var randomXValue = Random.Range(XLowerLimit, XUpperLimit);
-                    var randomYValue = Random.Range(YLowerLimit, YUpperLimit);
-
-                    forceVector.x = isOppositeSpawn ? -randomXValue : randomXValue;
-                    forceVector.y = randomYValue;
-
-                    rb.AddForce(forceVector * BaseForceMultiplier, ForceMode2D.Impulse);
                 }
 
                 var satiety = _lastSpawnedGameObject.GetComponent<Collectible>().mealStats.satiety;
@@ -247,7 +237,7 @@ public class FoodSpawner : MonoBehaviour
         prefab.GetComponent<Collectible>().mealStats.satiety = 0;
         
         OnTouch mealStats = prefab.GetComponent<OnTouch>();
-        mealStats.isTrippleSausage = true;
+        mealStats.isTripleSausage = true;
         mealStats.stats = stats;
         mealStats.mealParent = _mealParent.transform;
         mealStats.sausagePrefs = sausages;

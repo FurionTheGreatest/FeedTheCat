@@ -25,12 +25,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715067052724555014}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.106, y: 0.411, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.019999996, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7685225320391901191}
-  m_RootOrder: 2
+  m_Father: {fileID: 8444617946328403182}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &2898312612699213899
 ParticleSystem:
@@ -4766,7 +4766,7 @@ GameObject:
   - component: {fileID: 1872832786825090175}
   - component: {fileID: 5322742946753210155}
   m_Layer: 8
-  m_Name: Fog
+  m_Name: FX_Fuze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4782,7 +4782,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.086, y: 0.417, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4290101335176367583}
+  - {fileID: 863044637016209227}
   m_Father: {fileID: 7685225320391901191}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4976,7 +4978,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0, b: 0, a: 0.11764706}
+      maxColor: {r: 0, g: 0, b: 0, a: 0.18431373}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5420,7 +5422,7 @@ ParticleSystem:
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: -0, y: 0, z: 0}
+    m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 2
     m_MeshMaterialIndex: 0
@@ -9534,12 +9536,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6455611197465705621}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.113, y: 0.417, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.026999995, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7685225320391901191}
-  m_RootOrder: 1
+  m_Father: {fileID: 8444617946328403182}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &6621519343696207295
 ParticleSystem:
@@ -14281,6 +14283,8 @@ GameObject:
   - component: {fileID: 8561730995865294528}
   - component: {fileID: -4021233142188243253}
   - component: {fileID: 1498168988155018121}
+  - component: {fileID: 1345164793182515244}
+  - component: {fileID: 8165235321750737508}
   m_Layer: 8
   m_Name: CommonBadMeal
   m_TagString: BadMeal
@@ -14300,8 +14304,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8444617946328403182}
-  - {fileID: 4290101335176367583}
-  - {fileID: 863044637016209227}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14409,7 +14411,6 @@ MonoBehaviour:
   nextTimeToUpdate: 0.1
   floatingNumberPrefab: {fileID: 8867624307045739565, guid: 365e49dc61a34a84a8a39ff9e164d10d,
     type: 3}
-  isUsingParticle: 0
   isFood: 0
   isAddressablesInstance: 1
   sausagePrefs: []
@@ -14417,8 +14418,7 @@ MonoBehaviour:
     satiety: 0
     isFood: 0
   mealParent: {fileID: 0}
-  _parentParticleSystem: {fileID: 0}
-  isTrippleSausage: 0
+  isTripleSausage: 0
 --- !u!114 &785177672967011663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14445,8 +14445,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   areaToForce: {fileID: 8561730995865294528}
   forceField: {fileID: -4021233142188243253}
-  explosionPrefab: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56,
-    type: 3}
+  explosionPrefab:
+    m_AssetGUID: 46876a2780737ec45a19d62f88e5ce56
+    m_SubObjectName: 
 --- !u!58 &8561730995865294528
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14503,3 +14504,30 @@ MonoBehaviour:
   mealStats:
     satiety: -1
     isFood: 0
+--- !u!114 &1345164793182515244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7685225320391901209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2684ca3ba2f2b844aa1821b8b227ddc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceVector: {x: 0.2, y: 3}
+  isSpawnedFromAnotherObject: 0
+--- !u!114 &8165235321750737508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7685225320391901209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1198a96e642027b488471345e023a3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleFx: {fileID: 0}

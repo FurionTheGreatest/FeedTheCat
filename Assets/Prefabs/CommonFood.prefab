@@ -4770,6 +4770,8 @@ GameObject:
   - component: {fileID: -5850486435313160199}
   - component: {fileID: -1636563119045581589}
   - component: {fileID: 2907605489126623765}
+  - component: {fileID: 3544242979528286604}
+  - component: {fileID: 102856720140979518}
   m_Layer: 8
   m_Name: CommonFood
   m_TagString: Meal
@@ -4896,7 +4898,6 @@ MonoBehaviour:
   nextTimeToUpdate: 0.1
   floatingNumberPrefab: {fileID: 8867624307045739565, guid: 365e49dc61a34a84a8a39ff9e164d10d,
     type: 3}
-  isUsingParticle: 1
   isFood: 1
   isAddressablesInstance: 1
   sausagePrefs: []
@@ -4904,8 +4905,7 @@ MonoBehaviour:
     satiety: 0
     isFood: 0
   mealParent: {fileID: 0}
-  _parentParticleSystem: {fileID: 0}
-  isTrippleSausage: 0
+  isTripleSausage: 0
 --- !u!114 &-1636563119045581589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4949,3 +4949,30 @@ MonoBehaviour:
   mealStats:
     satiety: 1
     isFood: 1
+--- !u!114 &3544242979528286604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2627132978385364283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2684ca3ba2f2b844aa1821b8b227ddc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceVector: {x: 0.2, y: 3}
+  isSpawnedFromAnotherObject: 0
+--- !u!114 &102856720140979518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2627132978385364283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1198a96e642027b488471345e023a3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleFx: {fileID: 0}

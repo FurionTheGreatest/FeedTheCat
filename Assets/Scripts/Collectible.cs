@@ -7,7 +7,6 @@ using UnityEngine.Events;
 public class Collectible : MonoBehaviour
 {
     public bool isCollected;
-    public static event Action<GameObject> OnCollect;
     public UnityEvent onCollectEvent;
     public int touchCounter = 0;
     [Serializable] public struct MealDataStats
@@ -31,7 +30,6 @@ public class Collectible : MonoBehaviour
             touchCounter--;
         if (touchCounter != 0) return;
         isCollected = true;
-        OnCollect?.Invoke(gameObject);
         onCollectEvent.Invoke();
     }
 }
