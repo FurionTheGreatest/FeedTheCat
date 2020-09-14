@@ -4946,6 +4946,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   touchCounter: 0
+  iceAnimators: []
   mealStats:
     satiety: 1
     isFood: 1

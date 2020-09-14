@@ -53,6 +53,7 @@ public class FoodSpawner : MonoBehaviour
     
     public const int CommonBadMealChanceToSpawn = -12;
     public const int RareBadMealChanceToSpawn = -18;
+    private const int SnowflakeChanceToSpawn = -19;
     private const int BombBadMealChanceToSpawn = -20;
 
     private SpriteRenderer _machineSpriteRenderer;
@@ -161,6 +162,8 @@ public class FoodSpawner : MonoBehaviour
                 FoodInstantiate(_foodSupplyManager.badMealPrefabs[0],_foodSupplyManager.CommonBadFoodSatiety,false);
             else if (randomMealValue < 0 && randomMealValue >= RareBadMealChanceToSpawn)
                 FoodInstantiate(_foodSupplyManager.badMealPrefabs[1],_foodSupplyManager.RareBadFoodSatiety,false);
+            else if (randomMealValue < 0 && randomMealValue >= SnowflakeChanceToSpawn)
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[3],0,false);
             else if (randomMealValue < 0 && randomMealValue >= BombBadMealChanceToSpawn)
                 FoodInstantiate(_foodSupplyManager.badMealPrefabs[2],_foodSupplyManager.MythBadFoodSatiety,false);
         }
@@ -183,13 +186,13 @@ public class FoodSpawner : MonoBehaviour
                     OnMealAddOnScene?.Invoke(_lastSpawnedGameObject);
 
                     _lastSpawnedGameObject.GetComponent<OnTouch>().handler = instanceHandler;
-                    _lastSpawnedGameObject.GetComponent<Collectible>().mealStats.satiety = satietyOfFood;
+                    if(_lastSpawnedGameObject.GetComponent<Collectible>() != null)
+                        _lastSpawnedGameObject.GetComponent<Collectible>().mealStats.satiety = satietyOfFood;
                     
                     if(isFood)
                         SetRandomSprite(_lastSpawnedGameObject,_foodAtlas, foodSprites);
 
                     CheckForTripleSausage(_lastSpawnedGameObject);
-
                 }
 
                 var satiety = _lastSpawnedGameObject.GetComponent<Collectible>().mealStats.satiety;

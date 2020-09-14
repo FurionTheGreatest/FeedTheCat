@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 863044637016209227}
   - component: {fileID: 2898312612699213899}
   - component: {fileID: 5002455905475313325}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4765,7 +4765,7 @@ GameObject:
   - component: {fileID: 8444617946328403182}
   - component: {fileID: 1872832786825090175}
   - component: {fileID: 5322742946753210155}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: FX_Fuze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9522,7 +9522,7 @@ GameObject:
   - component: {fileID: 4290101335176367583}
   - component: {fileID: 6621519343696207295}
   - component: {fileID: 3863727172312524605}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Flare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14285,7 +14285,7 @@ GameObject:
   - component: {fileID: 1498168988155018121}
   - component: {fileID: 1345164793182515244}
   - component: {fileID: 8165235321750737508}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: CommonBadMeal
   m_TagString: BadMeal
   m_Icon: {fileID: 0}
@@ -14501,6 +14501,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   touchCounter: 0
+  iceAnimators: []
   mealStats:
     satiety: -1
     isFood: 0

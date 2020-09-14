@@ -21,10 +21,8 @@ MonoBehaviour:
     m_Address: CFX_Explosion_B_Smoke+Text.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56,
-      type: 3}
-    m_TargetAsset: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: 4adffb0018aeda44e9263f901167af1f
     m_Address: CFX_Firework_Trails_Gravity.prefab
     m_ReadOnly: 0
@@ -33,6 +31,12 @@ MonoBehaviour:
     m_TargetAsset: {fileID: 0}
   - m_GUID: a40b64bf23366dc42a892af2c6ff6140
     m_Address: CFX_MagicPoof
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ac456505e8e0e344590e6ea6e09b02d7
+    m_Address: Assets/Prefabs/CFX3_Snow_Explosion.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}

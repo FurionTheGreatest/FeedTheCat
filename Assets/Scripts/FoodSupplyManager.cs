@@ -6,6 +6,7 @@ using UnityEngine.AddressableAssets;
 
 public class FoodSupplyManager : MonoBehaviour
 {
+    public static FoodSupplyManager Instance;
     public static event Action<bool> OnLose;
     public static event Action OnWin;
     [Header("Prefabs")]
@@ -51,9 +52,11 @@ public class FoodSupplyManager : MonoBehaviour
     private void Start()
     {
         _spawns = FindObjectsOfType<FoodSpawner>();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
     }
-    
-
     private void AddCatSatiety(GameObject obj)
     {
         var satiety = obj.GetComponent<Collectible>().mealStats.satiety;

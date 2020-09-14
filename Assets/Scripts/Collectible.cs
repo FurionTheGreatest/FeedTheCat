@@ -2,13 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 
 public class Collectible : MonoBehaviour
 {
     public bool isCollected;
     public UnityEvent onCollectEvent;
-    public int touchCounter = 0;
+    public int touchCounter;
+
+    private int _iceBreakTrigger = Animator.StringToHash("IceBreak");
+    public List<Animator> iceAnimators;
+
+    public void Start()
+    {
+        touchCounter = 0;
+    }
+
     [Serializable] public struct MealDataStats
     {
         //public string name;
@@ -27,9 +37,20 @@ public class Collectible : MonoBehaviour
     private void OnMouseDown()
     {
         if (touchCounter > 0)
+        {
             touchCounter--;
+            PlayIceBreakEffect();
+            return;
+        }
         if (touchCounter != 0) return;
         isCollected = true;
         onCollectEvent.Invoke();
+    }
+
+    private void PlayIceBreakEffect()
+    {
+        var animator = iceAnimators[0];
+        animator.SetTrigger(_iceBreakTrigger);
+        iceAnimators.RemoveAt(0);
     }
 }
