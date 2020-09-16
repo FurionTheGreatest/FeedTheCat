@@ -187,10 +187,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d749de6fb90eb439396fe91c6015e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCollectedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   destroyFood: 0
   nextTimeToUpdate: 0.3
   floatingNumberPrefab: {fileID: 0}
   isFood: 0
+  isFreezeEvent: 0
   isAddressablesInstance: 1
   sausagePrefs: []
   stats:

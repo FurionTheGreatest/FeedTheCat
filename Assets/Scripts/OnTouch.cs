@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Events;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Vector3 = UnityEngine.Vector3;
 
@@ -13,6 +14,8 @@ public class OnTouch : MonoBehaviour
     public static event Action CheckForLose;
     public static event Action<GameObject> OnDestroyObject;
     public static event Action<GameObject> OnCollect;
+    
+    public UnityEvent isCollectedEvent;
 
     public bool destroyFood;
     [SerializeField] private float nextTimeToUpdate = 0.3f;
@@ -20,7 +23,8 @@ public class OnTouch : MonoBehaviour
     public GameObject floatingNumberPrefab;
     public AsyncOperationHandle<GameObject> handler;
     
-    public bool isFood = true;
+    public bool isCollectible = true;
+    public bool isFreezeEvent = false;
 
     public bool isAddressablesInstance = false;
     [Header("SpecialOptions")]
@@ -81,7 +85,7 @@ public class OnTouch : MonoBehaviour
     
     private IEnumerator TranslateMealToMouth()
     {
-        if(!GetComponent<Collectible>().mealStats.isFood) yield break;
+        if(!isCollectible) yield break;
         _collider2D.enabled = false;
         _rb.bodyType = RigidbodyType2D.Static;
 
@@ -90,9 +94,16 @@ public class OnTouch : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, _catMouth.position, _step);
             yield return Yielders.FixedUpdate;
         }
-        OnCollect?.Invoke(gameObject);
-
-        DestroyObject();
+        if (!isFreezeEvent)
+        {
+            OnCollect?.Invoke(gameObject);
+            isCollectedEvent.Invoke();
+            DestroyObject();
+        }
+        else
+        {
+            Reject();
+        }
     }
 
     private void Update()
@@ -170,6 +181,16 @@ public class OnTouch : MonoBehaviour
         emitter.enabled = true;
     }
 
+    private void CatFreezeEvent(bool isFreezed)
+    {
+        isFreezeEvent = isFreezed;
+    }
+
+    private void Reject()
+    {
+        GetComponent<SpawnedObjectPhysics>().RejectFood();
+    }
+
     public void DestroyObject()
     {
         OnDestroyObject?.Invoke(gameObject);
@@ -178,6 +199,15 @@ public class OnTouch : MonoBehaviour
             Addressables.ReleaseInstance(gameObject);
         else
             Destroy(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        CatController.OnFreeze += CatFreezeEvent;
+    }
+    private void OnDisable()
+    {
+        CatController.OnFreeze -= CatFreezeEvent;
     }
 
     /*private void OnDestroy()

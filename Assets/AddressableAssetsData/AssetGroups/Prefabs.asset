@@ -18,6 +18,14 @@ MonoBehaviour:
   m_GUID: 85e32b6df7f80cb4c81832e35d9705eb
   m_SerializeEntries:
   - m_GUID: 0412ce9f670ee5b43a5929fb6adeb937
+    m_Address: Assets/Prefabs/IceShell.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4819860256003887117, guid: 0412ce9f670ee5b43a5929fb6adeb937,
+      type: 3}
+    m_TargetAsset: {fileID: 4819860256003887117, guid: 0412ce9f670ee5b43a5929fb6adeb937,
+      type: 3}
+  - m_GUID: 0d48db6fdeef25f4eb3b13d47dd11638
     m_Address: Assets/Prefabs/Ice.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []

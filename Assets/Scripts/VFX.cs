@@ -9,7 +9,8 @@ public class VFX : MonoBehaviour
     
     private void Start()
     {
-        particleFx = gameObject.GetComponentInChildren<ParticleSystem>(true).gameObject;
+        particleFx = gameObject.GetComponentInChildren<ParticleSystem>(true) != null 
+            ? gameObject.GetComponentInChildren<ParticleSystem>(true).gameObject : null;
         _isParticleSystemNotNull = particleFx != null;
     }
 
@@ -21,6 +22,6 @@ public class VFX : MonoBehaviour
 
     public bool IsVfxEnabled()
     {
-        return particleFx.activeInHierarchy;
+        return _isParticleSystemNotNull && particleFx.activeInHierarchy;
     }
 }

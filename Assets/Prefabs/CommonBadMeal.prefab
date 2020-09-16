@@ -14407,11 +14407,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d749de6fb90eb439396fe91c6015e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCollectedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   destroyFood: 0
   nextTimeToUpdate: 0.1
   floatingNumberPrefab: {fileID: 8867624307045739565, guid: 365e49dc61a34a84a8a39ff9e164d10d,
     type: 3}
-  isFood: 0
+  isCollectible: 0
+  isFreezeEvent: 0
   isAddressablesInstance: 1
   sausagePrefs: []
   stats:

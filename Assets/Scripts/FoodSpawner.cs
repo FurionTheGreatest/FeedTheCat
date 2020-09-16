@@ -52,8 +52,9 @@ public class FoodSpawner : MonoBehaviour
     private const int LegendMealChanceToSpawn = 80;
     
     public const int CommonBadMealChanceToSpawn = -12;
-    public const int RareBadMealChanceToSpawn = -18;
-    private const int SnowflakeChanceToSpawn = -19;
+    public const int RareBadMealChanceToSpawn = -17;
+    private const int SnowflakeChanceToSpawn = -18;
+    private const int IceChanceToSpawn = -19;
     private const int BombBadMealChanceToSpawn = -20;
 
     private SpriteRenderer _machineSpriteRenderer;
@@ -159,17 +160,19 @@ public class FoodSpawner : MonoBehaviour
             }
 
             if (randomMealValue < 0 && randomMealValue >= CommonBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[0],_foodSupplyManager.CommonBadFoodSatiety,false);
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[0],_foodSupplyManager.CommonBadFoodSatiety);
             else if (randomMealValue < 0 && randomMealValue >= RareBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[1],_foodSupplyManager.RareBadFoodSatiety,false);
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[1],_foodSupplyManager.RareBadFoodSatiety);
             else if (randomMealValue < 0 && randomMealValue >= SnowflakeChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[3],0,false);
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[3],0);
+            else if (randomMealValue < 0 && randomMealValue >= IceChanceToSpawn)
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[4],0);
             else if (randomMealValue < 0 && randomMealValue >= BombBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[2],_foodSupplyManager.MythBadFoodSatiety,false);
+                FoodInstantiate(_foodSupplyManager.badMealPrefabs[2],_foodSupplyManager.MythBadFoodSatiety);
         }
     }
 
-    private void FoodInstantiate(AssetReference prefab, int satietyOfFood, bool isFood = true)
+    private void FoodInstantiate(AssetReference prefab, int satietyOfFood)
     {
         Addressables.LoadAssetAsync<GameObject>(prefab).Completed += async handle =>
         {
@@ -189,7 +192,7 @@ public class FoodSpawner : MonoBehaviour
                     if(_lastSpawnedGameObject.GetComponent<Collectible>() != null)
                         _lastSpawnedGameObject.GetComponent<Collectible>().mealStats.satiety = satietyOfFood;
                     
-                    if(isFood)
+                    if(_lastSpawnedGameObject.GetComponent<Collectible>().mealStats.isFood)
                         SetRandomSprite(_lastSpawnedGameObject,_foodAtlas, foodSprites);
 
                     CheckForTripleSausage(_lastSpawnedGameObject);

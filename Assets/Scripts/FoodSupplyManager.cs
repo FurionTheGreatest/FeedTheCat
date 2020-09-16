@@ -196,14 +196,14 @@ public class FoodSupplyManager : MonoBehaviour
 
     private void AddFoodToList(GameObject food)
     {
-        if(food.GetComponent<OnTouch>().isFood)
+        if(food.GetComponent<OnTouch>().isCollectible)
             foodOnScene.Add(food);
         else
             bombsOnScene.Add(food);
     }
     private void RemoveFoodFromList(GameObject food)
     {
-        if (food.GetComponent<OnTouch>().isFood)
+        if (food.GetComponent<OnTouch>().isCollectible)
         {
             if (foodOnScene.Contains(food))
             {

@@ -17,16 +17,26 @@ public class SpawnedObjectPhysics : MonoBehaviour
     private const float YUpperLimit = 4f;
     
     private FoodSpawner _foodSpawner;
+    private Rigidbody2D _objRigidBody;
+
 
     private void Awake()
     {
         _foodSpawner = GetComponentInParent<FoodSpawner>();
+        _objRigidBody = gameObject.GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
-        var rb = gameObject.GetComponent<Rigidbody2D>();
+        SpawnedObjectForce();
+    }
+    public void RejectFood()
+    {
+        SpawnedObjectForce(3f);
+    }
 
+    private void SpawnedObjectForce()
+    {
         var randomXValue = Random.Range(XLowerLimit, XUpperLimit);
         var randomYValue = Random.Range(YLowerLimit, YUpperLimit);
         
@@ -42,6 +52,30 @@ public class SpawnedObjectPhysics : MonoBehaviour
 
             _baseForceMultiplier /= 2f;
         }
-        rb.AddForce(forceVector * _baseForceMultiplier, ForceMode2D.Impulse);
+        _objRigidBody.bodyType = RigidbodyType2D.Dynamic;
+
+        _objRigidBody.AddForce(forceVector * _baseForceMultiplier, ForceMode2D.Impulse);
     }
+    private void SpawnedObjectForce(float decreaseValue)
+    {
+        var randomXValue = Random.Range(XLowerLimit, XUpperLimit);
+        var randomYValue = Random.Range(YLowerLimit, YUpperLimit);
+        
+        if(_foodSpawner != null && !isSpawnedFromAnotherObject)
+        {
+            forceVector.x = _foodSpawner.isOppositeSpawn ? -randomXValue : randomXValue;
+        }
+        forceVector.y = randomYValue;
+        
+        if (isSpawnedFromAnotherObject)
+        {
+            forceVector.x = Random.Range(-randomXValue ,randomXValue);
+
+            _baseForceMultiplier /= 2f;
+        }
+        _objRigidBody.bodyType = RigidbodyType2D.Dynamic;
+
+        _objRigidBody.AddForce(forceVector * _baseForceMultiplier / decreaseValue, ForceMode2D.Impulse);
+    }
+    
 }
