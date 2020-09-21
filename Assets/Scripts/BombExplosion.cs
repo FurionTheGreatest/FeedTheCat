@@ -18,7 +18,7 @@ public class BombExplosion : MonoBehaviour
     private Quaternion _explosionRotation;
     private const float MaxRotationValue = 60f;
 
-    private void OnMouseDown()
+    public void Explosion()
     {
         GetComponent<VFX>().DisableParticleSystem();
         GetComponent<SpriteRenderer>().enabled = false;

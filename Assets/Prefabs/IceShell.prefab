@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4819860256003887116}
   - component: {fileID: 8926726530266280940}
   m_Layer: 0
-  m_Name: Ice
+  m_Name: IceShell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

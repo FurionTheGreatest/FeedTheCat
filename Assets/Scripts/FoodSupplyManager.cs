@@ -155,11 +155,15 @@ public class FoodSupplyManager : MonoBehaviour
         }
         foodOnScene.Clear();
         bombsOnScene.Clear();
+        if (foodOnScene.Count == 0 && bombsOnScene.Count == 0) return;
+        foodOnScene.Clear();
+        bombsOnScene.Clear();
     }
 
     private void CheckForLoseCondition()
     {
-        var sceneSatiety = foodOnScene.Sum(food => food.GetComponent<Collectible>().mealStats.satiety);
+        var sceneSatiety = foodOnScene.Where(food => food != null).Sum(food => food.GetComponent<Collectible>().mealStats.satiety);
+
         if (_currentCatSatiety + _currentFoodMachineSatiety + sceneSatiety < maxCatSatiety)
         {
             ClearFoodTable();
@@ -190,20 +194,20 @@ public class FoodSupplyManager : MonoBehaviour
         }
         else
         {
-            _isFoodOnSceneEnd = true; 
+            _isFoodOnSceneEnd = true;
         }
     }
 
     private void AddFoodToList(GameObject food)
     {
-        if(food.GetComponent<OnTouch>().isCollectible)
+        if(food.GetComponent<Collectible>().mealStats.isFood)
             foodOnScene.Add(food);
         else
             bombsOnScene.Add(food);
     }
     private void RemoveFoodFromList(GameObject food)
     {
-        if (food.GetComponent<OnTouch>().isCollectible)
+        if (food.GetComponent<Collectible>().mealStats.isFood)
         {
             if (foodOnScene.Contains(food))
             {

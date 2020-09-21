@@ -13,7 +13,7 @@ public class FreezeField : MonoBehaviour
     public LayerMask mask;
     public Collider2D[] results;
 
-    private void OnMouseDown()
+    public void Freeze()
     {
         GetComponent<VFX>().DisableParticleSystem();
         GetComponent<SpriteRenderer>().enabled = false;
@@ -52,9 +52,7 @@ public class FreezeField : MonoBehaviour
 
             yield return new WaitUntil(() => ps.isPlaying == false);
         }
-        
-        Addressables.ReleaseInstance(gameObject);
-        Destroy(gameObject);
+        GetComponent<OnTouch>().DestroyObject();
     }
 
     private void InstantiateIce(Transform parent)

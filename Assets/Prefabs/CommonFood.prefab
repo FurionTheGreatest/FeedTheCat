@@ -4901,7 +4901,7 @@ MonoBehaviour:
   nextTimeToUpdate: 0.1
   floatingNumberPrefab: {fileID: 8867624307045739565, guid: 365e49dc61a34a84a8a39ff9e164d10d,
     type: 3}
-  isFood: 1
+  isCollectible: 1
   isFreezeEvent: 0
   isAddressablesInstance: 1
   sausagePrefs: []

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CatController : MonoBehaviour
@@ -23,10 +22,15 @@ public class CatController : MonoBehaviour
     
     private IEnumerator FreezeEvent()
     {
+        var time = DateTime.Now; 
+        Debug.Log("freezed");
         isFreezed = true;
         catIceShell.SetActive(true);
         OnFreeze?.Invoke(isFreezed);
         yield return Yielders.Get(freezeTime);
+        var elapsed = DateTime.Now;
+        var difference = elapsed - time;
+        Debug.Log(difference + " not freezed");
         isFreezed = false;
         catIceShell.SetActive(false);
         OnFreeze?.Invoke(isFreezed);
