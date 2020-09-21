@@ -13,6 +13,7 @@ public class FoodSpawner : MonoBehaviour
     
     public bool isOppositeSpawn;
     public AssetReference spawnParticle;
+    private RandomObjectSelector _selector;
     
     [Header("Food sprites")]
     
@@ -21,12 +22,7 @@ public class FoodSpawner : MonoBehaviour
     public static event Action<int> OnMealSpawned;
     public static event Action<GameObject> OnMealAddOnScene;
     public static event Action<int> OnBadMealSpawned;
-    
-    [Header("Random spawn rarity values")]
-    
-    public int minRandomValue;
-    public int maxRandomValue;
-    
+
     [Header("Broken machine event")]
     
     public bool isBrokenMachineEventEnabled = true;
@@ -46,7 +42,7 @@ public class FoodSpawner : MonoBehaviour
     private const float MaxDelayForSpawn = 3f;
     private const float RepeatRate = 2f;
 
-    public const int CommonMealChanceToSpawn = 40;
+    /*public const int CommonMealChanceToSpawn = 40;
     public const int RareMealChanceToSpawn = 60;
     public const int MythMealChanceToSpawn = 75;
     private const int LegendMealChanceToSpawn = 80;
@@ -55,7 +51,7 @@ public class FoodSpawner : MonoBehaviour
     public const int RareBadMealChanceToSpawn = -17;
     private const int SnowflakeChanceToSpawn = -18;
     private const int IceChanceToSpawn = -19;
-    private const int BombBadMealChanceToSpawn = -20;
+    private const int BombBadMealChanceToSpawn = -20;*/
 
     private SpriteRenderer _machineSpriteRenderer;
     //public AssetReference bombAtlas;
@@ -66,13 +62,15 @@ public class FoodSpawner : MonoBehaviour
     private const string TripleSausageName = "tripple_sausage(Clone)";
     private GameObject _lastSpawnedGameObject;
 
+    private void Awake()
+    {
+        _selector = GetComponent<RandomObjectSelector>();
+    }
+
     private IEnumerator Start()
     {
         _foodSupplyManager = FindObjectOfType<FoodSupplyManager>();
         _machineSpriteRenderer = GetComponent<SpriteRenderer>();
-        
-        minRandomValue = BombBadMealChanceToSpawn;
-        maxRandomValue = LegendMealChanceToSpawn;
 
         _mealParent = transform.GetChild(0).gameObject;
 
@@ -134,41 +132,19 @@ public class FoodSpawner : MonoBehaviour
     #region SpawnFood
     private void SpawnFood()
     {
-        var randomMealValue = Random.Range(minRandomValue, maxRandomValue);
-        if (randomMealValue >= 0 && randomMealValue <= CommonMealChanceToSpawn)
+        if (_selector.IsGoodObject())
         {
-            FoodInstantiate(_foodSupplyManager.mealPrefabs[0], _foodSupplyManager.CommonFoodSatiety);
-        }
-        else if (randomMealValue > 0 && randomMealValue <= RareMealChanceToSpawn)
-        {
-            FoodInstantiate(_foodSupplyManager.mealPrefabs[1],_foodSupplyManager.RareFoodSatiety);
-        }
-        else if (randomMealValue > 0 && randomMealValue <= MythMealChanceToSpawn)
-        {
-            FoodInstantiate(_foodSupplyManager.mealPrefabs[2], _foodSupplyManager.MythFoodSatiety);
-        }
-        else if (randomMealValue > 0 && randomMealValue <= LegendMealChanceToSpawn)
-        {
-            FoodInstantiate(_foodSupplyManager.mealPrefabs[3],_foodSupplyManager.LegendFoodSatiety);
+            var index = _selector.SelectObjectFromTable(_selector.goodObjectPercentTable);
+            FoodInstantiate(_foodSupplyManager.mealPrefabs[index], _foodSupplyManager.mealSatietyList[index]);
         }
         else
         {
             if (!_foodSupplyManager.isBadMealNotEmpty)
             {
-                minRandomValue = 0;
                 return;
             }
-
-            if (randomMealValue < 0 && randomMealValue >= CommonBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[0],_foodSupplyManager.CommonBadFoodSatiety);
-            else if (randomMealValue < 0 && randomMealValue >= RareBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[1],_foodSupplyManager.RareBadFoodSatiety);
-            else if (randomMealValue < 0 && randomMealValue >= SnowflakeChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[3],0);
-            else if (randomMealValue < 0 && randomMealValue >= IceChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[4],0);
-            else if (randomMealValue < 0 && randomMealValue >= BombBadMealChanceToSpawn)
-                FoodInstantiate(_foodSupplyManager.badMealPrefabs[2],_foodSupplyManager.MythBadFoodSatiety);
+            var index = _selector.SelectObjectFromTable(_selector.badObjectPercentTable);
+            FoodInstantiate(_foodSupplyManager.badMealPrefabs[index], _foodSupplyManager.badMealSatietyList[index]);
         }
     }
 

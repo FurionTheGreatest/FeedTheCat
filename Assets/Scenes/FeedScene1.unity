@@ -203,6 +203,7 @@ MonoBehaviour:
     m_SubObjectName: 
   - m_AssetGUID: e2684a3163f59e048af906f25ea5f223
     m_SubObjectName: 
+  mealSatietyList: 0100000002000000050000000a000000
   badMealPrefabs:
   - m_AssetGUID: e4d0fbe188348e045bb487b9f5bfdaca
     m_SubObjectName: 
@@ -214,6 +215,7 @@ MonoBehaviour:
     m_SubObjectName: 
   - m_AssetGUID: 200b82695a877b04ab3860d9ab0783b8
     m_SubObjectName: 
+  badMealSatietyList: fffffffffeffffff0000000000000000fbffffff
   maxCatSatiety: 100
   maxFoodMachineSatiety: 30
   isBadMealNotEmpty: 1
@@ -386,6 +388,7 @@ GameObject:
   - component: {fileID: 433873795}
   - component: {fileID: 433873796}
   - component: {fileID: 433873797}
+  - component: {fileID: 433873798}
   m_Layer: 0
   m_Name: FoodMachineLeft
   m_TagString: Untagged
@@ -478,8 +481,6 @@ MonoBehaviour:
     m_AssetGUID: 157597ecf7b382e468a982be41629804
     m_SubObjectName: 
   foodSprites: []
-  minRandomValue: -12
-  maxRandomValue: 75
   isBrokenMachineEventEnabled: 0
   _isBroken: 0
   litDefaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
@@ -531,6 +532,23 @@ MonoBehaviour:
   _particleReferences:
   - m_AssetGUID: a40b64bf23366dc42a892af2c6ff6140
     m_SubObjectName: 
+--- !u!114 &433873798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433873792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239e12e0ca2ebf545b6571dd78f59016, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectSelectPercentTable: 460000001e000000
+  goodObjectPercentTable: 320000001e0000000f00000005000000
+  badObjectPercentTable: 28000000140000000f0000000f0000000a000000
+  totalChance: 0
+  randomChance: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,6 +860,7 @@ GameObject:
   - component: {fileID: 922687517}
   - component: {fileID: 922687518}
   - component: {fileID: 922687519}
+  - component: {fileID: 922687520}
   m_Layer: 0
   m_Name: FoodMachineRight
   m_TagString: Untagged
@@ -934,8 +953,6 @@ MonoBehaviour:
     m_AssetGUID: 157597ecf7b382e468a982be41629804
     m_SubObjectName: 
   foodSprites: []
-  minRandomValue: -12
-  maxRandomValue: 75
   isBrokenMachineEventEnabled: 0
   _isBroken: 0
   litDefaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
@@ -987,6 +1004,23 @@ MonoBehaviour:
   _particleReferences:
   - m_AssetGUID: a40b64bf23366dc42a892af2c6ff6140
     m_SubObjectName: 
+--- !u!114 &922687520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922687514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239e12e0ca2ebf545b6571dd78f59016, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectSelectPercentTable: 460000001e000000
+  goodObjectPercentTable: 320000001e0000000f00000005000000
+  badObjectPercentTable: 28000000140000000f0000000f0000000a000000
+  totalChance: 0
+  randomChance: 0
 --- !u!1 &1136999763
 GameObject:
   m_ObjectHideFlags: 0
