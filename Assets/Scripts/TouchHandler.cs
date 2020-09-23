@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class TouchHandler : MonoBehaviour
@@ -27,6 +25,8 @@ public class TouchHandler : MonoBehaviour
 
             if (hitInformation.collider == null) return;
             GameObject touchedObject = hitInformation.transform.gameObject;
+            touchedObject.GetComponent<Collectible>().OnTouch();
+            touchedObject.GetComponent<FoodSpawner>()?.OnTouch();
             //Debug.Log("Touched " + touchedObject.transform.name);
         }
 #endif
@@ -45,6 +45,8 @@ public class TouchHandler : MonoBehaviour
 
             if (hitInformation.collider == null) return;
             GameObject touchedObject = hitInformation.transform.gameObject;
+            touchedObject.GetComponent<Collectible>().OnTouch();
+            touchedObject.GetComponent<FoodSpawner>()?.OnTouch();
             //Debug.Log("Touched " + touchedObject.transform.name);
         } 
 #endif

@@ -50,3 +50,6 @@ TagManager:
   - name: Foreground
     uniqueID: 3053118355
     locked: 0
+  - name: Food
+    uniqueID: 2232036721
+    locked: 0

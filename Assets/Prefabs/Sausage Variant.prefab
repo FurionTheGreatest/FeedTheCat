@@ -13,6 +13,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -7105547931052180870, guid: 85876dc37600c604db2b5f057bef6871,
         type: 3}
+    - target: {fileID: 2627132978385364260, guid: af703689e46827e4ba7192dc8170c84b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 2627132978385364261, guid: af703689e46827e4ba7192dc8170c84b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -71,7 +76,7 @@ PrefabInstance:
     - target: {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b,
         type: 3}
       propertyPath: m_Name
-      value: Sausage
+      value: Sausage Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af703689e46827e4ba7192dc8170c84b, type: 3}

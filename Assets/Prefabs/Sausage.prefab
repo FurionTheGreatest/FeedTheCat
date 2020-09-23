@@ -4812,7 +4812,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8b8956ad20c03734aa2296a4bce66adb, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4830,8 +4830,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2062930575
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: -3138518669811783670, guid: 85876dc37600c604db2b5f057bef6871,
     type: 3}
@@ -4894,11 +4894,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d749de6fb90eb439396fe91c6015e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCollectedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   destroyFood: 0
   nextTimeToUpdate: 0.1
   floatingNumberPrefab: {fileID: 8867624307045739565, guid: 365e49dc61a34a84a8a39ff9e164d10d,
     type: 3}
-  isFood: 1
+  isCollectible: 1
+  isFreezeEvent: 0
   isAddressablesInstance: 0
   sausagePrefs: []
   stats:
@@ -4934,6 +4938,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   touchCounter: 0
+  iceAnimators: []
   mealStats:
     satiety: 1
     isFood: 1
@@ -4975,3 +4980,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceVector: {x: 0, y: 0.01}
+  isSpawnedFromAnotherObject: 0

@@ -91,7 +91,6 @@
          
          if(_amountOfIntervalsPassed != 0)
          {
-             Debug.Log("!=0");
              _livesLeft = GetAmountOfLives();
              _amountOfIntervalsPassed = 0;
              _lostLifeTimeStamp = DateTime.Now;
@@ -99,7 +98,7 @@
          
          ChangeEnergyUi();
 
-         Debug.Log("it's been " + timeDifference + " since lives dropped from full (now "+_livesLeft+"). " + _amountOfIntervalsPassed + " reloads passed. Lives Left: " + GetAmountOfLives() );
+         //Debug.Log("it's been " + timeDifference + " since lives dropped from full (now "+_livesLeft+"). " + _amountOfIntervalsPassed + " reloads passed. Lives Left: " + GetAmountOfLives() );
      }
      private int GetAmountOfLives()
      {
@@ -108,13 +107,11 @@
 
      private void ChangeEnergyUi()
      {
-         if (energyText != null)
-         {
-             energySlider.maxValue = MaxEnergy;
-             energySlider.value = _livesLeft;
-             energyText.text = _livesLeft + "/" + MaxEnergy;
-         }
-         else Debug.Log("no text field for energy");
+         if (energyText == null) return;
+         energySlider.maxValue = MaxEnergy;
+         energySlider.value = _livesLeft;
+         energyText.text = _livesLeft + "/" + MaxEnergy;
+         //else Debug.Log("no text field for energy");
      }
 
      private void OnDestroy()

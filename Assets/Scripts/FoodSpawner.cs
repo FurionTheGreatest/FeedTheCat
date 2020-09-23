@@ -122,7 +122,7 @@ public class FoodSpawner : MonoBehaviour
         _machineSpriteRenderer.sharedMaterial = brokenRedMaterial;
     }
 
-    private void OnMouseDown()
+    public void OnTouch()
     {
         _isBroken = false;
         _machineSpriteRenderer.sharedMaterial = litDefaultMaterial;

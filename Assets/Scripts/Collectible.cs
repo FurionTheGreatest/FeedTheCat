@@ -34,7 +34,7 @@ public class Collectible : MonoBehaviour
     }
     public MealDataStats mealStats;
 
-    private void OnMouseDown()
+    public void OnTouch()
     {
         if (touchCounter > 0)
         {

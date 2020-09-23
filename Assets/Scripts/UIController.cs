@@ -16,6 +16,7 @@ public class UIController : MonoBehaviour
     public Image frameImage;
     private float _yieldTime = 0.05f;
     private Coroutine showFrameCoroutine;
+    private Coroutine winCoroutine;
     private int _score;
     private int _currentSatiety;
     private FoodSupplyManager _foodSupplyManager;
@@ -92,7 +93,12 @@ public class UIController : MonoBehaviour
     
     private void EnableWinScreen()
     {
-        StartCoroutine(ShowWinScreen(10, 1));
+        Debug.Log("win");
+        if (winCoroutine != null)
+        {
+            StopCoroutine(winCoroutine);
+        }
+        winCoroutine = StartCoroutine(ShowWinScreen(10, 1));
     }
 
     private IEnumerator ShowFrame(Color color)
@@ -112,8 +118,8 @@ public class UIController : MonoBehaviour
             yield return Yielders.Get(_yieldTime);
         }
     }
-    
-    public IEnumerator ShowWinScreen(int spawnCount, int index)
+
+    private IEnumerator ShowWinScreen(int spawnCount, int index)
     {
         for (int i = 0; i < spawnCount; i++)
         {
