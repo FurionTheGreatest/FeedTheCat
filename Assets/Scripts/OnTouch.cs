@@ -49,6 +49,8 @@ public class OnTouch : MonoBehaviour
     private float _currentTime;
     private VFX _vfx;
 
+    private bool _isTouched = false;
+
     private void Awake()
     {
         _vfx = GetComponent<VFX>();
@@ -66,6 +68,7 @@ public class OnTouch : MonoBehaviour
     
     public void Collect()
     {
+        //_isTouched = true;
         if (isTripleSausage)
         {
             foreach (var obj in sausagePrefs)
@@ -200,9 +203,10 @@ public class OnTouch : MonoBehaviour
 
     public void ReduceSatietyNonCollectible()
     {
-        var isExploded = GetComponent<BombExplosion>()?.isExploded;
-        if(isExploded != null && (bool) !isExploded)
-            OnCollect?.Invoke(gameObject);
+        if (_isTouched) return;
+        _isTouched = true;
+        OnCollect?.Invoke(gameObject);
+        Debug.Log("-" );
     }
 
     public void DestroyObject()
