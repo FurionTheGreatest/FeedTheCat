@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public TMP_Text loseText;
-    public TMP_Text winText;
+    public GameObject loseScreen;
+    public GameObject winScreen;
     public Slider satietySlider;
     public Slider foodLeftSlider;
     public int maxSatietyUiValue;
@@ -22,7 +22,7 @@ public class UIController : MonoBehaviour
     private FoodSupplyManager _foodSupplyManager;
 
     private string _gameOverText = "The food is over, GG";
-    private string _foodOverText = "Not enough food in machine to finish level, GG";
+    private string _foodOverText = "Not enough food in machine to finish level";
     private float _spawnDelay = 0.2f;
 
     private void Start()
@@ -81,13 +81,13 @@ public class UIController : MonoBehaviour
     {
         if (!isFoodOver)
         {
-            loseText.text = _gameOverText;
-            loseText.gameObject.SetActive(true);
+            loseScreen.GetComponentInChildren<TMP_Text>().text = _gameOverText;
+            loseScreen.SetActive(true);
         }
         else
         {
-            loseText.text = _foodOverText;
-            loseText.gameObject.SetActive(true);
+            loseScreen.GetComponentInChildren<TMP_Text>().text = _foodOverText;
+            loseScreen.SetActive(true);
         }
     }
     
@@ -127,7 +127,7 @@ public class UIController : MonoBehaviour
             yield return Yielders.Get(_spawnDelay);
         }
         yield return Yielders.EndOfFrame;
-        winText.gameObject.SetActive(true);
+        winScreen.SetActive(true);
     }
     
     private void OnEnable()

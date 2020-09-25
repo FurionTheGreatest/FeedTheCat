@@ -37,7 +37,6 @@ public class FoodSupplyManager : MonoBehaviour
     private FoodSpawner[] _spawns;
     private bool _isFoodOnSceneEnd;
 
-
     private void Awake()
     {
         maxFoodMachineSatiety = maxCatSatiety + maxCatSatiety/2;
@@ -136,7 +135,7 @@ public class FoodSupplyManager : MonoBehaviour
         StopSpawnFood();
         isWon = true;
         OnWin?.Invoke();
-        
+        FindObjectOfType<PauseController>().enabled = false;
         ClearFoodTable();
     }
 
@@ -165,6 +164,7 @@ public class FoodSupplyManager : MonoBehaviour
             ClearFoodTable();
             StopSpawnFood();
             OnLose?.Invoke(true);
+            FindObjectOfType<PauseController>().enabled = false;
         }
         
         if (_currentFoodMachineSatiety > 0)
@@ -187,6 +187,7 @@ public class FoodSupplyManager : MonoBehaviour
         if (foodOnScene.Count == 0)
         {
             OnLose?.Invoke(false);
+            FindObjectOfType<PauseController>().enabled = false;
         }
         else
         {

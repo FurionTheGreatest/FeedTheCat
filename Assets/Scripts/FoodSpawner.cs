@@ -42,22 +42,8 @@ public class FoodSpawner : MonoBehaviour
     private const float MaxDelayForSpawn = 3f;
     private const float RepeatRate = 2f;
 
-    /*public const int CommonMealChanceToSpawn = 40;
-    public const int RareMealChanceToSpawn = 60;
-    public const int MythMealChanceToSpawn = 75;
-    private const int LegendMealChanceToSpawn = 80;
-    
-    public const int CommonBadMealChanceToSpawn = -12;
-    public const int RareBadMealChanceToSpawn = -17;
-    private const int SnowflakeChanceToSpawn = -18;
-    private const int IceChanceToSpawn = -19;
-    private const int BombBadMealChanceToSpawn = -20;*/
-
     private SpriteRenderer _machineSpriteRenderer;
-    //public AssetReference bombAtlas;
     private SpriteAtlas _foodAtlas;
-    //private SpriteAtlas _bombAtlas;
-    //public Sprite[] bombSprites;
     private AsyncOperationHandle<SpriteAtlas> _foodHandler;
     private const string TripleSausageName = "tripple_sausage(Clone)";
     private GameObject _lastSpawnedGameObject;

@@ -25,7 +25,7 @@ public class TouchHandler : MonoBehaviour
 
             if (hitInformation.collider == null) return;
             GameObject touchedObject = hitInformation.transform.gameObject;
-            touchedObject.GetComponent<Collectible>().OnTouch();
+            touchedObject.GetComponent<Collectible>()?.OnTouch();
             touchedObject.GetComponent<FoodSpawner>()?.OnTouch();
             //Debug.Log("Touched " + touchedObject.transform.name);
         }
@@ -45,7 +45,7 @@ public class TouchHandler : MonoBehaviour
 
             if (hitInformation.collider == null) return;
             GameObject touchedObject = hitInformation.transform.gameObject;
-            touchedObject.GetComponent<Collectible>().OnTouch();
+            touchedObject.GetComponent<Collectible>()?.OnTouch();
             touchedObject.GetComponent<FoodSpawner>()?.OnTouch();
             //Debug.Log("Touched " + touchedObject.transform.name);
         } 
