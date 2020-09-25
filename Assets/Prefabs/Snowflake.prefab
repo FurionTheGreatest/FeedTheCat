@@ -102,10 +102,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.6
   m_LinearDrag: 5
   m_AngularDrag: 0.05
-  m_GravityScale: 0.5
+  m_GravityScale: 0.4
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -157,7 +157,7 @@ MonoBehaviour:
   icePrefab:
     m_AssetGUID: 0412ce9f670ee5b43a5929fb6adeb937
     m_SubObjectName: 
-  freezeRadius: 3
+  freezeRadius: 5
   mask:
     serializedVersion: 2
     m_Bits: 256
@@ -397,6 +397,11 @@ PrefabInstance:
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 198601255114733596, guid: 968c924d2be019d4b9e67647551eec3e,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e,
         type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.size
@@ -435,7 +440,7 @@ PrefabInstance:
     - target: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e,
         type: 3}

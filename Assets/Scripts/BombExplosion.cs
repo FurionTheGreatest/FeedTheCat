@@ -17,9 +17,12 @@ public class BombExplosion : MonoBehaviour
 
     private Quaternion _explosionRotation;
     private const float MaxRotationValue = 60f;
+    public bool isExploded = false;
 
     public void Explosion()
     {
+        if(isExploded) return;
+        isExploded = true;
         GetComponent<VFX>().DisableParticleSystem();
         GetComponent<SpriteRenderer>().enabled = false;
         
@@ -35,6 +38,7 @@ public class BombExplosion : MonoBehaviour
                     new InstantiationParameters(transform.position,_explosionRotation,null));
                 var go = await instanceHandler.Task;
                 StartCoroutine(WaitForEndOfEmission(go));
+                StartCoroutine(WaitToDisableExplosionArea());
             }
             else
             {
@@ -55,5 +59,12 @@ public class BombExplosion : MonoBehaviour
             yield return new WaitUntil(() => ps.isPlaying == false);
         }
         GetComponent<OnTouch>().DestroyObject();
+    }
+
+    private IEnumerator WaitToDisableExplosionArea()
+    {
+        yield return Yielders.Get(0.3f);
+        areaToForce.enabled = false;
+        forceField.enabled = false;
     }
 }

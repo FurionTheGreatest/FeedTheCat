@@ -17,7 +17,6 @@ public class FoodSupplyManager : MonoBehaviour
     public List<AssetReference> badMealPrefabs;
     
     public int[] badMealSatietyList = { -1, -2, -5};
-    public const int ZeroSatiety = 0;
     [Header("Level Values")]
     public int maxCatSatiety = 100;
     public int maxFoodMachineSatiety;
@@ -56,7 +55,6 @@ public class FoodSupplyManager : MonoBehaviour
     private void AddCatSatiety(GameObject obj)
     {
         var satiety = obj.GetComponent<Collectible>().mealStats.satiety;
-
         if(_currentCatSatiety == 0 && satiety < 0) return;
         if (_currentCatSatiety + satiety < 0 && satiety < 0)
         {

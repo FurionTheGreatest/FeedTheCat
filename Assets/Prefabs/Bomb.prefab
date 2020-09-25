@@ -159,6 +159,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bomb
       objectReference: {fileID: 0}
+    - target: {fileID: 8305984888828029276, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305984888828029276, guid: e4d0fbe188348e045bb487b9f5bfdaca,
+        type: 3}
+      propertyPath: m_Mass
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 8444617946328403182, guid: e4d0fbe188348e045bb487b9f5bfdaca,
         type: 3}
       propertyPath: m_LocalPosition.x

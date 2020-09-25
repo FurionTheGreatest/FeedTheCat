@@ -9485,8 +9485,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2062930575
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_RenderMode: 3
   m_SortMode: 0
@@ -14370,8 +14370,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 5
+  m_Mass: 0.6
+  m_LinearDrag: 4
   m_AngularDrag: 0.05
   m_GravityScale: 0.5
   m_Material: {fileID: 0}
@@ -14452,6 +14452,7 @@ MonoBehaviour:
   explosionPrefab:
     m_AssetGUID: 46876a2780737ec45a19d62f88e5ce56
     m_SubObjectName: 
+  isExploded: 0
 --- !u!58 &8561730995865294528
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14506,6 +14507,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: -3564303869526442185}
         m_MethodName: Explosion
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6925676023220095707}
+        m_MethodName: ReduceSatietyNonCollectible
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

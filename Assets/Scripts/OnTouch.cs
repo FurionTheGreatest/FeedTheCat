@@ -88,10 +88,17 @@ public class OnTouch : MonoBehaviour
         if(!isCollectible) yield break;
         _collider2D.enabled = false;
         _rb.bodyType = RigidbodyType2D.Static;
-
+        
         while(Vector3.Distance(transform.position, _catMouth.position) > 0.3f)
         {
             transform.position = Vector3.MoveTowards(transform.position, _catMouth.position, _step);
+            if (transform.lossyScale.x > 0.8f)
+            {
+                var mealTransform = transform;
+                var scale = mealTransform.localScale.x;
+                scale -= 0.01f;
+                mealTransform.localScale = new Vector3(scale,scale,scale);
+            }
             yield return Yielders.FixedUpdate;
         }
         if (!isFreezeEvent)
@@ -189,6 +196,13 @@ public class OnTouch : MonoBehaviour
     private void Reject()
     {
         GetComponent<SpawnedObjectPhysics>().RejectFood();
+    }
+
+    public void ReduceSatietyNonCollectible()
+    {
+        var isExploded = GetComponent<BombExplosion>()?.isExploded;
+        if(isExploded != null && (bool) !isExploded)
+            OnCollect?.Invoke(gameObject);
     }
 
     public void DestroyObject()

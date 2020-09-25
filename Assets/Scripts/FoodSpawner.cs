@@ -10,13 +10,11 @@ using Random = UnityEngine.Random;
 public class FoodSpawner : MonoBehaviour
 {
     [Header("Food machine options")]
-    
     public bool isOppositeSpawn;
     public AssetReference spawnParticle;
     private RandomObjectSelector _selector;
     
     [Header("Food sprites")]
-    
     public AssetReference spriteAtlas;
     public Sprite[] foodSprites;
     public static event Action<int> OnMealSpawned;
@@ -24,7 +22,6 @@ public class FoodSpawner : MonoBehaviour
     public static event Action<int> OnBadMealSpawned;
 
     [Header("Broken machine event")]
-    
     public bool isBrokenMachineEventEnabled = true;
     public bool _isBroken;
     public Material litDefaultMaterial;
@@ -32,6 +29,7 @@ public class FoodSpawner : MonoBehaviour
 
     public int minMachineEventBeginningTime = 10;
     public int maxMachineEventBeginningTime = 20;
+    
     [Header("Special options")]
     public GameObject[] sausages;
 
@@ -142,11 +140,10 @@ public class FoodSpawner : MonoBehaviour
             {
                 if (!_isBroken)
                 {
+                    PlaySpawnEffect();
                     var instanceHandler = Addressables.InstantiateAsync(prefab, _mealParent.transform);
                     var go = await instanceHandler.Task;
 
-                    PlaySpawnEffect();
-                    
                     _lastSpawnedGameObject = go;
                     OnMealAddOnScene?.Invoke(_lastSpawnedGameObject);
 
@@ -159,7 +156,6 @@ public class FoodSpawner : MonoBehaviour
 
                     CheckForTripleSausage(_lastSpawnedGameObject);
                 }
-
                 var satiety = _lastSpawnedGameObject.GetComponent<Collectible>().mealStats.satiety;
                 if (satiety > 0)
                 {
@@ -184,11 +180,9 @@ public class FoodSpawner : MonoBehaviour
         {
             spawnParticle.LoadAssetAsync<GameObject>().Completed += spawnEffectHandler =>
             {
-                if(spawnEffectHandler.Status == AsyncOperationStatus.Succeeded)
-                {
-                    spawnParticle.InstantiateAsync(_mealParent.transform.position, Quaternion.identity);
-                    Addressables.ReleaseInstance(spawnEffectHandler);
-                }
+                if (spawnEffectHandler.Status != AsyncOperationStatus.Succeeded) return;
+                spawnParticle.InstantiateAsync(_mealParent.transform.position, Quaternion.identity);
+                Addressables.ReleaseInstance(spawnEffectHandler);
             };
         }
         else

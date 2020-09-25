@@ -217,7 +217,7 @@ MonoBehaviour:
   - m_AssetGUID: 200b82695a877b04ab3860d9ab0783b8
     m_SubObjectName: 
   badMealSatietyList: fffffffffeffffff0000000000000000fbffffff
-  maxCatSatiety: 20
+  maxCatSatiety: 100
   maxFoodMachineSatiety: 30
   isBadMealNotEmpty: 1
   isWon: 0
@@ -1174,6 +1174,16 @@ PrefabInstance:
     - target: {fileID: 4410928329836465033, guid: 36965d61a0cb00c489e1ee0c941a56d4,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410928329836465038, guid: 36965d61a0cb00c489e1ee0c941a56d4,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410928329836465038, guid: 36965d61a0cb00c489e1ee0c941a56d4,
+        type: 3}
+      propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4410928329836465039, guid: 36965d61a0cb00c489e1ee0c941a56d4,

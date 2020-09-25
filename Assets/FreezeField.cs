@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
@@ -33,14 +35,7 @@ public class FreezeField : MonoBehaviour
             }
             Addressables.Release(handle);
         };
-        results = new Collider2D[FoodSupplyManager.Instance.foodOnScene.Count];
-        Physics2D.OverlapCircleNonAlloc(gameObject.transform.position, freezeRadius,results,mask);
-        if (results == null) return;
-        foreach (var food in results)
-        {
-            if(food != null)
-                InstantiateIce(food.transform);
-        }
+        StartCoroutine(WaitForIceSpawn());
     }
     private IEnumerator WaitForEndOfEmission(GameObject fxGameObject)
     {
@@ -73,6 +68,24 @@ public class FreezeField : MonoBehaviour
             }
             Addressables.Release(handle);
         };
+    }
+
+    private IEnumerator WaitForIceSpawn()
+    {
+        yield return Yielders.Get(0.3f);
+        results = new Collider2D[FoodSupplyManager.Instance.foodOnScene.Count];
+        Physics2D.OverlapCircleNonAlloc(gameObject.transform.position, freezeRadius,results,mask);
+        if (results == null) yield break;
+        foreach (var food in results)
+        {
+            if(food != null)
+                InstantiateIce(food.transform);
+        }
+    }
+
+    public void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position,freezeRadius);
     }
 }
     
