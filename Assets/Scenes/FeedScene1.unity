@@ -217,7 +217,9 @@ MonoBehaviour:
   - m_AssetGUID: 200b82695a877b04ab3860d9ab0783b8
     m_SubObjectName: 
   badMealSatietyList: fffffffffeffffff0000000000000000fbffffff
-  maxCatSatiety: 100
+  maxCatSatiety: 50
+  additionalPartCatSatiety: 4
+  additionalPartBadSatiety: 3
   maxFoodMachineSatiety: 30
   isBadMealNotEmpty: 1
   isWon: 0
@@ -491,6 +493,10 @@ MonoBehaviour:
   - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
   - {fileID: 4596067036186859148, guid: 69c782ad7b76919488f428b58f715fd4, type: 3}
   - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
+  isDoubleSatiety: 0
+  doubleSatietyAura:
+    m_AssetGUID: 51a5eae57e967464f86aa9c6a5771b1d
+    m_SubObjectName: 
 --- !u!61 &433873796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -893,6 +899,10 @@ MonoBehaviour:
   - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
   - {fileID: 4596067036186859148, guid: 69c782ad7b76919488f428b58f715fd4, type: 3}
   - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
+  isDoubleSatiety: 0
+  doubleSatietyAura:
+    m_AssetGUID: 51a5eae57e967464f86aa9c6a5771b1d
+    m_SubObjectName: 
 --- !u!61 &922687518
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -943,6 +953,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 431853477, guid: 46e0890a03b60ad4f9892a86f420ee7a, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 431853477, guid: 46e0890a03b60ad4f9892a86f420ee7a, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1444970369, guid: 46e0890a03b60ad4f9892a86f420ee7a, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1444970369, guid: 46e0890a03b60ad4f9892a86f420ee7a, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2191644027598451819, guid: 46e0890a03b60ad4f9892a86f420ee7a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

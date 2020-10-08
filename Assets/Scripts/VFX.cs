@@ -7,7 +7,7 @@ public class VFX : MonoBehaviour
     public GameObject particleFx;
     private bool _isParticleSystemNotNull;
     
-    private void Start()
+    private void Awake()
     {
         particleFx = gameObject.GetComponentInChildren<ParticleSystem>(true) != null 
             ? gameObject.GetComponentInChildren<ParticleSystem>(true).gameObject : null;

@@ -19,6 +19,8 @@ public class FoodSupplyManager : MonoBehaviour
     public int[] badMealSatietyList = { -1, -2, -5};
     [Header("Level Values")]
     public int maxCatSatiety = 100;
+    public int additionalPartCatSatiety = 4;
+    public int additionalPartBadSatiety = 3;
     public int maxFoodMachineSatiety;
     
     private int _currentCatSatiety;
@@ -38,9 +40,9 @@ public class FoodSupplyManager : MonoBehaviour
 
     private void Awake()
     {
-        maxFoodMachineSatiety = maxCatSatiety + maxCatSatiety/2;
+        maxFoodMachineSatiety = maxCatSatiety + maxCatSatiety/additionalPartCatSatiety;
         _currentFoodMachineSatiety = maxFoodMachineSatiety;
-        _maxBadMealSatiety = maxCatSatiety / 2;
+        _maxBadMealSatiety = maxCatSatiety / additionalPartBadSatiety;
         _currentBadMealSatiety = _maxBadMealSatiety;
     }
     

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
@@ -32,7 +33,13 @@ public class FoodSpawner : MonoBehaviour
     
     [Header("Special options")]
     public GameObject[] sausages;
+    [Header("Boost options")]
+    public bool isDoubleSatiety;
+    public AssetReference doubleSatietyAura;
 
+    private float _doubleSatietyTime = 7f;
+    private Coroutine _doubleSatietyRoutine;
+    
     private FoodSupplyManager _foodSupplyManager;
     private GameObject _mealParent;
 
@@ -93,6 +100,19 @@ public class FoodSpawner : MonoBehaviour
         atlas.GetSprites(sprites);
     }
 
+    public void EnableDoubleSatiety()
+    {
+        if(_doubleSatietyRoutine != null)
+            StopCoroutine(_doubleSatietyRoutine);
+        _doubleSatietyRoutine = StartCoroutine(DoubleSatiety());
+    }
+    private IEnumerator DoubleSatiety()
+    {
+        isDoubleSatiety = true;
+        yield return Yielders.Get(_doubleSatietyTime);
+        isDoubleSatiety = false;
+    }
+
     #region BrokenMachineEvent
     private float RandomTimeForMachineEvent()
     {
@@ -149,10 +169,15 @@ public class FoodSpawner : MonoBehaviour
 
                     _lastSpawnedGameObject.GetComponent<OnTouch>().handler = instanceHandler;
                     if(_lastSpawnedGameObject.GetComponent<Collectible>() != null)
-                        _lastSpawnedGameObject.GetComponent<Collectible>().mealStats.satiety = satietyOfFood;
-                    
-                    if(_lastSpawnedGameObject.GetComponent<Collectible>().mealStats.isFood)
+                        _lastSpawnedGameObject.GetComponent<Collectible>().mealStats.satiety = isDoubleSatiety ? satietyOfFood * 2 : satietyOfFood;
+
+                    if (_lastSpawnedGameObject.GetComponent<Collectible>().mealStats.isFood)
+                    {
                         SetRandomSprite(_lastSpawnedGameObject,_foodAtlas, foodSprites);
+                        
+                        if(isDoubleSatiety)
+                            SetFoodEffect(doubleSatietyAura,_lastSpawnedGameObject.transform);
+                    }
 
                     CheckForTripleSausage(_lastSpawnedGameObject);
                 }
@@ -189,6 +214,31 @@ public class FoodSpawner : MonoBehaviour
         {
             spawnParticle.InstantiateAsync(_mealParent.transform.position, Quaternion.identity);
         }
+    }
+
+    private void SetFoodEffect(AssetReference prefab, Transform parent)
+    {
+        Addressables.LoadAssetAsync<GameObject>(prefab).Completed += async handle =>
+        {
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                var instanceHandler = Addressables.InstantiateAsync(prefab, parent);
+                await instanceHandler.Task;
+                var aura = instanceHandler.Result;
+                var ps = aura.GetComponent<ParticleSystem>();
+                var color = ps.main;
+                await Task.Delay(1/10);
+                var currentColor = aura.GetComponentInParent<VFX>().particleFx.GetComponent<ParticleSystem>().main
+                    .startColor.color;
+                var alpha = currentColor.a;
+                alpha = 1;
+                currentColor.a = alpha;
+
+                color.startColor = currentColor;
+
+            }
+            Addressables.Release(handle);
+        };
     }
 
     private void CheckForTripleSausage(GameObject prefab)
