@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 92869453b3e408d489e790000ee26e74,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -387,6 +387,8 @@ MonoBehaviour:
     m_SubObjectName: 
   badMealSatietyList: fffffffffefffffffbffffff
   maxCatSatiety: 100
+  additionalPartCatSatiety: 4
+  additionalPartBadSatiety: 3
   maxFoodMachineSatiety: 30
   isBadMealNotEmpty: 1
   isWon: 0
@@ -729,6 +731,10 @@ MonoBehaviour:
   - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
   - {fileID: 4596067036186859148, guid: 69c782ad7b76919488f428b58f715fd4, type: 3}
   - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
+  isDoubleSatiety: 0
+  doubleSatietyAura:
+    m_AssetGUID: 51a5eae57e967464f86aa9c6a5771b1d
+    m_SubObjectName: 
 --- !u!61 &433873796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1131,6 +1137,10 @@ MonoBehaviour:
   - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
   - {fileID: 4596067036186859148, guid: 69c782ad7b76919488f428b58f715fd4, type: 3}
   - {fileID: 2627132978385364283, guid: af703689e46827e4ba7192dc8170c84b, type: 3}
+  isDoubleSatiety: 0
+  doubleSatietyAura:
+    m_AssetGUID: 51a5eae57e967464f86aa9c6a5771b1d
+    m_SubObjectName: 
 --- !u!61 &922687518
 BoxCollider2D:
   m_ObjectHideFlags: 0
